@@ -18,6 +18,8 @@ using R4Mvc;
 [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
 public static partial class MVC
 {
+    static readonly R4Mvc.DipendentiAreaClass s_Dipendenti = new R4Mvc.DipendentiAreaClass();
+    public static R4Mvc.DipendentiAreaClass Dipendenti => s_Dipendenti;
     static readonly R4Mvc.ExampleAreaClass s_Example = new R4Mvc.ExampleAreaClass();
     public static R4Mvc.ExampleAreaClass Example => s_Example;
     public static readonly Template.Web.Areas.AuthenticatedBaseController AuthenticatedBase = new Template.Web.Areas.R4MVC_AuthenticatedBaseController();
@@ -66,6 +68,13 @@ namespace R4Mvc
 
         static readonly ViewsClass s_Views = new ViewsClass();
         public ViewsClass Views => s_Views;
+    }
+
+    [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
+    public partial class DipendentiAreaClass
+    {
+        public readonly string Name = "Dipendenti";
+        public readonly Template.Web.Areas.Dipendenti.Users.UsersController Users = new Template.Web.Areas.Dipendenti.Users.R4MVC_UsersController();
     }
 
     [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]

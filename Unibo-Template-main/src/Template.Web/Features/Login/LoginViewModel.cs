@@ -6,7 +6,7 @@ namespace Template.Web.Features.Login
     {
         [Required]
         [Display(Name = "Email")]
-        [DataType(DataType.EmailAddress)]
+        //[DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         [Required]

@@ -46,7 +46,13 @@ namespace Template.Web.Features.Login
             if (string.IsNullOrWhiteSpace(returnUrl) == false)
                 return Redirect(returnUrl);
 
-            return RedirectToAction(MVC.Example.Users.Index());
+            if (utente.Email == "amministratore@test.it")
+            {
+                return RedirectToAction(MVC.Example.Users.Index());
+            }
+
+            return RedirectToAction(MVC.Dipendenti.Users.Index());
+
         }
 
         [HttpGet]
@@ -82,6 +88,7 @@ namespace Template.Web.Features.Login
                     });
 
                     return LoginAndRedirect(utente, model.ReturnUrl, model.RememberMe);
+
                 }
                 catch (LoginException e)
                 {
