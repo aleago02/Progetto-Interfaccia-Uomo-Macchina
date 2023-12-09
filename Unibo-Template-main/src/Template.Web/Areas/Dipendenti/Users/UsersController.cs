@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using Template.Infrastructure.AspNetCore;
 using Template.Services.Shared;
+using Template.Web.Areas.Example.Users;
 using Template.Web.Infrastructure;
 using Template.Web.SignalR;
 using Template.Web.SignalR.Hubs.Events;
@@ -33,6 +34,12 @@ namespace Template.Web.Areas.Dipendenti.Users
             //model.SetUsers(users);
 
             return View(/*model*/);
+        }
+
+        [HttpGet]
+        public virtual async Task<IActionResult> Index(IndexDipendentiViewModel model)
+        {
+            return View(model);
         }
 
         //[HttpGet]

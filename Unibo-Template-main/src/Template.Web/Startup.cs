@@ -114,6 +114,7 @@ namespace Template.Web
                 endpoints.MapHub<TemplateHub>("/templateHub");
 
                 endpoints.MapAreaControllerRoute("Example", "Example", "Example/{controller=Users}/{action=Index}/{id?}");
+                endpoints.MapAreaControllerRoute("Dipendenti", "Dipendenti", "Dipendenti/{controller=Users}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("default", "{controller=Login}/{action=Login}");
             });
         }
