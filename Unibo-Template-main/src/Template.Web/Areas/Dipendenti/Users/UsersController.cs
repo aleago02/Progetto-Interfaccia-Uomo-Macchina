@@ -24,16 +24,7 @@ namespace Template.Web.Areas.Dipendenti.Users
             _publisher = publisher;
             _sharedLocalizer = sharedLocalizer;
 
-            //ModelUnbinderHelpers.ModelUnbinders.Add(typeof(IndexViewModel), new SimplePropertyModelUnbinder());
-        }
-
-        [HttpGet]
-        public virtual async Task<IActionResult> Index(/*IndexViewModel model*/)
-        {
-            //var users = await _sharedService.Query(model.ToUsersIndexQuery());
-            //model.SetUsers(users);
-
-            return View(/*model*/);
+            ModelUnbinderHelpers.ModelUnbinders.Add(typeof(IndexViewModel), new SimplePropertyModelUnbinder());
         }
 
         [HttpGet]

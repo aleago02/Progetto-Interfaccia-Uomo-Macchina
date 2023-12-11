@@ -57,6 +57,13 @@ namespace Template.Web.Areas.Dipendenti.Users
             return RedirectToRoute(callInfo.RouteValueDictionary);
         }
 
+        [NonAction]
+        [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
+        public virtual IActionResult Index()
+        {
+            return new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Index);
+        }
+
         [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToPage(Task<IActionResult> taskResult)
         {
@@ -119,18 +126,8 @@ namespace Template.Web.Areas.Dipendenti.Users
     [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
     public partial class R4MVC_UsersController : Template.Web.Areas.Dipendenti.Users.UsersController
     {
-        public R4MVC_UsersController(): base(Dummy.Instance)
+        public R4MVC_UsersController() : base(Dummy.Instance)
         {
-        }
-
-        [NonAction]
-        partial void IndexOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo);
-        [NonAction]
-        public override System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> Index()
-        {
-            var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Index);
-            IndexOverride(callInfo);
-            return System.Threading.Tasks.Task.FromResult<Microsoft.AspNetCore.Mvc.IActionResult>(callInfo);
         }
 
         [NonAction]

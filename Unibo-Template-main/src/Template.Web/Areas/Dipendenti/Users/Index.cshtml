@@ -1,4 +1,11 @@
 ﻿@model Template.Web.Areas.Dipendenti.Users.IndexDipendentiViewModel
 @{
-    ViewData["Title"] = "Utenti";
+    ViewData["Title"] = ((Template.Web.Areas.IdentitaViewModel)ViewData[Template.Web.Areas.IdentitaViewModel.VIEWDATA_IDENTITACORRENTE_KEY]).NomeCognome;
+}
+@section pageTitle {
+    <nav class="navbar navbar-expand navbar-light flex-wrap onit-page-title">
+        <a class="navbar-brand">
+            @ViewData["Title"]
+        </a>
+    </nav>
 }
