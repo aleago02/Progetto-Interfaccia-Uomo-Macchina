@@ -9,9 +9,9 @@ using Template.Web.Infrastructure;
 using Template.Web.SignalR;
 using Template.Web.SignalR.Hubs.Events;
 
-namespace Template.Web.Areas.Dipendenti.Users
+namespace Template.Web.Areas.CapoSettore.Users
 {
-    [Area("Dipendenti")]
+    [Area("CapoSettore")]
     public partial class UsersController : AuthenticatedBaseController
     {
         private readonly SharedService _sharedService;
@@ -30,8 +30,6 @@ namespace Template.Web.Areas.Dipendenti.Users
         [HttpGet]
         public virtual async Task<IActionResult> Index(IndexCaposettoreViewModel model)
         {
-            var users = await _sharedService.QueryDays(model.ToUsersIndexQuery());
-            model.SetUsers(users);
             return View(model);
         }
 

@@ -18,6 +18,8 @@ using R4Mvc;
 [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
 public static partial class MVC
 {
+    static readonly R4Mvc.CapoSettoreAreaClass s_CapoSettore = new R4Mvc.CapoSettoreAreaClass();
+    public static R4Mvc.CapoSettoreAreaClass CapoSettore => s_CapoSettore;
     static readonly R4Mvc.DipendentiAreaClass s_Dipendenti = new R4Mvc.DipendentiAreaClass();
     public static R4Mvc.DipendentiAreaClass Dipendenti => s_Dipendenti;
     static readonly R4Mvc.ExampleAreaClass s_Example = new R4Mvc.ExampleAreaClass();
@@ -71,6 +73,13 @@ namespace R4Mvc
     }
 
     [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
+    public partial class CapoSettoreAreaClass
+    {
+        public readonly string Name = "CapoSettore";
+        public readonly Template.Web.Areas.CapoSettore.Users.UsersController Users = new Template.Web.Areas.CapoSettore.Users.R4MVC_UsersController();
+    }
+
+    [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
     public partial class DipendentiAreaClass
     {
         public readonly string Name = "Dipendenti";
@@ -114,6 +123,8 @@ public static partial class Links
         public static string Url(string fileName) => R4MvcHelpers.ProcessVirtualPath(UrlPath + "/" + fileName);
         public static readonly string app_logo_png = Url("app-logo.png");
         public static readonly string company_logo_png = Url("company-logo.png");
+        public static readonly string vanko_logo_png = Url("vanko-logo.png");
+        public static readonly string Vnko_png = Url("Vnko.png");
     }
 
     public static partial class js

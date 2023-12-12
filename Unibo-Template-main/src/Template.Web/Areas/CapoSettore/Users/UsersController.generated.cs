@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Routing;
 using R4Mvc;
 
-namespace Template.Web.Areas.Dipendenti.Users
+namespace Template.Web.Areas.CapoSettore.Users
 {
     public partial class UsersController
     {
@@ -84,9 +84,9 @@ namespace Template.Web.Areas.Dipendenti.Users
         }
 
         [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
-        public UsersController Actions => MVC.Dipendenti.Users;
+        public UsersController Actions => MVC.CapoSettore.Users;
         [GeneratedCode("R4Mvc", "1.0")]
-        public readonly string Area = "Dipendenti";
+        public readonly string Area = "CapoSettore";
         [GeneratedCode("R4Mvc", "1.0")]
         public readonly string Name = "Users";
         [GeneratedCode("R4Mvc", "1.0")]
@@ -124,16 +124,16 @@ namespace Template.Web.Areas.Dipendenti.Users
     }
 
     [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
-    public partial class R4MVC_UsersController : Template.Web.Areas.Dipendenti.Users.UsersController
+    public partial class R4MVC_UsersController : Template.Web.Areas.CapoSettore.Users.UsersController
     {
         public R4MVC_UsersController(): base(Dummy.Instance)
         {
         }
 
         [NonAction]
-        partial void IndexOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo, Template.Web.Areas.Dipendenti.Users.IndexCaposettoreViewModel model);
+        partial void IndexOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo, Template.Web.Areas.CapoSettore.Users.IndexCaposettoreViewModel model);
         [NonAction]
-        public override System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> Index(Template.Web.Areas.Dipendenti.Users.IndexCaposettoreViewModel model)
+        public override System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> Index(Template.Web.Areas.CapoSettore.Users.IndexCaposettoreViewModel model)
         {
             var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Index);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);

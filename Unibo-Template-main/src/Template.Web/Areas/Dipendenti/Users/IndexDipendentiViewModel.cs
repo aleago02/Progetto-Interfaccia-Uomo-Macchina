@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Template.Web.Areas.Dipendenti.Users
 {
-    public class IndexDipendentiViewModel : PagingViewModel
+    public class IndexCaposettoreViewModel : PagingViewModel
     {
         public IndexDipendentiViewModel() 
         {

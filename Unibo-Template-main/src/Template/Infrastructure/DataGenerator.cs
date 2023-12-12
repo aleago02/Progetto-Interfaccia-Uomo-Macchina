@@ -36,11 +36,11 @@ namespace Template.Infrastructure
                 new User
                 {
                     Id = Guid.Parse("bfdef48b-c7ea-4227-8333-c635af267354"), // Forced to specific Guid for tests
-                    Email = "email3@test.it",
+                    Email = "aa",
                     Password = "Uy6qvZV0iA2/drm4zACDLCCm7BE9aCKZVQ16bg80XiU=", // SHA-256 of text "Test"
-                    FirstName = "Nome3",
-                    LastName = "Cognome3",
-                    NickName = "Nickname3"
+                    FirstName = "Lorenzo",
+                    LastName = "Needle",
+                    NickName = "Asdrubale"
                 });
 
             context.SaveChanges();

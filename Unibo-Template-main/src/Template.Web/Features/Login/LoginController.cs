@@ -51,7 +51,7 @@ namespace Template.Web.Features.Login
 
             if (utente.Email == "amministratore@test.it")
             {
-                return RedirectToAction(MVC.Example.Users.Index());
+                return RedirectToAction(MVC.CapoSettore.Users.Index());
             }
 
             return RedirectToAction(MVC.Dipendenti.Users.Index());
