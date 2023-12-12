@@ -1,11 +1,65 @@
 ﻿@model Template.Web.Areas.Dipendenti.Users.IndexDipendentiViewModel
 @{
     ViewData["Title"] = ((Template.Web.Areas.IdentitaViewModel)ViewData[Template.Web.Areas.IdentitaViewModel.VIEWDATA_IDENTITACORRENTE_KEY]).NomeCognome;
+    ViewData["Fullday"] = 8;
 }
 @section pageTitle {
-    <nav class="navbar navbar-expand navbar-light flex-wrap onit-page-title">
-        <a class="navbar-brand">
-            @ViewData["Title"]
-        </a>
-    </nav>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <h1>@ViewData["Title"]</h1>
+            </div>
+        </nav>
+        <a class="btn btn-primary" href="#" role="button">Richiedi Ferie</a>
+        <a class="btn btn-primary" href="#" role="button">SamrtWorking</a>
+    </div>   
+}
+@section pageSubtitle{
+    <div class="container-sm">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Handle</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                @if (Model.Users.Any() == false)
+                {
+                    <tr>
+                        <td colspan="4">Nessun elemento trovato con i filtri correnti</td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var user in Model.Users)
+                    {
+                        <tr class="onit-table-row-link">
+                            <th scope="row">
+                                @user.Day
+                            </th>
+                            <td>
+                            @if (user.HSmartWork == 0 && user.HHoliday == 0)
+                                {
+                                    @ViewData["Fullday"];
+                                }
+                                else
+                                {
+                                    @Model.LessWork(user.HSmartWork, user.HHoliday)
+                                }
+                            </td>
+                            <td>
+                                @user.HSmartWork
+                            </td>
+                            <td>
+                                @user.HHoliday
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
 }

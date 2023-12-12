@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Template.Infrastructure;
@@ -44,6 +45,19 @@ namespace Template.Services.Shared
             public string Email { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
+        }
+    }
+
+    public class UsersDaysIndexDTO
+    {
+        public IEnumerable<User> Users { get; set; }
+        public int Count { get; set; }
+
+        public class User
+        {
+            public DataType Day { get; set; }
+            public float HSmartWork { get; set; }
+            public float HHoliday { get; set; }
         }
     }
 
@@ -122,6 +136,25 @@ namespace Template.Services.Shared
                         Email = x.Email,
                         FirstName = x.FirstName,
                         LastName = x.LastName
+                    })
+                    .ToArrayAsync(),
+                Count = await queryable.CountAsync()
+            };
+        }
+
+        public async Task<UsersDaysIndexDTO> QueryDays(UsersSelectQuery qry)
+        {
+            var queryable = _dbContext.Days
+                .Where(x => x.Id_User != qry.IdCurrentUser);
+
+            return new UsersDaysIndexDTO
+            {
+                Users = await queryable
+                    .Select(x => new UsersDaysIndexDTO.User
+                    {
+                        Day = x.Day,
+                        HSmartWork = x.HSmartWorking,
+                        HHoliday = x.HHoliday
                     })
                     .ToArrayAsync(),
                 Count = await queryable.CountAsync()
