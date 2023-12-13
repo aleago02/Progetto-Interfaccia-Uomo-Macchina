@@ -55,7 +55,7 @@ namespace Template.Services.Shared
 
         public class User
         {
-            public DataType Day { get; set; }
+            public DateTime Day { get; set; }
             public float HSmartWork { get; set; }
             public float HHoliday { get; set; }
         }

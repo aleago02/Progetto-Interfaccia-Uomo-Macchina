@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Template.Web.Areas.Dipendenti.Users
 {
-    public class IndexCaposettoreViewModel : PagingViewModel
+    public class IndexDipendentiViewModel : PagingViewModel
     {
         public IndexDipendentiViewModel() 
         {
@@ -54,7 +54,7 @@ namespace Template.Web.Areas.Dipendenti.Users
             this.HHoliday = userWorkIndexDTO.HHoliday;
         }
 
-        public DataType Day { get; set; }
+        public DateTime Day { get; set; }
         public float HSmartWork { get; set; }
         public float HHoliday { get; set; }
     }

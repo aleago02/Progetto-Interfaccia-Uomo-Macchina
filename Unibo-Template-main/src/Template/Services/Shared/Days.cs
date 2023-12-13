@@ -10,12 +10,13 @@ namespace Template.Services.Shared
 {
     internal class Days
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id_User { get; set; }
-        public DataType Day { get; set; }
+        [ForeignKey(nameof(Id_User))]
+        [InverseProperty("Days")]
+
+        [Key]
+        public DateTime Day { get; set; }
         public float HSmartWorking { get; set; }
         public float HHoliday { get; set; }
-
     }
 }
