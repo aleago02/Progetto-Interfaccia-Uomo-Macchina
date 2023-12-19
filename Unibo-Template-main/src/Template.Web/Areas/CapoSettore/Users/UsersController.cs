@@ -28,76 +28,76 @@ namespace Template.Web.Areas.CapoSettore.Users
         }
 
         [HttpGet]
-        public virtual async Task<IActionResult> Index(IndexCaposettoreViewModel model)
+        public virtual async Task<IActionResult> Index(IndexViewModel model)
         {
             return View(model);
         }
 
-        //[HttpGet]
-        //public virtual IActionResult New()
-        //{
-        //    return RedirectToAction(Actions.Edit());
-        //}
+        [HttpGet]
+        public virtual IActionResult New()
+        {
+            return RedirectToAction(Actions.Edit());
+        }
 
-        //[HttpGet]
-        //public virtual async Task<IActionResult> Edit(Guid? id)
-        //{
-        //    var model = new EditViewModel();
+        [HttpGet]
+        public virtual async Task<IActionResult> Edit(Guid? id)
+        {
+            var model = new EditViewModel();
 
-        //    if (id.HasValue)
-        //    {
-        //        model.SetUser(await _sharedService.Query(new UserDetailQuery
-        //        {
-        //            Id = id.Value,
-        //        }));
-        //    }
+            if (id.HasValue)
+            {
+                model.SetUser(await _sharedService.Query(new UserDetailQuery
+                {
+                    Id = id.Value,
+                }));
+            }
 
 
 
-        //    return View(model);
-        //}
+            return View(model);
+        }
 
-        //[HttpPost]
-        //public virtual async Task<IActionResult> Edit(EditViewModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            model.Id = await _sharedService.Handle(model.ToAddOrUpdateUserCommand());
+        [HttpPost]
+        public virtual async Task<IActionResult> Edit(EditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    model.Id = await _sharedService.Handle(model.ToAddOrUpdateUserCommand());
 
-        //            Alerts.AddSuccess(this, "Informazioni aggiornate");
+                    Alerts.AddSuccess(this, "Informazioni aggiornate");
 
-        //            // Esempio lancio di un evento SignalR
-        //            await _publisher.Publish(new NewMessageEvent
-        //            {
-        //                IdGroup = model.Id.Value,
-        //                IdUser = model.Id.Value,
-        //                IdMessage = Guid.NewGuid()
-        //            });
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            ModelState.AddModelError(string.Empty, e.Message);
-        //        }
-        //    }
+                    // Esempio lancio di un evento SignalR
+                    await _publisher.Publish(new NewMessageEvent
+                    {
+                        IdGroup = model.Id.Value,
+                        IdUser = model.Id.Value,
+                        IdMessage = Guid.NewGuid()
+                    });
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError(string.Empty, e.Message);
+                }
+            }
 
-        //    if (ModelState.IsValid == false)
-        //    {
-        //        Alerts.AddError(this, "Errore in aggiornamento");
-        //    }
+            if (ModelState.IsValid == false)
+            {
+                Alerts.AddError(this, "Errore in aggiornamento");
+            }
 
-        //    return RedirectToAction(Actions.Edit(model.Id));
-        //}
+            return RedirectToAction(Actions.Edit(model.Id));
+        }
 
-        //[HttpPost]
-        //public virtual async Task<IActionResult> Delete(Guid id)
-        //{
-        //    // Query to delete user
+        [HttpPost]
+        public virtual async Task<IActionResult> Delete(Guid id)
+        {
+            // Query to delete user
 
-        //    Alerts.AddSuccess(this, "Utente cancellato");
+            Alerts.AddSuccess(this, "Utente cancellato");
 
-        //    return RedirectToAction(Actions.Index());
-        //}
+            return RedirectToAction(Actions.Index());
+        }
     }
 }

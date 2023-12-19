@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Template.Services.Shared
 {
-    internal class Days
+    public class Days
     {
         public Guid Id_User { get; set; }
         [ForeignKey(nameof(Id_User))]
