@@ -10,7 +10,7 @@ namespace Template.Web.Areas.Dipendenti.Users
 {
     public class IndexDipendentiViewModel : PagingViewModel
     {
-        public IndexDipendentiViewModel() 
+        public IndexDipendentiViewModel()
         {
             Users = Array.Empty<UserDaysIndexViewModel>();
         }
@@ -23,6 +23,7 @@ namespace Template.Web.Areas.Dipendenti.Users
         }
 
         public IEnumerable<UserDaysIndexViewModel> Users { get; set; }
+        public Guid CurrentId { get; set; }
 
         internal void SetUsers(UsersDaysIndexDTO usersIndexDTO)
         {
@@ -30,16 +31,21 @@ namespace Template.Web.Areas.Dipendenti.Users
             TotalItems = usersIndexDTO.Count;
         }
 
-        public float LessWork(float HSmartWork, float HHoliday)
+        public decimal LessWork(decimal HSmartWork, decimal HHoliday)
         {
             return 8 - HSmartWork - HHoliday;
+        }
+
+        public Guid setCurrentId(String CurrentId)
+        {
+            return this.CurrentId = new Guid(CurrentId);
         }
 
         public UsersSelectQuery ToUsersIndexQuery()
         {
             return new UsersSelectQuery
             {
-                //qui passargli Id User corrente
+                IdCurrentUser = this.CurrentId
             };
         }
 
@@ -49,13 +55,14 @@ namespace Template.Web.Areas.Dipendenti.Users
     {
         public UserDaysIndexViewModel(UsersDaysIndexDTO.User userWorkIndexDTO)
         {
+            this.Id = userWorkIndexDTO.Id;  
             this.Day = userWorkIndexDTO.Day;
             this.HSmartWork = userWorkIndexDTO.HSmartWork;
             this.HHoliday = userWorkIndexDTO.HHoliday;
         }
-
-        public DateTime Day { get; set; }
-        public float HSmartWork { get; set; }
-        public float HHoliday { get; set; }
+        public Guid Id { get; set; }  
+        public DateOnly Day { get; set; }
+        public decimal HSmartWork { get; set; }
+        public decimal HHoliday { get; set; }
     }
 }

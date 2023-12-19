@@ -34,6 +34,7 @@ namespace Template.Web.Areas
                 {
                     ViewData[IdentitaViewModel.VIEWDATA_IDENTITACORRENTE_KEY] = new IdentitaViewModel
                     {
+                        IdCorrente = context.HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.NameIdentifier).First().Value,
                         EmailUtenteCorrente = context.HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.Email).First().Value,
                         NomeUtenteCorrente = context.HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.Name).First().Value,
                         CognomeUtenteCorrente = context.HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.Surname).First().Value

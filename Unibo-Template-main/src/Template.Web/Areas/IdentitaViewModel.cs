@@ -3,6 +3,7 @@ using Template.Web.Infrastructure;
 using System.Threading.Tasks;
 using Template.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Template.Web.Areas
 {
@@ -10,6 +11,7 @@ namespace Template.Web.Areas
     {
         public static string VIEWDATA_IDENTITACORRENTE_KEY = "IdentitaUtenteCorrente";
 
+        public String IdCorrente { get; set; }
         public string EmailUtenteCorrente { get; set; }
         public string NomeUtenteCorrente { get; set; }
         public string CognomeUtenteCorrente { get; set; }

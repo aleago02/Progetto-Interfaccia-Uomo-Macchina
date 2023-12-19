@@ -10,30 +10,30 @@ namespace Template.Services.Shared
     public class AddOrUpdateDaysCommand
     {
         public Guid Id_User { get; set; }
-        public DateTime Day { get; set; }
-        public float HSmartWorking { get; set; }
-        public float HHoliday { get; set; }
+        public DateOnly Day { get; set; }
+        public decimal HSmartWorking { get; set; }
+        public decimal HHoliday { get; set; }
     }
 
     public partial class SharedService
     {
-        public async Task<DateTime> Handle(AddOrUpdateDaysCommand cmd)
+        public async Task<DateOnly> Handle(AddOrUpdateDaysCommand cmd)
         {
-            var day = await _dbContext.Days
+            var day = await _dbContext.UsersDayDetails
                 .Where(x => x.Day.Equals(cmd.Day))
                 .FirstOrDefaultAsync();
 
             if (day == null)
             {
-                day = new Days
+                day = new UserDayDetail
                 {
                     Day = cmd.Day,
                 };
-                _dbContext.Days.Add(day);
+                _dbContext.UsersDayDetails.Add(day);
             }
 
             day.HHoliday = cmd.HHoliday;
-            day.Id_User = cmd.Id_User;
+            day.UserId = cmd.Id_User;
             day.HSmartWorking = cmd.HSmartWorking;
 
             await _dbContext.SaveChangesAsync();

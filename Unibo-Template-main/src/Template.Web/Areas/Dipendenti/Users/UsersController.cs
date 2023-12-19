@@ -30,6 +30,7 @@ namespace Template.Web.Areas.Dipendenti.Users
         [HttpGet]
         public virtual async Task<IActionResult> Index(IndexDipendentiViewModel model)
         {
+            model.setCurrentId(this.Identita.IdCorrente);
             var users = await _sharedService.QueryDays(model.ToUsersIndexQuery());
             model.SetUsers(users);
             return View(model);

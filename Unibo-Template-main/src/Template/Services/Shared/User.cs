@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Cryptography;
@@ -8,6 +9,11 @@ namespace Template.Services.Shared
 {
     public class User
     {
+        public User()
+        {
+            UsersDayDetails = new HashSet<UserDayDetail>();
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
@@ -18,6 +24,8 @@ namespace Template.Services.Shared
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string NickName { get; set; }
+
+        IEnumerable<UserDayDetail> UsersDayDetails {  get; set; }
 
         /// <summary>
         /// Checks if password passed as parameter matches with the Password of the current user

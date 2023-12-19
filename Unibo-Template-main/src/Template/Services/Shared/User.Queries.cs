@@ -55,9 +55,10 @@ namespace Template.Services.Shared
 
         public class User
         {
-            public DateTime Day { get; set; }
-            public float HSmartWork { get; set; }
-            public float HHoliday { get; set; }
+            public Guid Id { get; set; }
+            public DateOnly Day { get; set; }
+            public decimal HSmartWork { get; set; }
+            public decimal HHoliday { get; set; }
         }
     }
 
@@ -144,8 +145,8 @@ namespace Template.Services.Shared
 
         public async Task<UsersDaysIndexDTO> QueryDays(UsersSelectQuery qry)
         {
-            var queryable = _dbContext.Days
-                .Where(x => x.Id_User != qry.IdCurrentUser);
+            var queryable = _dbContext.UsersDayDetails
+                .Where(x => x.UserId == qry.IdCurrentUser);
 
             return new UsersDaysIndexDTO
             {
