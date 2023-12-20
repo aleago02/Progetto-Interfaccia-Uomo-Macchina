@@ -1,0 +1,19 @@
+﻿@model Template.Web.Areas.Dipendenti.Users.SmartWorkingViewModel
+@{
+    ViewData["Title"] = ((Template.Web.Areas.IdentitaViewModel)ViewData[Template.Web.Areas.IdentitaViewModel.VIEWDATA_IDENTITACORRENTE_KEY]).NomeCognome;
+}
+@section pageTitle {
+    <div class="container">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <h1>@ViewData["Title"]</h1>
+            </div>
+        </nav>
+        <a class="btn btn-primary" href="@Url.Action(MVC.Dipendenti.Users.Ferie())" role="button">Richiedi Ferie</a>
+    </div>   
+}
+@section pageSubtitle{
+    <div class="container-sm">
+
+    </div>
+}

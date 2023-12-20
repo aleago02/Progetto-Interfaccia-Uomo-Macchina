@@ -99,12 +99,16 @@ namespace Template.Web.Areas.Dipendenti.Users
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
+            public readonly string Ferie = "Ferie";
+            public readonly string SmartWorking = "SmartWorking";
         }
 
         [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string Index = "Index";
+            public const string Ferie = "Ferie";
+            public const string SmartWorking = "SmartWorking";
         }
 
         [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
@@ -139,6 +143,26 @@ namespace Template.Web.Areas.Dipendenti.Users
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             IndexOverride(callInfo, model);
             return System.Threading.Tasks.Task.FromResult<Microsoft.AspNetCore.Mvc.IActionResult>(callInfo);
+        }
+
+        [NonAction]
+        partial void FerieOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo);
+        [NonAction]
+        public override Microsoft.AspNetCore.Mvc.IActionResult Ferie()
+        {
+            var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Ferie);
+            FerieOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void SmartWorkingOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo);
+        [NonAction]
+        public override Microsoft.AspNetCore.Mvc.IActionResult SmartWorking()
+        {
+            var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.SmartWorking);
+            SmartWorkingOverride(callInfo);
+            return callInfo;
         }
     }
 }
