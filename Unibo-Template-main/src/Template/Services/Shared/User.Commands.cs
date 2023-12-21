@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.ComponentModel;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 
 namespace Template.Services.Shared
@@ -12,6 +14,14 @@ namespace Template.Services.Shared
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string NickName { get; set; }
+    }
+
+    public class AddOrUpdateUserDayCommand
+    {
+        public Guid Id { get; set; }
+        public DateOnly Day { get; set; }
+        public decimal HSmartWork { get; set; }
+        public decimal HHoliday { get; set; }
     }
 
     public partial class SharedService
@@ -38,6 +48,24 @@ namespace Template.Services.Shared
             await _dbContext.SaveChangesAsync();
 
             return user.Id;
+        }
+
+        public async Task<Guid> HandleDay(AddOrUpdateUserDayCommand cmd)
+        {
+           
+            UserDayDetail dayDetail = new UserDayDetail
+            {
+                UserId = cmd.Id,
+                Day = cmd.Day,
+                HSmartWorking = cmd.HSmartWork,
+                HHoliday = cmd.HHoliday,
+
+            };
+
+            _dbContext.UsersDayDetails.Add(dayDetail);
+            await _dbContext.SaveChangesAsync();
+
+            return cmd.Id;
         }
     }
 }

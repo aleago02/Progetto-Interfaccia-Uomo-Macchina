@@ -13,12 +13,14 @@
     </div>   
 }
 @section pageSubtitle{
-    <div class="container-sm">
+    <div class="container-sm" style="margin-top: 35px">
         <div class="row">Giorno di Ferie</div>
         <div class="row g-3">
             <input class="form-control form-control-lg" type="text" placeholder="gg/mm/aa" aria-label="gg/mm/aa">
             <label for="customRange2" class="form-label">Ore di SmartWorking</label>
-            <input type="range" class="form-range" min="1" max="8" id="customRange2">
+            <div class="container-sm">
+                <input type="range" value="1" class="form-range" min="1" max="8" id="customRange2" oninput="this.nextElementSibling.value = this.value"><output>1</output>
+            </div>
             <button type="button" class="btn btn-outline-primary">Invia</button>
         </div>
     </div>

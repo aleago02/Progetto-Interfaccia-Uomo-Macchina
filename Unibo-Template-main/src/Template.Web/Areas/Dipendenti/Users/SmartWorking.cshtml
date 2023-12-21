@@ -1,6 +1,7 @@
 ﻿@model Template.Web.Areas.Dipendenti.Users.SmartWorkingViewModel
 @{
     ViewData["Title"] = ((Template.Web.Areas.IdentitaViewModel)ViewData[Template.Web.Areas.IdentitaViewModel.VIEWDATA_IDENTITACORRENTE_KEY]).NomeCognome;
+    Model.setUserId(((Template.Web.Areas.IdentitaViewModel)ViewData[Template.Web.Areas.IdentitaViewModel.VIEWDATA_IDENTITACORRENTE_KEY]).IdCorrente);
 }
 @section pageTitle {
     <div class="container">
@@ -13,13 +14,15 @@
     </div>   
 }
 @section pageSubtitle{
-    <div class="container-sm">
+    <div class="container-sm" style="margin-top: 35px">
         <div class="row">Giorno di SmartWorking</div>
         <div class="row g-3">
-            <input class="form-control form-control-lg" type="text" placeholder="gg/mm/aa" aria-label="gg/mm/aa">
+            <input class="form-control form-control-lg" type="text" asp-for="Day" placeholder="gg/mm/aa" aria-label="gg/mm/aa">
             <label for="customRange2" class="form-label">Ore di SmartWorking</label>
-            <input type="range" class="form-range" min="1" max="8" id="customRange2">
-            <button type="button" class="btn btn-outline-primary">Invia</button>
+            <div class="container-sm">
+                <input type="range" value="1" asp-for="HSmartWork" class="form-range" min="1" max="8" id="customRange2" oninput="this.nextElementSibling.value = this.value"><output>1</output>
+            </div>
+            <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('edit-form-submitter').click()">Invia</button>
         </div>
     </div>
 }

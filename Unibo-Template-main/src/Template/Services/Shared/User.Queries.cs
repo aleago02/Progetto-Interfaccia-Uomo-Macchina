@@ -76,6 +76,14 @@ namespace Template.Services.Shared
         public string NickName { get; set; }
     }
 
+    public class UserDayDetailDTO
+    {
+        public Guid Id { get; set; }
+        public DateOnly Day { get; set; }
+        public decimal HSmartWork { get; set; }
+        public decimal HHoliday { get; set; }
+    }
+
     public class CheckLoginCredentialsQuery
     {
         public string Email { get; set; }

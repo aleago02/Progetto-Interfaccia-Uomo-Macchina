@@ -49,5 +49,38 @@ namespace Template.Web.Areas.Dipendenti.Users
             var model = new SmartWorkingViewModel();
             return View(model);
         }
+
+        [HttpPost]
+        public virtual async Task<IActionResult> SmartWorking(SmartWorkingViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    model.UserId = await _sharedService.HandleDay(model.ToAddOrUpdateUserCommand());
+
+                    Alerts.AddSuccess(this, "Informazioni aggiornate");
+
+                    // Esempio lancio di un evento SignalR
+                    await _publisher.Publish(new NewMessageEvent
+                    {
+                        IdGroup = model.UserId.Value,
+                        IdUser = model.UserId.Value,
+                        IdMessage = Guid.NewGuid()
+                    });
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError(string.Empty, e.Message);
+                }
+            }
+
+            if (ModelState.IsValid == false)
+            {
+                Alerts.AddError(this, "Errore in aggiornamento");
+            }
+
+            return RedirectToAction(Actions.SmartWorking(model));
+        }
     }
 }
