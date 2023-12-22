@@ -17,11 +17,17 @@
     <div class="container-sm" style="margin-top: 35px">
         <div class="row">Giorno di SmartWorking</div>
         <div class="row g-3">
-            <input class="form-control form-control-lg" type="text" asp-for="Day" placeholder="gg/mm/aa" aria-label="gg/mm/aa">
-            <label for="customRange2" class="form-label">Ore di SmartWorking</label>
-            <div class="container-sm">
-                <input type="range" value="1" asp-for="HSmartWork" class="form-range" min="1" max="8" id="customRange2" oninput="this.nextElementSibling.value = this.value"><output>1</output>
-            </div>
+            <form autocomplete="off" method="post" class="onit-form-sm" action="@Url.Action(MVC.Dipendenti.Users.SmartWorking())" id="edit-form">
+                <input id="edit-form-submitter" class="d-none" type="submit" />
+                <fieldset class="pb-3">
+                    <input class="form-control form-control-lg" type="text" asp-for="Day" placeholder="gg/mm/aa" aria-label="gg/mm/aa">
+                    <label for="customRange2" class="form-label">Ore di SmartWorking</label>
+                    <div class="container-sm">
+                        <input type="range" value="1" asp-for="HSmartWork" class="form-range" min="1" max="8" id="customRange2" oninput="this.nextElementSibling.value = this.value"><output>1</output>
+                    </div>
+                    <input type="hidden" asp-for="UserId">
+                </fieldset>
+            </form>
             <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('edit-form-submitter').click()">Invia</button>
         </div>
     </div>

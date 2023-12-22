@@ -10,7 +10,8 @@ namespace Template.Web.Areas
     public class IdentitaViewModel
     {
         public static string VIEWDATA_IDENTITACORRENTE_KEY = "IdentitaUtenteCorrente";
-
+        
+        public String Group {  get; set; }
         public String IdCorrente { get; set; }
         public string EmailUtenteCorrente { get; set; }
         public string NomeUtenteCorrente { get; set; }

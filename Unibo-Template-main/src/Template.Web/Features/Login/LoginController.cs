@@ -27,7 +27,7 @@ namespace Template.Web.Features.Login
             _sharedLocalizer = sharedLocalizer;
         }
 
-        private ActionResult LoginAndRedirect(UserDetailDTO utente, string returnUrl, bool rememberMe)
+        private ActionResult LoginAndRedirect(UserDetailDTO utente, bool rememberMe)
         {
             var claims = new List<Claim>
             {
@@ -38,6 +38,21 @@ namespace Template.Web.Features.Login
 
             };
 
+
+            if (utente.Email == "amministratore@test.it")
+            {
+                claims.Add(new Claim(ClaimTypes.GroupSid, "CapoSettore"));
+                var clamiIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(clamiIdentity), new AuthenticationProperties
+                {
+                    ExpiresUtc = (rememberMe) ? DateTimeOffset.UtcNow.AddMonths(3) : null,
+                    IsPersistent = rememberMe,
+                });
+                
+                return RedirectToAction(MVC.CapoSettore.Users.Index());
+            }
+            claims.Add(new Claim(ClaimTypes.GroupSid, "Dipendenti"));
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
             HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), new AuthenticationProperties
@@ -45,15 +60,7 @@ namespace Template.Web.Features.Login
                 ExpiresUtc = (rememberMe) ? DateTimeOffset.UtcNow.AddMonths(3) : null,
                 IsPersistent = rememberMe,
             });
-
-            if (string.IsNullOrWhiteSpace(returnUrl) == false)
-                return Redirect(returnUrl);
-
-            if (utente.Email == "amministratore@test.it")
-            {
-                return RedirectToAction(MVC.CapoSettore.Users.Index());
-            }
-
+            
             return RedirectToAction(MVC.Dipendenti.Users.Index());
 
         }
@@ -61,18 +68,8 @@ namespace Template.Web.Features.Login
         [HttpGet]
         public virtual IActionResult Login(string returnUrl)
         {
-            if (HttpContext.User != null && HttpContext.User.Identity != null && HttpContext.User.Identity.IsAuthenticated)
-            {
-                if (string.IsNullOrWhiteSpace(returnUrl) == false)
-                    return Redirect(returnUrl);
-
-                return RedirectToAction(MVC.Example.Users.Index());
-            }
-
-            var model = new LoginViewModel
-            {
-                ReturnUrl = returnUrl,
-            };
+ 
+            var model = new LoginViewModel();
 
             return View(model);
         }
@@ -90,7 +87,7 @@ namespace Template.Web.Features.Login
                         Password = model.Password,
                     });
 
-                    return LoginAndRedirect(utente, model.ReturnUrl, model.RememberMe);
+                    return LoginAndRedirect(utente, model.RememberMe);
 
                 }
                 catch (LoginException e)

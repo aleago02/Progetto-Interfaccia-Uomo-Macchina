@@ -164,6 +164,17 @@ namespace Template.Web.Areas.Dipendenti.Users
             SmartWorkingOverride(callInfo);
             return callInfo;
         }
+
+        [NonAction]
+        partial void SmartWorkingOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo, Template.Web.Areas.Dipendenti.Users.SmartWorkingViewModel model);
+        [NonAction]
+        public override System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> SmartWorking(Template.Web.Areas.Dipendenti.Users.SmartWorkingViewModel model)
+        {
+            var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.SmartWorking);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            SmartWorkingOverride(callInfo, model);
+            return System.Threading.Tasks.Task.FromResult<Microsoft.AspNetCore.Mvc.IActionResult>(callInfo);
+        }
     }
 }
 #pragma warning restore 1591, 3008, 3009, 0108

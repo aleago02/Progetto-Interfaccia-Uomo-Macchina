@@ -4,6 +4,7 @@ namespace Template.Web.Features.Login
 {
     public class LoginViewModel
     {
+        public LoginViewModel() { }
         [Required]
         [Display(Name = "Email")]
         //[DataType(DataType.EmailAddress)]
@@ -17,6 +18,5 @@ namespace Template.Web.Features.Login
         [Display(Name = "Rimani connesso")]
         public bool RememberMe { get; set; }
 
-        public string ReturnUrl { get; set; }
     }
 }

@@ -23,8 +23,8 @@ namespace Template.Web.Areas.Dipendenti.Users
             UserId = new Guid(id);
         }
         public DateOnly Day { get; set; }
-        public decimal HSmartWork = 8;
-        public decimal HHoliday { get; set; }
+        public decimal HHoliday = 0;
+        public decimal HSmartWork { get; set; }
 
         public string ToJson()
         {
