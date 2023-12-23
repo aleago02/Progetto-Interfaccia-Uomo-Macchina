@@ -20,15 +20,17 @@
             <form autocomplete="off" method="post" class="onit-form-sm" action="@Url.Action(MVC.Dipendenti.Users.SmartWorking())" id="edit-form">
                 <input id="edit-form-submitter" class="d-none" type="submit" />
                 <fieldset class="pb-3">
-                    <input class="form-control form-control-lg" type="text" asp-for="Day" placeholder="gg/mm/aa" aria-label="gg/mm/aa">
-                    <label for="customRange2" class="form-label">Ore di SmartWorking</label>
+                    <input class="form-control form-control-lg" type="text" asp-for="Day" pattern="\d{1,2}/\d{1,2}/\d{4}" placeholder="gg/mm/aa" value="@Model.DateTommorow()" >
+                    <label for="customRange2" class="form-label">Ore di SmartWorking : </label>
+                    <output id="hour">1</output>
                     <div class="container-sm">
-                        <input type="range" value="1" asp-for="HSmartWork" class="form-range" min="1" max="8" id="customRange2" oninput="this.nextElementSibling.value = this.value"><output>1</output>
+                        <input type="range" value="1" asp-for="HSmartWork" class="form-range" min="1" max="8" id="customRange2" oninput="hour.value = this.value">
                     </div>
                     <input type="hidden" asp-for="UserId">
                 </fieldset>
             </form>
-            <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('edit-form-submitter').click()">Invia</button>
+            <div id="liveAlertPlaceholder"></div>
+            <button type="button" class="btn btn-outline-primary" id="liveAlertBtn" onclick="document.getElementById('edit-form-submitter').click()">Invia</button>
         </div>
     </div>
 }

@@ -53,7 +53,7 @@ namespace Template.Web.Areas.Dipendenti.Users
         [HttpPost]
         public virtual async Task<IActionResult> SmartWorking(SmartWorkingViewModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && model.Day > DateOnly.FromDateTime(DateTime.Now))
             {
                 try
                 {
@@ -73,11 +73,8 @@ namespace Template.Web.Areas.Dipendenti.Users
                 {
                     ModelState.AddModelError(string.Empty, e.Message);
                 }
-            }
-
-            if (ModelState.IsValid == false)
-            {
-                Alerts.AddError(this, "Errore in aggiornamento");
+            } else { 
+                Alerts.AddError(this, "Errore nella data");
             }
 
             return RedirectToAction(Actions.SmartWorking(model));

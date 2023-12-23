@@ -165,6 +165,7 @@ namespace Template.Services.Shared
                         HSmartWork = x.HSmartWorking,
                         HHoliday = x.HHoliday
                     })
+                    .OrderByDescending(x => x.Day)
                     .ToArrayAsync(),
                 Count = await queryable.CountAsync()
             };

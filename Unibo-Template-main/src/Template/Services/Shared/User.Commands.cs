@@ -52,20 +52,28 @@ namespace Template.Services.Shared
 
         public async Task<Guid> HandleDay(AddOrUpdateUserDayCommand cmd)
         {
-           
-            UserDayDetail dayDetail = new UserDayDetail
+
+            var day = await _dbContext.UsersDayDetails
+                .Where(x => x.Day.Equals(cmd.Day))
+                .FirstOrDefaultAsync();
+
+            if (day == null)
             {
-                UserId = cmd.Id,
-                Day = cmd.Day,
-                HSmartWorking = cmd.HSmartWork,
-                HHoliday = cmd.HHoliday,
+                day = new UserDayDetail
+                {
+                    Day = cmd.Day,
+                };
+                _dbContext.UsersDayDetails.Add(day);
+            }
 
-            };
+            day.HHoliday = cmd.HHoliday;
+            day.UserId = cmd.Id;
+            day.HSmartWorking = cmd.HSmartWork;
 
-            _dbContext.UsersDayDetails.Add(dayDetail);
             await _dbContext.SaveChangesAsync();
 
             return cmd.Id;
         }
+
     }
 }
