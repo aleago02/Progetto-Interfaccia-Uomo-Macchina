@@ -36,7 +36,19 @@
                 {
                     @foreach (var user in Model.Users)
                     {
-                        <tr class="onit-table-row-link">
+                        @if (user.Request == null)
+                        {
+                            ViewData["Request"] = "";
+                        } 
+                        else if (user.Request) 
+                        {
+                            ViewData["Request"] = "table-warning";
+                        }
+                        else if (!user.Request)
+                        {
+                            ViewData["Request"] = "table-success";
+                        }
+                        <tr class="@ViewData["Request"]">
                             <th scope="row">
                                 @user.Day
                             </th>

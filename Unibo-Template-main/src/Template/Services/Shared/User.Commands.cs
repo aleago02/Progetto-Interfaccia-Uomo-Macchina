@@ -77,6 +77,19 @@ namespace Template.Services.Shared
                 {
                     day.HHoliday = cmd.HHoliday;
                 }
+                var request = await _dbContext.Requests
+                    .Where(x => x.Id == day.Id)
+                    .FirstOrDefaultAsync();
+
+                if (request == null)
+                {
+                    request = new Requests
+                    {
+                        Id = day.Id,
+                    };
+                    _dbContext.Requests.Add(request);
+                }
+                request.request = true;
             }
             if (cmd.HSmartWork != 0)
             {

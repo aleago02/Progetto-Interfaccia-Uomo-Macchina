@@ -50,7 +50,7 @@ namespace Template.Web.Areas.Dipendenti.Users
                 Id = (Guid)UserId,
                 Day = Day,
                 HSmartWork = HSmartWork,
-                HHoliday = HHoliday
+                HHoliday = HHoliday,
             };
         }
     }

@@ -59,10 +59,12 @@ namespace Template.Web.Areas.Dipendenti.Users
             this.Day = userWorkIndexDTO.Day;
             this.HSmartWork = userWorkIndexDTO.HSmartWork;
             this.HHoliday = userWorkIndexDTO.HHoliday;
+            this.Request = userWorkIndexDTO.Request;    
         }
         public Guid Id { get; set; }  
         public DateOnly Day { get; set; }
         public decimal HSmartWork { get; set; }
         public decimal HHoliday { get; set; }
+        public Boolean Request {  get; set; }
     }
 }

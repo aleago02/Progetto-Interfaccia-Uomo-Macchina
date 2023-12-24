@@ -59,6 +59,7 @@ namespace Template.Services.Shared
             public DateOnly Day { get; set; }
             public decimal HSmartWork { get; set; }
             public decimal HHoliday { get; set; }
+            public Boolean Request {  get; set; }
         }
     }
 
@@ -158,15 +159,18 @@ namespace Template.Services.Shared
 
             return new UsersDaysIndexDTO
             {
-                Users = await queryable
-                    .Select(x => new UsersDaysIndexDTO.User
-                    {
-                        Day = x.Day,
-                        HSmartWork = x.HSmartWorking,
-                        HHoliday = x.HHoliday
-                    })
-                    .OrderByDescending(x => x.Day)
-                    .ToArrayAsync(),
+                Users = from UsersDayDetails in _dbContext.UsersDayDetails
+                        where UsersDayDetails.UserId == qry.IdCurrentUser
+                        join Requests in _dbContext.Requests
+                        on UsersDayDetails.Id equals Requests.Id into requestGroup
+                        from request in requestGroup.DefaultIfEmpty()
+                        select new UsersDaysIndexDTO.User
+                        {
+                            Day = UsersDayDetails.Day,
+                            HSmartWork = UsersDayDetails.HSmartWorking,
+                            HHoliday = UsersDayDetails.HHoliday,
+                            Request = request.request != null ? request.request : false  // Assuming Request is of type bool
+                        },
                 Count = await queryable.CountAsync()
             };
         }
