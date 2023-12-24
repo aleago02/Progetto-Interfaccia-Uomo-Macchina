@@ -156,6 +156,17 @@ namespace Template.Web.Areas.Dipendenti.Users
         }
 
         [NonAction]
+        partial void FerieOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo, Template.Web.Areas.Dipendenti.Users.FerieViewModel model);
+        [NonAction]
+        public override System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> Ferie(Template.Web.Areas.Dipendenti.Users.FerieViewModel model)
+        {
+            var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Ferie);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            FerieOverride(callInfo, model);
+            return System.Threading.Tasks.Task.FromResult<Microsoft.AspNetCore.Mvc.IActionResult>(callInfo);
+        }
+
+        [NonAction]
         partial void SmartWorkingOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo);
         [NonAction]
         public override Microsoft.AspNetCore.Mvc.IActionResult SmartWorking()

@@ -43,6 +43,38 @@ namespace Template.Web.Areas.Dipendenti.Users
             return View(model);
         }
 
+        [HttpPost]
+        public virtual async Task<IActionResult> Ferie(FerieViewModel model)
+        {
+            if (ModelState.IsValid && model.Day > DateOnly.FromDateTime(DateTime.Now))
+            {
+                try
+                {
+                    model.UserId = await _sharedService.HandleDay(model.ToAddOrUpdateUserCommand());
+
+                    Alerts.AddSuccess(this, "Informazioni aggiornate");
+
+                    // Esempio lancio di un evento SignalR
+                    await _publisher.Publish(new NewMessageEvent
+                    {
+                        IdGroup = model.UserId.Value,
+                        IdUser = model.UserId.Value,
+                        IdMessage = Guid.NewGuid()
+                    });
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError(string.Empty, e.Message);
+                }
+            }
+            else
+            {
+                Alerts.AddError(this, "Errore nella data");
+            }
+
+            return RedirectToAction(Actions.Ferie(model));
+        }
+
         [HttpGet]
         public virtual IActionResult SmartWorking()
         {

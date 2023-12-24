@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
@@ -66,9 +67,30 @@ namespace Template.Services.Shared
                 _dbContext.UsersDayDetails.Add(day);
             }
 
-            day.HHoliday = cmd.HHoliday;
+            if (cmd.HHoliday != 0)
+            {
+                if (cmd.HHoliday + day.HSmartWorking > 8)
+                {
+                    day.HHoliday = 8 - day.HSmartWorking;
+                } 
+                else
+                {
+                    day.HHoliday = cmd.HHoliday;
+                }
+            }
+            if (cmd.HSmartWork != 0)
+            {
+                if (cmd.HSmartWork + day.HHoliday > 8)
+                {
+                    day.HSmartWorking = 8 - day.HHoliday;
+                }
+                else
+                {
+                    day.HSmartWorking = cmd.HSmartWork;
+                }
+                
+            }
             day.UserId = cmd.Id;
-            day.HSmartWorking = cmd.HSmartWork;
 
             await _dbContext.SaveChangesAsync();
 
