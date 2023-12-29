@@ -38,6 +38,24 @@ namespace Template.Web.Features.Login
 
             };
 
+<<<<<<< Updated upstream
+=======
+
+            if (utente.Email == "aa")
+            {
+                claims.Add(new Claim(ClaimTypes.GroupSid, "CapoSettore"));
+                var clamiIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(clamiIdentity), new AuthenticationProperties
+                {
+                    ExpiresUtc = (rememberMe) ? DateTimeOffset.UtcNow.AddMonths(3) : null,
+                    IsPersistent = rememberMe,
+                });
+                
+                return RedirectToAction(MVC.CapoSettore.Users.Index());
+            }
+            claims.Add(new Claim(ClaimTypes.GroupSid, "Dipendenti"));
+>>>>>>> Stashed changes
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
             HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), new AuthenticationProperties

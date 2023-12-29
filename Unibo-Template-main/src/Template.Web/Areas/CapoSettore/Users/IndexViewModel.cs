@@ -6,9 +6,10 @@ using System.Linq;
 using Template.Services.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Globalization;
+using Template.Web.Areas.Example.Users;
+using static Template.Web.Areas.CapoSettore.Users.IndexViewModel;
 
-namespace Template.Web.Areas.Example.Users
+namespace Template.Web.Areas.CapoSettore.Users
 {
     public class IndexViewModel : PagingViewModel
     {
@@ -18,6 +19,16 @@ namespace Template.Web.Areas.Example.Users
             OrderByDescending = false;
             Users = Array.Empty<UserIndexViewModel>();
         }
+        public class CalendarCell
+        {
+            public int? Day { get; set; }
+            public string Status { get; set; }
+            public string CssClass { get; set; }
+            public string DayOfWeek { get; set; }
+        }
+
+        // Nella tua IndexViewModel
+        public List<List<CalendarCell>> CalendarData { get; set; }
 
         [Display(Name = "Cerca")]
         public string Filter { get; set; }
@@ -28,8 +39,6 @@ namespace Template.Web.Areas.Example.Users
         {
             Users = usersIndexDTO.Users.Select(x => new UserIndexViewModel(x)).ToArray();
             TotalItems = usersIndexDTO.Count;
-
- 
         }
 
         public UsersIndexQuery ToUsersIndexQuery()
@@ -47,7 +56,7 @@ namespace Template.Web.Areas.Example.Users
             };
         }
 
-        public override IActionResult GetRoute() => MVC.Example.Users.Index(this).GetAwaiter().GetResult();
+        public override IActionResult GetRoute() => MVC.CapoSettore.Users.Index(this).GetAwaiter().GetResult();
 
         public string OrderbyUrl<TProperty>(IUrlHelper url, System.Linq.Expressions.Expression<Func<UserIndexViewModel, TProperty>> expression) => base.OrderbyUrl(url, expression);
 
@@ -73,5 +82,14 @@ namespace Template.Web.Areas.Example.Users
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public List<List<CalendarCell>> CalendarData { get; set; }
+    }
+
+    public class CalendarDay
+    {
+        public int Day { get; set; }
+        public string Status { get; set; }
+        public string CssClass { get; set; }
+        public string DayOfWeek { get; set; }
     }
 }
