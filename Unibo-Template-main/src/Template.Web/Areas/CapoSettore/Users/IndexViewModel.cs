@@ -6,6 +6,8 @@ using System.Linq;
 using Template.Services.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Template.Web.Areas.Example.Users;
+using static Template.Web.Areas.CapoSettore.Users.IndexViewModel;
 
 namespace Template.Web.Areas.CapoSettore.Users
 {
@@ -17,6 +19,16 @@ namespace Template.Web.Areas.CapoSettore.Users
             OrderByDescending = false;
             Users = Array.Empty<UserIndexViewModel>();
         }
+        public class CalendarCell
+        {
+            public int? Day { get; set; }
+            public string Status { get; set; }
+            public string CssClass { get; set; }
+            public string DayOfWeek { get; set; }
+        }
+
+        // Nella tua IndexViewModel
+        public List<List<CalendarCell>> CalendarData { get; set; }
 
         [Display(Name = "Cerca")]
         public string Filter { get; set; }
@@ -70,5 +82,14 @@ namespace Template.Web.Areas.CapoSettore.Users
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public List<List<CalendarCell>> CalendarData { get; set; }
+    }
+
+    public class CalendarDay
+    {
+        public int Day { get; set; }
+        public string Status { get; set; }
+        public string CssClass { get; set; }
+        public string DayOfWeek { get; set; }
     }
 }

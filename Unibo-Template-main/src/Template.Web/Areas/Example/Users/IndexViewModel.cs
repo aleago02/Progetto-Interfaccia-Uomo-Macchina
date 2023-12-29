@@ -6,6 +6,7 @@ using System.Linq;
 using Template.Services.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace Template.Web.Areas.Example.Users
 {
@@ -27,6 +28,8 @@ namespace Template.Web.Areas.Example.Users
         {
             Users = usersIndexDTO.Users.Select(x => new UserIndexViewModel(x)).ToArray();
             TotalItems = usersIndexDTO.Count;
+
+ 
         }
 
         public UsersIndexQuery ToUsersIndexQuery()

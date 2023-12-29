@@ -38,8 +38,7 @@ namespace Template.Web.Features.Login
 
             };
 
-
-            if (utente.Email == "amministratore@test.it")
+            if (utente.Email == "aa")
             {
                 claims.Add(new Claim(ClaimTypes.GroupSid, "CapoSettore"));
                 var clamiIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
