@@ -6,7 +6,6 @@ using System.Linq;
 using Template.Services.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Template.Web.Areas.Example.Users;
 using static Template.Web.Areas.CapoSettore.Users.IndexViewModel;
 
 namespace Template.Web.Areas.CapoSettore.Users

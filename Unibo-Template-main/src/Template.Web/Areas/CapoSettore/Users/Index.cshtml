@@ -1,16 +1,13 @@
-﻿﻿@model Template.Web.Areas.CapoSettore.Users.IndexViewModel
-@{
-    ViewData["Title"] = ((Template.Web.Areas.IdentitaViewModel)ViewData[Template.Web.Areas.IdentitaViewModel.VIEWDATA_IDENTITACORRENTE_KEY]).NomeCognome;
-}
+﻿@model Template.Web.Areas.CapoSettore.Users.IndexViewModel
+
 @section pageTitle {
-    <nav class="navbar navbar-expand navbar-light flex-wrap onit-page-title">   
+    <nav class="navbar navbar-expand navbar-light flex-wrap onit-page-title">
         <h1>Ciao Ago</h1>
         <a class="navbar-brand">
             @ViewData["Title"]
         </a>
     </nav>
 }
-
 <div class="table-container">
     <div class="table-scroll">
         <table class="table">
@@ -44,4 +41,3 @@
         </table>
     </div>
 </div>
-
