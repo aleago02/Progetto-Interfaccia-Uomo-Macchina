@@ -151,13 +151,15 @@ namespace Template.Web.Areas.CapoSettore.Users
         }
 
         [NonAction]
-        partial void IndexOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo, Template.Web.Areas.CapoSettore.Users.IndexViewModel model);
+        partial void IndexOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo, Template.Web.Areas.CapoSettore.Users.IndexViewModel model, System.DateTime? startDate, System.DateTime? endDate);
         [NonAction]
-        public override System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> Index(Template.Web.Areas.CapoSettore.Users.IndexViewModel model)
+        public override System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> Index(Template.Web.Areas.CapoSettore.Users.IndexViewModel model, System.DateTime? startDate, System.DateTime? endDate)
         {
             var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Index);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
-            IndexOverride(callInfo, model);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "startDate", startDate);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "endDate", endDate);
+            IndexOverride(callInfo, model, startDate, endDate);
             return System.Threading.Tasks.Task.FromResult<Microsoft.AspNetCore.Mvc.IActionResult>(callInfo);
         }
 

@@ -1,13 +1,21 @@
 ﻿@model Template.Web.Areas.CapoSettore.Users.IndexViewModel
 
 @section pageTitle {
-    <nav class="navbar navbar-expand navbar-light flex-wrap onit-page-title">
-        <h1>Ciao Ago</h1>
-        <a class="navbar-brand">
-            @ViewData["Title"]
-        </a>
-    </nav>
+    <div class="container row g-4">
+        <div class="col-auto">
+            <label for="startData" class="form-control-start">Data di inzio:</label>
+            <input type="date" class="form-control" id="startDate" />
+        </div>
+        <div class="col-auto">
+           <label for="endDate" class="form-control-end">Data di fine:</label>
+           <input type="date" class="form-control" id="endDate" />
+        </div>
+        <div class="col-auto">
+            <a class="btn btn-primary" id="btnAggiorna">Aggiorna</a>
+        </div>
+    </div>
 }
+ 
 <div class="table-container">
     <div class="table-scroll">
         <table class="table">

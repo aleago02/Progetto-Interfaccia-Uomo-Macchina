@@ -7,6 +7,7 @@ using Template.Services.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static Template.Web.Areas.CapoSettore.Users.IndexViewModel;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Template.Web.Areas.CapoSettore.Users
 {
@@ -17,7 +18,11 @@ namespace Template.Web.Areas.CapoSettore.Users
             OrderBy = nameof(UserIndexViewModel.Email);
             OrderByDescending = false;
             Users = Array.Empty<UserIndexViewModel>();
+            
         }
+
+        public DateTime CurrentDate { get; set; }
+
         public class CalendarCell
         {
             public int? Day { get; set; }
@@ -64,6 +69,12 @@ namespace Template.Web.Areas.CapoSettore.Users
         public string ToJson()
         {
             return JsonSerializer.ToJsonCamelCase(this);
+        }
+
+        public class UpdateViewModel
+        {
+            public DateTime StartDate { get; set; }
+            public DateTime EndDate { get; set; }
         }
     }
 
