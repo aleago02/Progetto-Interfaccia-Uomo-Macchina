@@ -2,16 +2,19 @@
 
 @section pageTitle {
     <div class="container row g-4">
-        <div class="col-auto">
+        <div class="col-auto mb-4">
             <label for="startData" class="form-control-start">Data di inzio:</label>
             <input type="date" class="form-control" id="startDate" />
         </div>
-        <div class="col-auto">
+        <div class="col-auto mb-4">
            <label for="endDate" class="form-control-end">Data di fine:</label>
            <input type="date" class="form-control" id="endDate" />
         </div>
         <div class="col-auto">
-            <a class="btn btn-primary" id="btnAggiorna">Aggiorna</a>
+            <a class="btn btn-primary">Aggiorna</a>
+        </div>
+        <div class="col-auto ms-auto">
+            <a class="btn btn-primary" href=" @Url.Action(MVC.Dipendenti.Users.Index())">Portale</a>
         </div>
     </div>
 }
