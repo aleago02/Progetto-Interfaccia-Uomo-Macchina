@@ -19,7 +19,7 @@
     </div>
 }
  
-<div class="table-container">
+<div class="table-container" id="scrolling-container">
     <div class="table-scroll">
         <table class="table">
             <thead>
@@ -43,7 +43,7 @@
                         @foreach (var day in Model.CalendarData.SelectMany(week => week))
                         {
                             <td class="@day.CssClass">
-                                <!-- Puoi inserire ulteriori informazioni specifiche per ogni cella qui -->
+                                
                             </td>
                         }
                     </tr>
@@ -52,3 +52,12 @@
         </table>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var container = document.getElementById("scrolling-container");
+        var currentDay = document.querySelector(".current-day");
+
+        container.scrollLeft = currentDay.offsetLeft;
+    });
+</script>

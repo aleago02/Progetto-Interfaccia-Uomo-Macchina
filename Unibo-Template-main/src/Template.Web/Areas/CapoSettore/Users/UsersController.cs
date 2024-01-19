@@ -237,9 +237,7 @@ namespace Template.Web.Areas.CapoSettore.Users
         }
         private string GetCssClassForStatus(string status)
         {
-            // Implementa la logica per determinare la classe CSS in base allo status.
-            // Ad esempio, potresti restituire "presente", "assente", "festivo", ecc.
-            return status?.ToLower() ?? "lavorativo"; // Restituisce il nome dello status in minuscolo come classe CSS; se status è null, restituisce "lavorativo" come default
+            return status?.ToLower() ?? "lavorativo"; 
         }
     }
 }
