@@ -76,6 +76,7 @@ namespace R4Mvc
     public partial class CapoSettoreAreaClass
     {
         public readonly string Name = "CapoSettore";
+        public readonly Template.Web.Areas.CapoSettore.Users.DaysController Days = new Template.Web.Areas.CapoSettore.Users.R4MVC_DaysController();
         public readonly Template.Web.Areas.CapoSettore.Users.UsersController Users = new Template.Web.Areas.CapoSettore.Users.R4MVC_UsersController();
     }
 

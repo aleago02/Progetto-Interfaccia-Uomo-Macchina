@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static Template.Web.Areas.CapoSettore.Users.IndexViewModel;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Template.Web.Areas.Dipendenti.Users;
 
 namespace Template.Web.Areas.CapoSettore.Users
 {
@@ -17,9 +18,11 @@ namespace Template.Web.Areas.CapoSettore.Users
         {
             OrderBy = nameof(UserIndexViewModel.Email);
             OrderByDescending = false;
-            Users = Array.Empty<UserIndexViewModel>();
-            
+            Users = Array.Empty<UserIndexViewModel>();  
+            Days = Array.Empty<DaysIndexViewModel>();
         }
+
+        public override IActionResult GetRoute() => MVC.CapoSettore.Days.Index(this).GetAwaiter().GetResult();
 
         public DateTime CurrentDate { get; set; }
 
@@ -31,7 +34,6 @@ namespace Template.Web.Areas.CapoSettore.Users
             public string DayOfWeek { get; set; }
         }
 
-        // Nella tua IndexViewModel
         public List<List<CalendarCell>> CalendarData { get; set; }
 
         [Display(Name = "Cerca")]
@@ -39,10 +41,25 @@ namespace Template.Web.Areas.CapoSettore.Users
 
         public IEnumerable<UserIndexViewModel> Users { get; set; }
 
+        public IEnumerable<DaysIndexViewModel> Days { get; set; }
+
+        public Guid CurrentId { get ; set; }
+
         internal void SetUsers(UsersIndexDTO usersIndexDTO)
         {
             Users = usersIndexDTO.Users.Select(x => new UserIndexViewModel(x)).ToArray();
             TotalItems = usersIndexDTO.Count;
+        }
+
+        internal void SetDays(UsersDaysIndexDTO usersIndexDTO)
+        {
+            Days = usersIndexDTO.Users.Select(x => new DaysIndexViewModel(x)).ToArray();
+            TotalItems = usersIndexDTO.Count;
+        }
+
+        public Guid setCurrentId(String CurrentId)
+        {
+            return this.CurrentId = new Guid(CurrentId);
         }
 
         public UsersIndexQuery ToUsersIndexQuery()
@@ -60,7 +77,14 @@ namespace Template.Web.Areas.CapoSettore.Users
             };
         }
 
-        public override IActionResult GetRoute() => MVC.CapoSettore.Users.Index(this).GetAwaiter().GetResult();
+        public UsersSelectQuery ToDaysIndexQuery()
+        {
+            return new UsersSelectQuery
+            {
+                IdCurrentUser = this.CurrentId
+            };
+        }
+
 
         public string OrderbyUrl<TProperty>(IUrlHelper url, System.Linq.Expressions.Expression<Func<UserIndexViewModel, TProperty>> expression) => base.OrderbyUrl(url, expression);
 
@@ -101,5 +125,22 @@ namespace Template.Web.Areas.CapoSettore.Users
         public string Status { get; set; }
         public string CssClass { get; set; }
         public string DayOfWeek { get; set; }
+    }
+
+    public class DaysIndexViewModel
+    {
+        public DaysIndexViewModel(UsersDaysIndexDTO.User userWorkIndexDTO)
+        {
+            this.Id = userWorkIndexDTO.Id;
+            this.Day = userWorkIndexDTO.Day;
+            this.HSmartWork = userWorkIndexDTO.HSmartWork;
+            this.HHoliday = userWorkIndexDTO.HHoliday;
+            this.Request = userWorkIndexDTO.Request;
+        }
+        public Guid Id { get; set; }
+        public DateOnly Day { get; set; }
+        public decimal HSmartWork { get; set; }
+        public decimal HHoliday { get; set; }
+        public Boolean Request { get; set; }
     }
 }

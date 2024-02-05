@@ -18,6 +18,13 @@
         </div>
     </div>
 }
+
+<p>Ciao</p>
+@foreach (var d in Model.Days)
+{
+    <p>Ciao</p>
+    <p>@d.Request</p>
+}
  
 <div class="table-container" id="scrolling-container">
     <div class="table-scroll">
@@ -43,7 +50,7 @@
                         @foreach (var day in Model.CalendarData.SelectMany(week => week))
                         {
                             <td class="@day.CssClass">
-                                
+
                             </td>
                         }
                     </tr>
