@@ -76,13 +76,6 @@ namespace Template.Web.Areas.CapoSettore.Users
             return RedirectToPagePermanent(taskResult.Result);
         }
 
-        [NonAction]
-        [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
-        public virtual IActionResult Index()
-        {
-            return new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Index);
-        }
-
         [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
         public DaysController Actions => MVC.CapoSettore.Days;
         [GeneratedCode("R4Mvc", "1.0")]
@@ -98,13 +91,11 @@ namespace Template.Web.Areas.CapoSettore.Users
         [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
-            public readonly string Index = "Index";
         }
 
         [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
-            public const string Index = "Index";
         }
 
         [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
@@ -128,17 +119,6 @@ namespace Template.Web.Areas.CapoSettore.Users
     {
         public R4MVC_DaysController(): base(Dummy.Instance)
         {
-        }
-
-        [NonAction]
-        partial void IndexOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo, Template.Web.Areas.CapoSettore.Users.IndexViewModel model);
-        [NonAction]
-        public override System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> Index(Template.Web.Areas.CapoSettore.Users.IndexViewModel model)
-        {
-            var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Index);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
-            IndexOverride(callInfo, model);
-            return System.Threading.Tasks.Task.FromResult<Microsoft.AspNetCore.Mvc.IActionResult>(callInfo);
         }
     }
 }

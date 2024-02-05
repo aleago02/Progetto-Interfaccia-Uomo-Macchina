@@ -53,6 +53,8 @@ namespace Template.Web.Areas.CapoSettore.Users
             }
             var users = await _sharedService.Query(model.ToUsersIndexQuery());
             model.SetUsers(users);
+            var days = await _sharedService.QueryDaysArray(model.Id());
+            model.SetDays(days);
             return View(model);
         }
 

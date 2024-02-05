@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Net.Cache;
 using System.Threading.Tasks;
 using Template.Infrastructure;
 
@@ -173,6 +175,39 @@ namespace Template.Services.Shared
                         },
                 Count = await queryable.CountAsync()
             };
+        }
+
+        public async Task<ArrayList> QueryDaysArray(Array id)
+        {
+
+            var responce = new ArrayList();
+
+
+            foreach (Guid IdCurrentUser in id)
+            {
+                var queryable = _dbContext.UsersDayDetails
+                .Where(x => x.UserId == IdCurrentUser);
+
+                UsersDaysIndexDTO userDays = new UsersDaysIndexDTO
+                {
+                    Users = from UsersDayDetails in _dbContext.UsersDayDetails
+                            where UsersDayDetails.UserId == IdCurrentUser
+                            join Requests in _dbContext.Requests
+                            on UsersDayDetails.Id equals Requests.Id into requestGroup
+                            from request in requestGroup.DefaultIfEmpty()
+                            select new UsersDaysIndexDTO.User
+                            {
+                                Day = UsersDayDetails.Day,
+                                HSmartWork = UsersDayDetails.HSmartWorking,
+                                HHoliday = UsersDayDetails.HHoliday,
+                                Request = request.request != null ? request.request : false  // Assuming Request is of type bool
+                            },
+                    Count = await queryable.CountAsync()
+                };
+                responce.Add(userDays);
+            }
+
+            return responce;
         }
 
         /// <summary>

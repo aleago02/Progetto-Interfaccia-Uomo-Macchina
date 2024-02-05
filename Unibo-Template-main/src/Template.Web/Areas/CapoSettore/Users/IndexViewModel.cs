@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using static Template.Web.Areas.CapoSettore.Users.IndexViewModel;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Template.Web.Areas.Dipendenti.Users;
+using System.Collections;
 
 namespace Template.Web.Areas.CapoSettore.Users
 {
@@ -22,7 +23,7 @@ namespace Template.Web.Areas.CapoSettore.Users
             Days = Array.Empty<DaysIndexViewModel>();
         }
 
-        public override IActionResult GetRoute() => MVC.CapoSettore.Days.Index(this).GetAwaiter().GetResult();
+        public override IActionResult GetRoute() => MVC.CapoSettore.Users.Index(this).GetAwaiter().GetResult();
 
         public DateTime CurrentDate { get; set; }
 
@@ -41,6 +42,8 @@ namespace Template.Web.Areas.CapoSettore.Users
 
         public IEnumerable<UserIndexViewModel> Users { get; set; }
 
+        public Array Id() => Users.Select(x => x.Id).ToArray();
+
         public IEnumerable<DaysIndexViewModel> Days { get; set; }
 
         public Guid CurrentId { get ; set; }
@@ -51,10 +54,10 @@ namespace Template.Web.Areas.CapoSettore.Users
             TotalItems = usersIndexDTO.Count;
         }
 
-        internal void SetDays(UsersDaysIndexDTO usersIndexDTO)
+        internal void SetDays(ArrayList days)
         {
-            Days = usersIndexDTO.Users.Select(x => new DaysIndexViewModel(x)).ToArray();
-            TotalItems = usersIndexDTO.Count;
+            Days = (IEnumerable<DaysIndexViewModel>)days;
+            TotalItems = 0;
         }
 
         public Guid setCurrentId(String CurrentId)

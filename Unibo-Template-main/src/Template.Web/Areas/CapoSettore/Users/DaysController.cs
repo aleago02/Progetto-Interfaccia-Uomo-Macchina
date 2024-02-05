@@ -26,13 +26,5 @@ namespace Template.Web.Areas.CapoSettore.Users
 
         }
 
-        [HttpGet]
-        public virtual async Task<IActionResult> Index(IndexViewModel model)
-        {
-            model.setCurrentId(this.Identita.IdCorrente);
-            var days = await _sharedService.QueryDays(model.ToDaysIndexQuery());
-            model.SetDays(days);
-            return View(model);
-        }
     }
 }
