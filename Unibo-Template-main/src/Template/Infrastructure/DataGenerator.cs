@@ -46,23 +46,23 @@ namespace Template.Infrastructure
             context.UsersDayDetails.AddRange(
                 new UserDayDetail
                 {
-                    UserId = Guid.Parse("3de6883f-9a0b-4667-aa53-0fbc52c4d300"), // Forced to specific Guid for tests
+                    UserId = Guid.Parse("3de6883f-9a0b-4667-aa53-0fbc52c4d300"), 
                     Day = new DateOnly(2023, 10, 25),
-                    HSmartWorking = 8, // SHA-256 of text "Prova"
+                    HSmartWorking = 8, 
                     HHoliday = 0,
                 },
                 new UserDayDetail
                 {
-                    UserId = Guid.Parse("a030ee81-31c7-47d0-9309-408cb5ac0ac7"), // Forced to specific Guid for tests
+                    UserId = Guid.Parse("a030ee81-31c7-47d0-9309-408cb5ac0ac7"), 
                     Day = new DateOnly(2023, 10, 20),
-                    HSmartWorking = 5, // SHA-256 of text "Prova"
+                    HSmartWorking = 5, 
                     HHoliday = 2,
                 },
                 new UserDayDetail
                 {
-                    UserId = Guid.Parse("bfdef48b-c7ea-4227-8333-c635af267354"), // Forced to specific Guid for tests
+                    UserId = Guid.Parse("bfdef48b-c7ea-4227-8333-c635af267354"), 
                     Day = new DateOnly(2023, 10, 05),
-                    HSmartWorking = 0, // SHA-256 of text "Prova"
+                    HSmartWorking = 0,
                     HHoliday = 8,
                 });
 
