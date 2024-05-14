@@ -65,6 +65,20 @@ namespace Template.Services.Shared
         }
     }
 
+    public class UserDayIndexDTO
+    {
+        public User Users { get; set; }
+        public class User
+        {
+            public Guid Id { get; set; }
+            public DateOnly Day { get; set; }
+            public decimal HSmartWork { get; set; }
+            public decimal HHoliday { get; set; }
+            public Boolean Request { get; set; }
+        }
+
+    }
+
     public class UserDetailQuery
     {
         public Guid Id { get; set; }
@@ -188,21 +202,20 @@ namespace Template.Services.Shared
                 var queryable = _dbContext.UsersDayDetails
                 .Where(x => x.UserId == IdCurrentUser);
 
-                UsersDaysIndexDTO userDays = new UsersDaysIndexDTO
+                UserDayIndexDTO userDays = new UserDayIndexDTO
                 {
-                    Users = from UsersDayDetails in _dbContext.UsersDayDetails
+                    Users = (UserDayIndexDTO.User)(from UsersDayDetails in _dbContext.UsersDayDetails
                             where UsersDayDetails.UserId == IdCurrentUser
                             join Requests in _dbContext.Requests
                             on UsersDayDetails.Id equals Requests.Id into requestGroup
                             from request in requestGroup.DefaultIfEmpty()
-                            select new UsersDaysIndexDTO.User
+                            select new UserDayIndexDTO.User
                             {
                                 Day = UsersDayDetails.Day,
                                 HSmartWork = UsersDayDetails.HSmartWorking,
                                 HHoliday = UsersDayDetails.HHoliday,
                                 Request = request.request != null ? request.request : false  // Assuming Request is of type bool
-                            },
-                    Count = await queryable.CountAsync()
+                            })
                 };
                 responce.Add(userDays);
             }
