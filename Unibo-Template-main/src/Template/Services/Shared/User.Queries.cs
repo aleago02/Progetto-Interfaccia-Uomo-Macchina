@@ -8,7 +8,7 @@ using Template.Infrastructure;
 
 namespace Template.Services.Shared
 {
-    public class UsersSelectQuery
+    public class DaysSelectQuery
     {
         public Guid IdCurrentUser { get; set; }
         public string Filter { get; set; }
@@ -48,7 +48,7 @@ namespace Template.Services.Shared
         }
     }
 
-    public class UsersDaysIndexDTO
+    public class DaysIndexDTO
     {
         public IEnumerable<User> Users { get; set; }
         public int Count { get; set; }
@@ -98,7 +98,7 @@ namespace Template.Services.Shared
         /// </summary>
         /// <param name="qry"></param>
         /// <returns></returns>
-        public async Task<UsersSelectDTO> Query(UsersSelectQuery qry)
+        public async Task<UsersSelectDTO> Query(DaysSelectQuery qry)
         {
             var queryable = _dbContext.Users
                 .Where(x => x.Id != qry.IdCurrentUser);
@@ -152,19 +152,19 @@ namespace Template.Services.Shared
             };
         }
 
-        public async Task<UsersDaysIndexDTO> QueryDays(UsersSelectQuery qry)
+        public async Task<DaysIndexDTO> QueryDays(DaysSelectQuery qry)
         {
             var queryable = _dbContext.UsersDayDetails
                 .Where(x => x.UserId == qry.IdCurrentUser);
 
-            return new UsersDaysIndexDTO
+            return new DaysIndexDTO
             {
                 Users = from UsersDayDetails in _dbContext.UsersDayDetails
                         where UsersDayDetails.UserId == qry.IdCurrentUser
                         join Requests in _dbContext.Requests
                         on UsersDayDetails.Id equals Requests.Id into requestGroup
                         from request in requestGroup.DefaultIfEmpty()
-                        select new UsersDaysIndexDTO.User
+                        select new DaysIndexDTO.User
                         {
                             Day = UsersDayDetails.Day,
                             HSmartWork = UsersDayDetails.HSmartWorking,

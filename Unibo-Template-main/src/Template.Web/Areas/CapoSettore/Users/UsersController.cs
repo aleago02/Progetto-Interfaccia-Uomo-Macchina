@@ -30,6 +30,27 @@ namespace Template.Web.Areas.CapoSettore.Users
         [HttpGet]
         public virtual async Task<IActionResult> Index(IndexViewModel model)
         {
+            model.CurrentDate = DateTime.Now;
+            int endYear = DateTime.Now.Year;
+            int endMonth = DateTime.Now.Month;
+
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                model.CalendarData = GenerateCalendarData(startDate.Value.Year, startDate.Value.Month, endDate.Value.Year, endDate.Value.Month)
+                    .Select(week => week.Select(day => new CalendarCell { Day = day.Day, Status = day.Status, CssClass = day.CssClass, Date = day.Date }).ToList())
+                    .ToList();
+            }
+            else
+            {
+                model.CalendarData = GenerateCalendarData(DateTime.Now.Year, DateTime.Now.Month, endYear, endMonth)
+                    .Select(week => week.Select(day => new CalendarCell { Day = day.Day, Status = day.Status, CssClass = day.CssClass, Date = day.Date }).ToList())
+                    .ToList();
+            }
+            var users = await _sharedService.Query(model.ToUsersIndexQuery());
+            model.SetUsers(users);
+            model.SetCurrentId(this.Identita.IdCorrente);
+            var days = await _sharedService.QueryDays(model.ToDaysIndexQuery());
+            model.SetDays(days);
             return View(model);
         }
 
@@ -98,6 +119,126 @@ namespace Template.Web.Areas.CapoSettore.Users
             Alerts.AddSuccess(this, "Utente cancellato");
 
             return RedirectToAction(Actions.Index());
+        }
+
+        [HttpPost]
+        public virtual IActionResult Update(IndexViewModel model)
+        {
+            return RedirectToAction(Actions.Index());
+        }
+
+        private List<List<CalendarDay>> GenerateCalendarData(int startYear, int startMonth, int endYear, int endMonth)
+        {
+            var calendarData = new List<List<CalendarDay>>();
+
+            for (var year = startYear; year <= endYear; year++)
+            {
+                for (var month = startMonth; month <= (year == endYear ? endMonth : 12); month++)
+                {
+                    var daysInMonth = DateTime.DaysInMonth(year, month);
+                    for (var day = 1; day <= daysInMonth; day++)
+                    {
+                        var date = new DateTime(year, month, day);
+
+                        string status = "";
+                        string cssClass = "";
+
+                        if (date.DayOfWeek == DayOfWeek.Sunday)
+                        {
+                            if (date.Date == DateTime.Now.Date)
+                            {
+                                status = "Domenica";
+                                cssClass = "current-day";
+                            }
+                            else
+                            {
+                                status = "Domenica";
+                                cssClass = GetCssClassForStatus(status);
+                            }
+                        }
+                        else if (date.DayOfWeek == DayOfWeek.Saturday)
+                        {
+                            if (date.Date == DateTime.Now.Date)
+                            {
+                                status = "Sabato";
+                                cssClass = "current-day";
+                            }
+                            else
+                            {
+                                status = "Sabato";
+                                cssClass = GetCssClassForStatus(status);
+                            }
+                        }
+                        else
+                        {
+                            if (date.Date.AddDays(1) == DateTime.Now.Date.AddDays(1))
+                            {
+                                status = IsFestivity(date) ? "Festività" : "Lavorativo";
+                                cssClass = "current-day";
+                            }
+                            else
+                            {
+                                status = IsFestivity(date) ? "Festività" : "Lavorativo";
+                                cssClass = GetCssClassForStatus(status);
+                            }
+                        }
+
+                        var calendarDay = new CalendarDay
+                        {
+                            Day = day,
+                            Status = status,
+                            CssClass = cssClass,
+                            DayOfWeek = date.ToString("dddd"),
+                            Date = DateOnly.FromDateTime(date),
+                        };
+
+                        if (calendarData.Count == 0 || calendarData.Last().Count == 7)
+                        {
+                            calendarData.Add(new List<CalendarDay> { calendarDay });
+                        }
+                        else
+                        {
+                            calendarData.Last().Add(calendarDay);
+                        }
+                    }
+                }
+            }
+
+            return calendarData;
+        }
+
+
+        private bool IsFestivity(DateTime date)
+        {
+            var holidays = new ItalyPublicHoliday().PublicHolidaysInformation(date.Year);
+
+            var isFestivity = holidays.Any(holiday => holiday.HolidayDate.Date == date.Date);
+
+            return isFestivity;
+        }
+
+        private string GetStatusForDay(DateTime day, PublicHoliday.Holiday ferieTrovata)
+        {
+            if (day.DayOfWeek == DayOfWeek.Sunday)
+            {
+                return "Domenica";
+            }
+            else if (day.DayOfWeek == DayOfWeek.Saturday)
+            {
+                return "Sabato";
+            }
+            else if (ferieTrovata != null)
+            {
+                return ferieTrovata.GetName();
+            }
+            else
+            {
+                return "Lavorativo";
+            }
+        }
+        private string GetCssClassForStatus(string status)
+        {
+            return status?.ToLower() ?? "lavorativo";
         }
     }
 }

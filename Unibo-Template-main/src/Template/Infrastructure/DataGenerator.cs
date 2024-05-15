@@ -60,9 +60,9 @@ namespace Template.Infrastructure
                 },
                 new UserDayDetail
                 {
-                    UserId = Guid.Parse("bfdef48b-c7ea-4227-8333-c635af267354"), // Forced to specific Guid for tests
-                    Day = new DateOnly(2023, 10, 05),
-                    HSmartWorking = 0, // SHA-256 of text "Prova"
+                    UserId = Guid.Parse("bfdef48b-c7ea-4227-8333-c635af267354"), 
+                    Day = new DateOnly(2024, 05, 05),
+                    HSmartWorking = 0,
                     HHoliday = 8,
                 });
 
