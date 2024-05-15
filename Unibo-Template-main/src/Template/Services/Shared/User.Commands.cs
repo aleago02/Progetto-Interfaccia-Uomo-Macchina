@@ -83,7 +83,7 @@ namespace Template.Services.Shared
 
                 if (request == null)
                 {
-                    request = new Requests
+                    request = new Request
                     {
                         Id = day.Id,
                     };

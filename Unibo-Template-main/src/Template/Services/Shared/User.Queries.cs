@@ -10,7 +10,7 @@ using Template.Infrastructure;
 
 namespace Template.Services.Shared
 {
-    public class UsersSelectQuery
+    public class DaysSelectQuery
     {
         public Guid IdCurrentUser { get; set; }
         public string Filter { get; set; }
@@ -50,7 +50,7 @@ namespace Template.Services.Shared
         }
     }
 
-    public class UsersDaysIndexDTO
+    public class DaysIndexDTO
     {
         public IEnumerable<User> Users { get; set; }
         public int Count { get; set; }
@@ -63,20 +63,6 @@ namespace Template.Services.Shared
             public decimal HHoliday { get; set; }
             public Boolean Request {  get; set; }
         }
-    }
-
-    public class UserDayIndexDTO
-    {
-        public User Users { get; set; }
-        public class User
-        {
-            public Guid Id { get; set; }
-            public DateOnly Day { get; set; }
-            public decimal HSmartWork { get; set; }
-            public decimal HHoliday { get; set; }
-            public Boolean Request { get; set; }
-        }
-
     }
 
     public class UserDetailQuery
@@ -114,7 +100,7 @@ namespace Template.Services.Shared
         /// </summary>
         /// <param name="qry"></param>
         /// <returns></returns>
-        public async Task<UsersSelectDTO> Query(UsersSelectQuery qry)
+        public async Task<UsersSelectDTO> Query(DaysSelectQuery qry)
         {
             var queryable = _dbContext.Users
                 .Where(x => x.Id != qry.IdCurrentUser);
@@ -168,62 +154,42 @@ namespace Template.Services.Shared
             };
         }
 
-        public async Task<UsersDaysIndexDTO> QueryDays(UsersSelectQuery qry)
+        public async Task<DaysIndexDTO> QueryDays(DaysSelectQuery qry)
         {
-            var queryable = _dbContext.UsersDayDetails
-                .Where(x => x.UserId == qry.IdCurrentUser);
+            var users = _dbContext.Users.Include(x => x.UsersDayDetails).ThenInclude(x=> x.Requests).ToArray();
 
-            return new UsersDaysIndexDTO
+            var queryable = _dbContext.UsersDayDetails;
+                //.Where(x => x.UserId == qry.IdCurrentUser);
+
+            return new DaysIndexDTO
             {
-                Users = from UsersDayDetails in _dbContext.UsersDayDetails
-                        where UsersDayDetails.UserId == qry.IdCurrentUser
-                        join Requests in _dbContext.Requests
-                        on UsersDayDetails.Id equals Requests.Id into requestGroup
-                        from request in requestGroup.DefaultIfEmpty()
-                        select new UsersDaysIndexDTO.User
-                        {
-                            Day = UsersDayDetails.Day,
-                            HSmartWork = UsersDayDetails.HSmartWorking,
-                            HHoliday = UsersDayDetails.HHoliday,
-                            Request = request.request != null ? request.request : false  // Assuming Request is of type bool
-                        },
+                Users = await queryable.Select(x=> new DaysIndexDTO.User
+                {
+                    Day = x.Day,
+                    Id = x.UserId,
+                    HSmartWork = x.HSmartWorking,
+                    HHoliday = x.HHoliday,
+                    Request = x.Requests.Select(y=> y.request).FirstOrDefault()
+                }).ToArrayAsync(),
+
+                //from UsersDayDetails in _dbContext.UsersDayDetails
+                //        where UsersDayDetails.UserId == qry.IdCurrentUser
+                //        join Requests in _dbContext.Requests
+                //        on UsersDayDetails.Id equals Requests.Id into requestGroup
+                //        from request in requestGroup.DefaultIfEmpty()
+                //        select new DaysIndexDTO.User
+                //        {
+                //            Day = UsersDayDetails.Day,
+                //            HSmartWork = UsersDayDetails.HSmartWorking,
+                //            HHoliday = UsersDayDetails.HHoliday,
+                //            Request = request.request != null ? request.request : false  // Assuming Request is of type bool
+                //        },
                 Count = await queryable.CountAsync()
             };
         }
 
-        public async Task<ArrayList> QueryDaysArray(Array id)
-        {
-
-            var responce = new ArrayList();
-
-
-            foreach (Guid IdCurrentUser in id)
-            {
-                var queryable = _dbContext.UsersDayDetails
-                .Where(x => x.UserId == IdCurrentUser);
-
-                UserDayIndexDTO userDays = new UserDayIndexDTO
-                {
-                    Users = (UserDayIndexDTO.User)(from UsersDayDetails in _dbContext.UsersDayDetails
-                            where UsersDayDetails.UserId == IdCurrentUser
-                            join Requests in _dbContext.Requests
-                            on UsersDayDetails.Id equals Requests.Id into requestGroup
-                            from request in requestGroup.DefaultIfEmpty()
-                            select new UserDayIndexDTO.User
-                            {
-                                Day = UsersDayDetails.Day,
-                                HSmartWork = UsersDayDetails.HSmartWorking,
-                                HHoliday = UsersDayDetails.HHoliday,
-                                Request = request.request != null ? request.request : false  // Assuming Request is of type bool
-                            })
-                };
-                responce.Add(userDays);
-            }
-
-            return responce;
-        }
-
         /// <summary>
+        /// 
         /// Returns the detail of the user who matches the Id passed in the qry parameter
         /// </summary>
         /// <param name="qry"></param>

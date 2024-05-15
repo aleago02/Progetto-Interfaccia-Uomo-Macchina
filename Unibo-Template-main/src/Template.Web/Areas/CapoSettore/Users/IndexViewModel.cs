@@ -33,6 +33,7 @@ namespace Template.Web.Areas.CapoSettore.Users
             public string Status { get; set; }
             public string CssClass { get; set; }
             public string DayOfWeek { get; set; }
+            public DateOnly Date { get; set; }
         }
 
         public List<List<CalendarCell>> CalendarData { get; set; }
@@ -54,13 +55,13 @@ namespace Template.Web.Areas.CapoSettore.Users
             TotalItems = usersIndexDTO.Count;
         }
 
-        internal void SetDays(ArrayList days)
+        internal void SetDays(DaysIndexDTO dayIndexDTO)
         {
-            Days = (IEnumerable<DaysIndexViewModel>)days;
-            TotalItems = 0;
+            Days = dayIndexDTO.Users.Select(x => new DaysIndexViewModel(x)).ToArray();
+            TotalItems = dayIndexDTO.Count;
         }
 
-        public Guid setCurrentId(String CurrentId)
+        public Guid SetCurrentId(String CurrentId)
         {
             return this.CurrentId = new Guid(CurrentId);
         }
@@ -69,20 +70,13 @@ namespace Template.Web.Areas.CapoSettore.Users
         {
             return new UsersIndexQuery
             {
-                Filter = Filter,
-                Paging = new Template.Infrastructure.Paging
-                {
-                    OrderBy = OrderBy,
-                    OrderByDescending = OrderByDescending,
-                    Page = Page,
-                    PageSize = PageSize
-                }
+                IdCurrentUser = this.CurrentId
             };
         }
 
-        public UsersSelectQuery ToDaysIndexQuery()
+        public DaysSelectQuery ToDaysIndexQuery()
         {
-            return new UsersSelectQuery
+            return new DaysSelectQuery
             {
                 IdCurrentUser = this.CurrentId
             };
@@ -128,11 +122,12 @@ namespace Template.Web.Areas.CapoSettore.Users
         public string Status { get; set; }
         public string CssClass { get; set; }
         public string DayOfWeek { get; set; }
+        public DateOnly Date { get; set; }
     }
 
     public class DaysIndexViewModel
     {
-        public DaysIndexViewModel(UsersDaysIndexDTO.User userWorkIndexDTO)
+        public DaysIndexViewModel(DaysIndexDTO.User userWorkIndexDTO)
         {
             this.Id = userWorkIndexDTO.Id;
             this.Day = userWorkIndexDTO.Day;

@@ -25,7 +25,8 @@ namespace Template.Services.Shared
         public string LastName { get; set; }
         public string NickName { get; set; }
 
-        IEnumerable<UserDayDetail> UsersDayDetails {  get; set; }
+        [InverseProperty(nameof(UserDayDetail.User))]
+        public virtual ICollection<UserDayDetail> UsersDayDetails {  get; set; }
 
         /// <summary>
         /// Checks if password passed as parameter matches with the Password of the current user

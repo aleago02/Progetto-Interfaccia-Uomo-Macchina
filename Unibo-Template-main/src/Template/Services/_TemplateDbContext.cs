@@ -17,6 +17,6 @@ namespace Template.Services
 
         public DbSet<User> Users { get; set; }
         public DbSet<UserDayDetail> UsersDayDetails { get; set; }
-        public DbSet<Requests> Requests { get; set; }
+        public DbSet<Request> Requests { get; set; }
     }
 }

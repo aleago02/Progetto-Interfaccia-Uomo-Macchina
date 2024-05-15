@@ -17,10 +17,14 @@ namespace Template.Services.Shared
 
         public Guid UserId { get; set; }
         [ForeignKey(nameof(UserId))]
-        [InverseProperty("UsersDayDetails")]
+        public User User { get; set; }
+
 
         public DateOnly Day { get; set; }
         public decimal HSmartWorking { get; set; }
         public decimal HHoliday { get; set; }
+
+        [InverseProperty(nameof(Request.UserDayDetail))]
+        public virtual ICollection<Request> Requests { get; set; }
     }
 }

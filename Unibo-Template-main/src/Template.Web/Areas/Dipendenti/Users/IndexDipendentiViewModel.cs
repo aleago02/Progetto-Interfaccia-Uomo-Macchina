@@ -25,7 +25,7 @@ namespace Template.Web.Areas.Dipendenti.Users
         public IEnumerable<UserDaysIndexViewModel> Users { get; set; }
         public Guid CurrentId { get; set; }
 
-        internal void SetUsers(UsersDaysIndexDTO usersIndexDTO)
+        internal void SetUsers(DaysIndexDTO usersIndexDTO)
         {
             Users = usersIndexDTO.Users.Select(x => new UserDaysIndexViewModel(x)).ToArray();
             TotalItems = usersIndexDTO.Count;
@@ -41,9 +41,9 @@ namespace Template.Web.Areas.Dipendenti.Users
             return this.CurrentId = new Guid(CurrentId);
         }
 
-        public UsersSelectQuery ToUsersIndexQuery()
+        public DaysSelectQuery ToUsersIndexQuery()
         {
-            return new UsersSelectQuery
+            return new DaysSelectQuery
             {
                 IdCurrentUser = this.CurrentId
             };
@@ -53,7 +53,7 @@ namespace Template.Web.Areas.Dipendenti.Users
 
     public class UserDaysIndexViewModel
     {
-        public UserDaysIndexViewModel(UsersDaysIndexDTO.User userWorkIndexDTO)
+        public UserDaysIndexViewModel(DaysIndexDTO.User userWorkIndexDTO)
         {
             this.Id = userWorkIndexDTO.Id;  
             this.Day = userWorkIndexDTO.Day;

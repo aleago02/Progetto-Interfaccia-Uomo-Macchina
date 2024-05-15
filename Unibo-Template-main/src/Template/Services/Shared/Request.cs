@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Template.Services.Shared
 {
-    public class Requests
+    public class Request
     {
         /*
         [Key]
@@ -17,10 +17,13 @@ namespace Template.Services.Shared
         */
 
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [ForeignKey(nameof(Id))]
-        [InverseProperty("Requests")]
 
-        public Boolean request { get; set; }
+        public int UserDayDetailId { get; set; }
+        [ForeignKey(nameof(UserDayDetailId))]
+        public UserDayDetail UserDayDetail { get; set; }
+
+        public bool request { get; set; }
     }
 }
