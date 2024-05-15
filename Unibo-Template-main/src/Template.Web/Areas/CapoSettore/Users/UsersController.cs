@@ -41,7 +41,7 @@ namespace Template.Web.Areas.CapoSettore.Users
 
             if (startDate.HasValue && endDate.HasValue)
             {
-                model.CalendarData = GenerateCalendarData(startDate.Value.Day, startDate.Value.Month, startDate.Value.Month, endDate.Value.Day, endDate.Value.Month, endDate.Value.Year)
+                model.CalendarData = GenerateCalendarData(startDate.Value.Year, startDate.Value.Month, endDate.Value.Year, endDate.Value.Month)
                     .Select(week => week.Select(day => new CalendarCell { Day = day.Day, Status = day.Status, CssClass = day.CssClass, Date = day.Date }).ToList())
                     .ToList();
             }
@@ -129,56 +129,85 @@ namespace Template.Web.Areas.CapoSettore.Users
             return RedirectToAction(Actions.Index());
         }
 
-        private List<List<CalendarDay>> GenerateCalendarData(int startDay, int startMonth, int startYear, int endDay, int endMonth, int endYear)
+        private List<List<CalendarDay>> GenerateCalendarData(int startYear, int startMonth, int endYear, int endMonth)
         {
             var calendarData = new List<List<CalendarDay>>();
 
-            var startDate = new DateTime(startYear, startMonth, startDay);
-            var endDate = new DateTime(endYear, endMonth, endDay);
-
-            for (var date = startDate; date <= endDate; date = date.AddDays(1))
+            for (var year = startYear; year <= endYear; year++)
             {
-                string status = "";
-                string cssClass = "";
+                for (var month = startMonth; month <= (year == endYear ? endMonth : 12); month++)
+                {
+                    var daysInMonth = DateTime.DaysInMonth(year, month);
+                    for (var day = 1; day <= daysInMonth; day++)
+                    {
+                        var date = new DateTime(year, month, day);
 
-                if (date.DayOfWeek == DayOfWeek.Sunday)
-                {
-                    status = "Domenica";
-                    cssClass = date.Date == DateTime.Now.Date ? "current-day" : GetCssClassForStatus(status);
-                }
-                else if (date.DayOfWeek == DayOfWeek.Saturday)
-                {
-                    status = "Sabato";
-                    cssClass = date.Date == DateTime.Now.Date ? "current-day" : GetCssClassForStatus(status);
-                }
-                else
-                {
-                    status = IsFestivity(date) ? "Festività" : "Lavorativo";
-                    cssClass = date.Date == DateTime.Now.Date ? "current-day" : GetCssClassForStatus(status);
-                }
+                        string status = "";
+                        string cssClass = "";
 
-                var calendarDay = new CalendarDay
-                {
-                    Day = date.Day,
-                    Status = status,
-                    CssClass = cssClass,
-                    DayOfWeek = date.ToString("dddd"),
-                    Date = DateOnly.FromDateTime(date)
-                };
+                        if (date.DayOfWeek == DayOfWeek.Sunday)
+                        {
+                            if (date.Date == DateTime.Now.Date)
+                            {
+                                status = "Domenica";
+                                cssClass = "current-day";
+                            }
+                            else
+                            {
+                                status = "Domenica";
+                                cssClass = GetCssClassForStatus(status);
+                            }
+                        }
+                        else if (date.DayOfWeek == DayOfWeek.Saturday)
+                        {
+                            if (date.Date == DateTime.Now.Date)
+                            {
+                                status = "Sabato";
+                                cssClass = "current-day";
+                            }
+                            else
+                            {
+                                status = "Sabato";
+                                cssClass = GetCssClassForStatus(status);
+                            }
+                        }
+                        else
+                        {
+                            if (date.Date.AddDays(1)  == DateTime.Now.Date.AddDays(1))
+                            {
+                                status = IsFestivity(date) ? "Festività" : "Lavorativo";
+                                cssClass = "current-day";
+                            }
+                            else
+                            {
+                                status = IsFestivity(date) ? "Festività" : "Lavorativo";
+                                cssClass = GetCssClassForStatus(status);
+                            }
+                        }
 
-                if (calendarData.Count == 0 || calendarData.Last().Count == 7)
-                {
-                    calendarData.Add(new List<CalendarDay> { calendarDay });
-                }
-                else
-                {
-                    calendarData.Last().Add(calendarDay);
+                        var calendarDay = new CalendarDay
+                        {
+                            Day = day,
+                            Status = status,
+                            CssClass = cssClass,
+                            DayOfWeek = date.ToString("dddd"),
+                            Date = DateOnly.FromDateTime(date)
+                        };
+
+                        if (calendarData.Count == 0 || calendarData.Last().Count == 7)
+                        {
+                            calendarData.Add(new List<CalendarDay> { calendarDay });
+                        }
+                        else
+                        {
+                            calendarData.Last().Add(calendarDay);
+                        }
+                    }
                 }
             }
 
             return calendarData;
         }
-
 
 
         private bool IsFestivity(DateTime date)
