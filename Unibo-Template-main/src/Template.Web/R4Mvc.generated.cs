@@ -76,7 +76,6 @@ namespace R4Mvc
     public partial class CapoSettoreAreaClass
     {
         public readonly string Name = "CapoSettore";
-        public readonly Template.Web.Areas.CapoSettore.Users.DaysController Days = new Template.Web.Areas.CapoSettore.Users.R4MVC_DaysController();
         public readonly Template.Web.Areas.CapoSettore.Users.UsersController Users = new Template.Web.Areas.CapoSettore.Users.R4MVC_UsersController();
     }
 
@@ -124,6 +123,7 @@ public static partial class Links
         public static string Url(string fileName) => R4MvcHelpers.ProcessVirtualPath(UrlPath + "/" + fileName);
         public static readonly string app_logo_png = Url("app-logo.png");
         public static readonly string company_logo_png = Url("company-logo.png");
+        public static readonly string red_request_png = Url("red-request.png");
         public static readonly string vanko_logo_png = Url("vanko-logo.png");
         public static readonly string Vnko_png = Url("Vnko.png");
     }

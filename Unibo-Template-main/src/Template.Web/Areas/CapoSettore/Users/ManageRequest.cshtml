@@ -1,0 +1,47 @@
+﻿@model Template.Web.Areas.CapoSettore.Users.ManageRequestViewModel
+
+@section pageTitle {
+    <div class="container">
+        <div class="col">
+            <a class="btn btn-primary" href="@Url.Action(MVC.CapoSettore.Users.Index())">Dashboard</a>
+        </div>
+    </div>
+
+}
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Dipendenti</th>
+                <th>Periodo</th>
+                <th>Accetta</th>
+                <th>Rifiuta</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            @foreach (var user in Model.Users)
+            {
+                @foreach(var req in Model.Days)
+                {
+                    if (user.Id == req.Id)
+                    {
+                        <tr>
+                            <td>@user.FirstName @user.LastName</td>
+                            <td>@req.HHoliday</td>>
+                            @if(req.Request == false)
+                            {
+                                <td>
+                                    <input type="checkbox">
+                                </td>
+                                <td>
+                                    <input type="checkbox">
+                                </td>
+                            }
+                        </tr>
+                    }
+
+                }
+            }
+        </tbody>
+    </table>
+</div>

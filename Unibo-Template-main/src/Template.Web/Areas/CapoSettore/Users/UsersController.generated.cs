@@ -120,6 +120,7 @@ namespace Template.Web.Areas.CapoSettore.Users
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
+            public readonly string ManageRequest = "ManageRequest";
             public readonly string New = "New";
             public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
@@ -130,6 +131,7 @@ namespace Template.Web.Areas.CapoSettore.Users
         public class ActionNameConstants
         {
             public const string Index = "Index";
+            public const string ManageRequest = "ManageRequest";
             public const string New = "New";
             public const string Edit = "Edit";
             public const string Delete = "Delete";
@@ -173,6 +175,16 @@ namespace Template.Web.Areas.CapoSettore.Users
         }
 
         [NonAction]
+        partial void ManageRequestOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo);
+        [NonAction]
+        public override System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> ManageRequest()
+        {
+            var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.ManageRequest);
+            ManageRequestOverride(callInfo);
+            return System.Threading.Tasks.Task.FromResult<Microsoft.AspNetCore.Mvc.IActionResult>(callInfo);
+        }
+
+        [NonAction]
         partial void NewOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo);
         [NonAction]
         public override Microsoft.AspNetCore.Mvc.IActionResult New()
@@ -194,9 +206,9 @@ namespace Template.Web.Areas.CapoSettore.Users
         }
 
         [NonAction]
-        partial void EditOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo, Template.Web.Areas.CapoSettore.Users.EditViewModel model);
+        partial void EditOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo, Template.Web.Areas.Example.Users.EditViewModel model);
         [NonAction]
-        public override System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> Edit(Template.Web.Areas.CapoSettore.Users.EditViewModel model)
+        public override System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> Edit(Template.Web.Areas.Example.Users.EditViewModel model)
         {
             var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);

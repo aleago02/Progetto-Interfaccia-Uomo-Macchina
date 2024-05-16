@@ -59,6 +59,17 @@ namespace Template.Web.Areas.CapoSettore.Users
         }
 
         [HttpGet]
+        public virtual async Task<IActionResult> ManageRequest()
+        {
+            var model = new ManageRequestViewModel();
+            var users = await _sharedService.Query(model.ToUsersIndexQuery());
+            model.SetUsers(users);
+            var days = await _sharedService.QueryDays(model.ToDaysIndexQuery());
+            model.SetDays(days);
+            return View(model);
+        }
+
+        [HttpGet]
         public virtual IActionResult New()
         {
             return RedirectToAction(Actions.Edit());

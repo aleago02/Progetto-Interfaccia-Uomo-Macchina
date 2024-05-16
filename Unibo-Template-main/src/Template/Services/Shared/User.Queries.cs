@@ -170,7 +170,7 @@ namespace Template.Services.Shared
                     HSmartWork = x.HSmartWorking,
                     HHoliday = x.HHoliday,
                     Request = x.Requests.Select(y=> y.request).FirstOrDefault()
-                }).ToArrayAsync(),
+                }).OrderBy(x => x.Day).ToArrayAsync(),
 
                 //from UsersDayDetails in _dbContext.UsersDayDetails
                 //        where UsersDayDetails.UserId == qry.IdCurrentUser

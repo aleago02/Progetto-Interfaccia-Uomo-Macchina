@@ -1,6 +1,5 @@
 ﻿@model Template.Web.Areas.CapoSettore.Users.IndexViewModel
 
-
 @section pageTitle {
     <div class="container">
         <div class="row g-4 align-items-end">
@@ -15,7 +14,18 @@
                     <div class="col">
                         <button type="submit" class="btn btn-primary mb-2">Aggiorna</button>
                     </div>
-                    <div class="col-2">
+                    <div class="col">
+                        @foreach(var req in Model.Days)
+                        {
+                            if (req.Request == false){
+                                <a href="@Url.Action(MVC.CapoSettore.Users.ManageRequest())">
+                                <img src="~/images/red-request.png" alt="logo request" width="40" height="40" />
+                                </a>
+                                break;
+                            }
+                        }
+                    </div>
+                    <div class="col">
                         <a class="btn btn-primary" href="@Url.Action(MVC.Dipendenti.Users.Index())">Portale</a>
                     </div>
                 </div>
@@ -23,8 +33,6 @@
         </div>
     </div>
 }
-
-
 
 <div class="table-container" id="scrolling-container">
     <div class="table-scroll">
@@ -49,27 +57,25 @@
                         <td>@user.FirstName @user.LastName</td>
                         @foreach (var day in Model.CalendarData.SelectMany(week => week))
                         {
-                            //check id user con id model.req
-                            @foreach (var req in Model.Days)
+                            var req = Model.Days.FirstOrDefault(r => r.Id == user.Id && r.Day == day.Date);
+                            if (req != null && (day.CssClass == "lavorativo" || day.CssClass == "current-day"))
                             {
-                                if (req.Id == user.Id)
+                                if (req.HHoliday != 0)
                                 {
-                                    if (day.Date == req.Day)
-                                    {
-                                        if (req.HHoliday !=0)
-                                        {
-                                            <td class="@day.CssClass">Ferie</td>
-                                        }
-                                        else
-                                        {
-                                            <td class="@day.CssClass">Smart Working</td>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <td class="@day.CssClass"></td>
-                                    }
+                                    <td class="@day.CssClass">Ferie</td>
                                 }
+                                else if (req.HSmartWork != 0)
+                                {
+                                    <td class="@day.CssClass">Smart Working</td>
+                                }
+                                else
+                                {
+                                    <td class="@day.CssClass"></td>
+                                }
+                            }
+                            else
+                            {
+                                <td class="@day.CssClass"></td>
                             }
                         }
                     </tr>
@@ -84,6 +90,8 @@
         var container = document.getElementById("scrolling-container");
         var currentDay = document.querySelector(".current-day");
 
-        container.scrollLeft = currentDay.offsetLeft;
+        if (currentDay) {
+            container.scrollLeft = currentDay.offsetLeft;
+        }
     });
 </script>
