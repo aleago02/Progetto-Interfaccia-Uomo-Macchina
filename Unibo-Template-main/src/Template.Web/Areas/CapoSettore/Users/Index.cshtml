@@ -15,11 +15,12 @@
                         <button type="submit" class="btn btn-primary mb-2">Aggiorna</button>
                     </div>
                     <div class="col">
-                        @foreach(var req in Model.Days)
+                        @foreach (var req in Model.Days)
                         {
-                            if (req.Request == false){
+                            if (!req.Request)
+                            {
                                 <a href="@Url.Action(MVC.CapoSettore.Users.ManageRequest())">
-                                <img src="~/images/red-request.png" alt="logo request" width="40" height="40" />
+                                    <img src="~/images/red-request.png" alt="logo request" width="40" height="40" />
                                 </a>
                                 break;
                             }
@@ -39,7 +40,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th style="width: 200px;">Dipendenti</th>
+                    <th class="sticky-column" style="width: 200px;">Dipendenti</th>
                     @foreach (var day in Model.CalendarData.SelectMany(week => week))
                     {
                         <th class="@day.CssClass">
@@ -54,11 +55,11 @@
                 @foreach (var user in Model.Users)
                 {
                     <tr>
-                        <td>@user.FirstName @user.LastName</td>
+                        <td class="sticky-column">@user.FirstName @user.LastName</td>
                         @foreach (var day in Model.CalendarData.SelectMany(week => week))
                         {
                             var req = Model.Days.FirstOrDefault(r => r.Id == user.Id && r.Day == day.Date);
-                            if (req != null && (day.CssClass == "lavorativo" || day.CssClass == "current-day"))
+                            if (req != null && req.Request != false && (day.CssClass == "lavorativo" || day.CssClass == "current-day"))
                             {
                                 if (req.HHoliday != 0)
                                 {
@@ -85,13 +86,15 @@
     </div>
 </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var container = document.getElementById("scrolling-container");
-        var currentDay = document.querySelector(".current-day");
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var container = document.getElementById("scrolling-container");
+            var currentDay = document.querySelector(".current-day");
 
-        if (currentDay) {
-            container.scrollLeft = currentDay.offsetLeft;
-        }
-    });
-</script>
+            if (currentDay) {
+                container.scrollLeft = currentDay.offsetLeft;
+            }
+        });
+    </script>
+}

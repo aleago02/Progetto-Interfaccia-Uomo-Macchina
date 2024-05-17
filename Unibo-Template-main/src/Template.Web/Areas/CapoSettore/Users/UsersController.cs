@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+Ôªøusing Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
@@ -48,7 +48,7 @@ namespace Template.Web.Areas.CapoSettore.Users
             else
             {
                 model.CalendarData = GenerateCalendarData(DateTime.Now.Year, DateTime.Now.Month, endYear, endMonth)
-                    .Select(week => week.Select(day => new CalendarCell { Day = day.Day, Status = day.Status, CssClass = day.CssClass, Date = day.Date}).ToList())
+                    .Select(week => week.Select(day => new CalendarCell { Day = day.Day, Status = day.Status, CssClass = day.CssClass, Date = day.Date }).ToList())
                     .ToList();
             }
             var users = await _sharedService.Query(model.ToUsersIndexQuery());
@@ -184,14 +184,14 @@ namespace Template.Web.Areas.CapoSettore.Users
                         }
                         else
                         {
-                            if (date.Date.AddDays(1)  == DateTime.Now.Date.AddDays(1))
+                            if (date.Date.AddDays(1) == DateTime.Now.Date.AddDays(1))
                             {
-                                status = IsFestivity(date) ? "Festivit‡" : "Lavorativo";
+                                status = IsFestivity(date) ? "Festivit√†" : "Lavorativo";
                                 cssClass = "current-day";
                             }
                             else
                             {
-                                status = IsFestivity(date) ? "Festivit‡" : "Lavorativo";
+                                status = IsFestivity(date) ? "Festivit√†" : "Lavorativo";
                                 cssClass = GetCssClassForStatus(status);
                             }
                         }
@@ -251,7 +251,7 @@ namespace Template.Web.Areas.CapoSettore.Users
         }
         private string GetCssClassForStatus(string status)
         {
-            return status?.ToLower() ?? "lavorativo"; 
+            return status?.ToLower() ?? "lavorativo";
         }
     }
 }
