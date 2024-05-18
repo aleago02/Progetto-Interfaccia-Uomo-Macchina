@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Linq;
@@ -58,6 +59,7 @@ namespace Template.Services.Shared
                 .Where(x => x.Day.Equals(cmd.Day))
                 .FirstOrDefaultAsync();
 
+
             if (day == null)
             {
                 day = new UserDayDetail
@@ -78,18 +80,23 @@ namespace Template.Services.Shared
                     day.HHoliday = cmd.HHoliday;
                 }
                 var request = await _dbContext.Requests
-                    .Where(x => x.Id == day.Id)
-                    .FirstOrDefaultAsync();
+                   .Where(x => x.UserDayDetailId == day.Id)
+                   .FirstOrDefaultAsync();
 
                 if (request == null)
                 {
                     request = new Request
                     {
-                        Id = day.Id,
+                        request = true,
+                        UserDayDetailId = day.Id
                     };
                     _dbContext.Requests.Add(request);
                 }
-                request.request = true;
+                else
+                {
+                    request.request = true;
+                }
+                day.Requests.Add(request);
             }
             if (cmd.HSmartWork != 0)
             {
