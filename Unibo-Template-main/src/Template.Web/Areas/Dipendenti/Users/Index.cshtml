@@ -37,11 +37,7 @@
                 {
                     @foreach (var user in Model.Users)
                     {
-                        @if (user.Request == false)
-                        {
-                            ViewData["Request"] = "";
-                        } 
-                        else if (user.Request) 
+                        if (user.Request) 
                         {
                             ViewData["Request"] = "table-warning";
                         }
