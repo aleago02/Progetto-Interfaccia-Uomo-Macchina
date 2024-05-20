@@ -59,6 +59,7 @@ namespace Template.Services.Shared
         {
             public Guid Id { get; set; }
             public DateOnly Day { get; set; }
+            public DateOnly DayEnd { get; set; }
             public decimal HSmartWork { get; set; }
             public decimal HHoliday { get; set; }
             public Boolean Request {  get; set; }
@@ -83,6 +84,7 @@ namespace Template.Services.Shared
     {
         public Guid Id { get; set; }
         public DateOnly Day { get; set; }
+        public DateOnly DayEnd { get; set; }
         public decimal HSmartWork { get; set; }
         public decimal HHoliday { get; set; }
     }
@@ -166,6 +168,7 @@ namespace Template.Services.Shared
                 Users = await queryable.Select(x=> new DaysIndexDTO.User
                 {
                     Day = x.Day,
+                    DayEnd = x.DayEnd,
                     Id = x.UserId,
                     HSmartWork = x.HSmartWorking,
                     HHoliday = x.HHoliday,

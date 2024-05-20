@@ -21,6 +21,7 @@ namespace Template.Services.Shared
 
 
         public DateOnly Day { get; set; }
+        public DateOnly DayEnd { get; set; }
         public decimal HSmartWorking { get; set; }
         public decimal HHoliday { get; set; }
 

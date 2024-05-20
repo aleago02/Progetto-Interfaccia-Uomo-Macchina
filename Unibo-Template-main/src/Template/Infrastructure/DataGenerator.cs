@@ -48,6 +48,7 @@ namespace Template.Infrastructure
                 {
                     UserId = Guid.Parse("3de6883f-9a0b-4667-aa53-0fbc52c4d300"), 
                     Day = new DateOnly(2024, 05, 24),
+                    DayEnd = new DateOnly(2024, 05, 24),
                     HSmartWorking = 8, 
                     HHoliday = 0,
                 },
@@ -55,6 +56,7 @@ namespace Template.Infrastructure
                 {
                     UserId = Guid.Parse("a030ee81-31c7-47d0-9309-408cb5ac0ac7"), 
                     Day = new DateOnly(2024, 05, 20),
+                    DayEnd = new DateOnly(2024, 05, 20),
                     HSmartWorking = 5, 
                     HHoliday = 0,
                 },
@@ -62,6 +64,7 @@ namespace Template.Infrastructure
                 {
                     UserId = Guid.Parse("bfdef48b-c7ea-4227-8333-c635af267354"),
                     Day = new DateOnly(2024, 05, 16),
+                    DayEnd = new DateOnly(2024, 05, 16),
                     HSmartWorking = 0,
                     HHoliday = 8,
                 },
@@ -69,6 +72,7 @@ namespace Template.Infrastructure
                 {
                     UserId = Guid.Parse("bfdef48b-c7ea-4227-8333-c635af267354"), 
                     Day = new DateOnly(2024, 05, 05),
+                    DayEnd = new DateOnly(2024, 05, 05),
                     HSmartWorking = 0,
                     HHoliday = 8,
                 });

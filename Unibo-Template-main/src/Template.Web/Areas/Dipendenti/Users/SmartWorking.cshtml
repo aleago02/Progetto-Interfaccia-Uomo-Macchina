@@ -20,7 +20,8 @@
             <form autocomplete="off" method="post" class="onit-form-sm" action="@Url.Action(MVC.Dipendenti.Users.SmartWorking())" id="edit-form">
                 <input id="edit-form-submitter" class="d-none" type="submit" />
                 <fieldset class="pb-3">
-                    <input class="form-control form-control-lg" type="text" asp-for="Day" pattern="\d{1,2}/\d{1,2}/\d{4}" placeholder="gg/mm/aa" value="@Model.DateTommorow()" >
+                    <input class="form-control form-control-lg" type="date" asp-for="Day">
+                    <br />
                     <label for="customRange2" class="form-label">Ore di SmartWorking : </label>
                     <output id="hour">1</output>
                     <div class="container-sm">

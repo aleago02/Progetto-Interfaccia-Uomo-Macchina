@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,6 +7,7 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Template.Services.Shared
 {
@@ -24,6 +26,7 @@ namespace Template.Services.Shared
         public DateOnly Day { get; set; }
         public decimal HSmartWork { get; set; }
         public decimal HHoliday { get; set; }
+        public DateOnly DayEnd { get; set; }
     }
 
     public partial class SharedService
@@ -59,12 +62,17 @@ namespace Template.Services.Shared
                 .Where(x => x.Day.Equals(cmd.Day))
                 .FirstOrDefaultAsync();
 
+            if (cmd.DayEnd.Equals(new DateOnly(0001, 01, 01))) {
+                cmd.DayEnd = cmd.Day;
+            }
+
 
             if (day == null)
             {
                 day = new UserDayDetail
                 {
                     Day = cmd.Day,
+                    DayEnd = cmd.DayEnd,
                 };
                 _dbContext.UsersDayDetails.Add(day);
             }
@@ -109,6 +117,11 @@ namespace Template.Services.Shared
                     day.HSmartWorking = cmd.HSmartWork;
                 }
                 
+            }
+            if (day.DayEnd != day.Day)
+            {
+                int giorni = (day.DayEnd.DayNumber - day.Day.DayNumber) + 1;
+                day.HHoliday = giorni * 8;
             }
             day.UserId = cmd.Id;
 

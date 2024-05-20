@@ -15,12 +15,15 @@
 }
 @section pageSubtitle{
     <div class="container-sm" style="margin-top: 35px">
-        <div class="row">Giorno di Ferie</div>
+        <div class="row">Giorni di Ferie</div>
         <div class="row g-3">
             <form autocomplete="off" method="post" class="onit-form-sm" action="@Url.Action(MVC.Dipendenti.Users.Ferie())" id="edit-form">
                 <input id="edit-form-submitter" class="d-none" type="submit" />
                 <fieldset class="pb-3">
-                    <input class="form-control form-control-lg" type="text" asp-for="Day" pattern="\d{1,2}/\d{1,2}/\d{4}" placeholder="gg/mm/aa" value="@Model.DateTommorow()" >
+                    <label>Inizio : </label><input class="form-control form-control-lg" type="date" asp-for="Day">
+                    <label>Fine : </label>
+                    <input class="form-control form-control-lg" type="date" asp-for="DayEnd" value="@Model.DateTommorow()"/>
+                    <br />
                     <label for="customRange2" class="form-label">Ore di Ferie : </label>
                     <output id="hour">1</output>
                     <div class="container-sm">

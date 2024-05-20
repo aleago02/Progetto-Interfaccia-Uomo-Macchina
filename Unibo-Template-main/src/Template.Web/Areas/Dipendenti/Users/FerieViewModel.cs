@@ -19,6 +19,7 @@ namespace Template.Web.Areas.Dipendenti.Users
             UserId = new Guid(id);
         }
         public DateOnly Day { get; set; }
+        public DateOnly DayEnd { get; set; }
         public decimal HSmartWork = 0;
         public decimal HHoliday { get; set; }
 
@@ -51,6 +52,7 @@ namespace Template.Web.Areas.Dipendenti.Users
                 Day = Day,
                 HSmartWork = HSmartWork,
                 HHoliday = HHoliday,
+                DayEnd = DayEnd
             };
         }
     }

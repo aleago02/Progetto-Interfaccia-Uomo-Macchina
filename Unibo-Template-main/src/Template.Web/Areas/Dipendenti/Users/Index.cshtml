@@ -19,7 +19,8 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Date</th>
+                    <th scope="col">Date Inizo</th>
+                    <th scope="col">Date Fine</th>
                     <th scope="col">WorkHour</th>
                     <th scope="col">SmartWork</th>
                     <th scope="col">Holiday</th>
@@ -52,8 +53,11 @@
                             <th scope="row">
                                 @user.Day
                             </th>
+                            <th scope="row">
+                                @user.DayEnd
+                            </th>
                             <td>
-                            @if (user.HSmartWork == 0 && user.HHoliday == 0)
+                                @if ((user.HSmartWork == 0 && user.HHoliday == 0))
                                 {
                                     @ViewData["Fullday"];
                                 }

@@ -46,7 +46,7 @@ namespace Template.Web.Areas.Dipendenti.Users
         [HttpPost]
         public virtual async Task<IActionResult> Ferie(FerieViewModel model)
         {
-            if (ModelState.IsValid && model.Day > DateOnly.FromDateTime(DateTime.Now))
+            if ( model.Day > DateOnly.FromDateTime(DateTime.Now))
             {
                 try
                 {
