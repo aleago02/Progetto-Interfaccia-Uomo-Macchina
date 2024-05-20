@@ -72,6 +72,17 @@
                             <td>
                                 @user.HHoliday
                             </td>
+                            <td>
+                                @if ((user.Request))
+                                {
+                                    <button class="dropdown-item text-danger" type="button" onclick="document.getElementById('delete-form').submit();">
+                                        <i class="fa-solid fa-trash"></i>&nbsp;Elimina
+                                    </button>
+                                    <form hidden autocomplete="off" id="delete-form" method="post" action="@Url.Action(MVC.Dipendenti.Users.Delete(user.Day))">
+                                        <input type="hidden" asp-for="@user.Day" />
+                                    </form>
+                                }
+                            </td>
                         </tr>
                     }
                 }
@@ -79,3 +90,5 @@
         </table>
     </div>
 }
+
+

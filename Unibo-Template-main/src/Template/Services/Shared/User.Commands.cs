@@ -130,5 +130,16 @@ namespace Template.Services.Shared
             return cmd.Id;
         }
 
+        public async Task DeleteDay(DateOnly day)
+        {
+            var dato = await _dbContext.UsersDayDetails
+                .Where(x => x.Day.Equals(day))
+                .FirstOrDefaultAsync();
+
+            _dbContext.UsersDayDetails.Remove(dato);
+
+            await _dbContext.SaveChangesAsync();
+        }
+
     }
 }

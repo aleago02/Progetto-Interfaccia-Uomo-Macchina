@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Threading.Tasks;
@@ -110,6 +111,23 @@ namespace Template.Web.Areas.Dipendenti.Users
             }
 
             return RedirectToAction(Actions.SmartWorking(model));
+        }
+
+        [HttpPost]
+        public virtual async Task<IActionResult> Delete(DateOnly day)
+        {
+            try
+            {
+                await _sharedService.DeleteDay(day);
+
+                Alerts.AddSuccess(this, "Richiesta cancellata");
+            } catch (Exception e)
+            {
+                Alerts.AddSuccess(this, "Errore nella cancellazione");
+            }
+
+
+            return RedirectToAction(Actions.Index());
         }
     }
 }
