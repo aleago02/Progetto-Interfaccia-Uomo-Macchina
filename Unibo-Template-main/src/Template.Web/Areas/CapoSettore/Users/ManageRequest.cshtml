@@ -13,7 +13,8 @@
         <thead>
             <tr>
                 <th>Dipendenti</th>
-                <th>Periodo</th>
+                <th>Periodo Inizio</th>
+                <th>Periodo Fine</th>
                 <th>Accetta</th>
                 <th>Rifiuta</th>
             </tr>
@@ -27,7 +28,8 @@
                     {
                         <tr>
                             <td>@user.FirstName @user.LastName</td>
-                            <td>@req.HHoliday</td>>
+                            <td>@req.Day</td>>
+                            <td>@req.DayEnd</td>
                             @if(req.Request == false)
                             {
                                 <td>

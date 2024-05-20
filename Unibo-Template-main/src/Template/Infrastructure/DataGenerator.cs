@@ -63,10 +63,10 @@ namespace Template.Infrastructure
                 new UserDayDetail
                 {
                     UserId = Guid.Parse("bfdef48b-c7ea-4227-8333-c635af267354"),
-                    Day = new DateOnly(2024, 05, 16),
+                    Day = new DateOnly(2024, 05, 13),
                     DayEnd = new DateOnly(2024, 05, 16),
                     HSmartWorking = 0,
-                    HHoliday = 8,
+                    HHoliday = 32,
                 },
                 new UserDayDetail
                 {

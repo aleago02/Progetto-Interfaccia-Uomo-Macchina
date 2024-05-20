@@ -77,12 +77,14 @@ namespace Template.Web.Areas.CapoSettore.Users
         {
             this.Id = userWorkIndexDTO.Id;
             this.Day = userWorkIndexDTO.Day;
+            this.DayEnd = userWorkIndexDTO.DayEnd;
             this.HSmartWork = userWorkIndexDTO.HSmartWork;
             this.HHoliday = userWorkIndexDTO.HHoliday;
             this.Request = userWorkIndexDTO.Request;
         }
         public Guid Id { get; set; }
         public DateOnly Day { get; set; }
+        public DateOnly DayEnd { get; set; }
         public decimal HSmartWork { get; set; }
         public decimal HHoliday { get; set; }
         public Boolean Request { get; set; }
