@@ -83,6 +83,13 @@ namespace Template.Web.Areas.Dipendenti.Users
             return new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Index);
         }
 
+        [NonAction]
+        [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
+        public virtual IActionResult Delete()
+        {
+            return new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Delete);
+        }
+
         [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
         public UsersController Actions => MVC.Dipendenti.Users;
         [GeneratedCode("R4Mvc", "1.0")]
@@ -101,6 +108,7 @@ namespace Template.Web.Areas.Dipendenti.Users
             public readonly string Index = "Index";
             public readonly string Ferie = "Ferie";
             public readonly string SmartWorking = "SmartWorking";
+            public readonly string Delete = "Delete";
         }
 
         [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
@@ -109,6 +117,7 @@ namespace Template.Web.Areas.Dipendenti.Users
             public const string Index = "Index";
             public const string Ferie = "Ferie";
             public const string SmartWorking = "SmartWorking";
+            public const string Delete = "Delete";
         }
 
         [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
@@ -184,6 +193,17 @@ namespace Template.Web.Areas.Dipendenti.Users
             var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.SmartWorking);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             SmartWorkingOverride(callInfo, model);
+            return System.Threading.Tasks.Task.FromResult<Microsoft.AspNetCore.Mvc.IActionResult>(callInfo);
+        }
+
+        [NonAction]
+        partial void DeleteOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo, System.DateOnly day);
+        [NonAction]
+        public override System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> Delete(System.DateOnly day)
+        {
+            var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Delete);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "day", day);
+            DeleteOverride(callInfo, day);
             return System.Threading.Tasks.Task.FromResult<Microsoft.AspNetCore.Mvc.IActionResult>(callInfo);
         }
     }

@@ -5,6 +5,8 @@ using Template.Services.Shared;
 using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
+using PublicHoliday;
 
 namespace Template.Web.Areas.Dipendenti.Users
 {
@@ -69,4 +71,6 @@ namespace Template.Web.Areas.Dipendenti.Users
         public decimal HHoliday { get; set; }
         public Boolean Request {  get; set; }
     }
+
+   
 }
