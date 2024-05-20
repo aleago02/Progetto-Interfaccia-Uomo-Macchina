@@ -18,10 +18,9 @@
     border-bottom: 1px solid black;
     z-index: 0;
 }
-.festività, .current-day, .lavorativo, .domenica, .sabato {
-    border-bottom: 1px solid black;
-}
+.festività,.current-day,.lavorativo,.domenica,.sabato {border-bottom: 1px solid black;}
 .current-day{background-color:lightblue!important;color:black!important;font-weight:bold!important;white-space:nowrap!important}
+.sabato{background-color:darkgray !important;color: black !important;font-weight: bold !important;}
 .domenica,.festività{background-color:lightcoral!important;color: black!important;font-weight: bold !important;}
 .table-container{overflow:auto;max-width 100%;}
 .dipendenti{overflow-y:auto;max-width100%;}

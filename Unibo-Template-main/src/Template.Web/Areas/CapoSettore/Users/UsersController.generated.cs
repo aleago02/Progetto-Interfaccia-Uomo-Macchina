@@ -83,27 +83,6 @@ namespace Template.Web.Areas.CapoSettore.Users
             return new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Index);
         }
 
-        [NonAction]
-        [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
-        public virtual IActionResult Edit()
-        {
-            return new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Edit);
-        }
-
-        [NonAction]
-        [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
-        public virtual IActionResult Delete()
-        {
-            return new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Delete);
-        }
-
-        [NonAction]
-        [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
-        public virtual IActionResult Update()
-        {
-            return new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Update);
-        }
-
         [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
         public UsersController Actions => MVC.CapoSettore.Users;
         [GeneratedCode("R4Mvc", "1.0")]
@@ -121,10 +100,6 @@ namespace Template.Web.Areas.CapoSettore.Users
         {
             public readonly string Index = "Index";
             public readonly string ManageRequest = "ManageRequest";
-            public readonly string New = "New";
-            public readonly string Edit = "Edit";
-            public readonly string Delete = "Delete";
-            public readonly string Update = "Update";
         }
 
         [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
@@ -132,10 +107,6 @@ namespace Template.Web.Areas.CapoSettore.Users
         {
             public const string Index = "Index";
             public const string ManageRequest = "ManageRequest";
-            public const string New = "New";
-            public const string Edit = "Edit";
-            public const string Delete = "Delete";
-            public const string Update = "Update";
         }
 
         [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
@@ -182,60 +153,6 @@ namespace Template.Web.Areas.CapoSettore.Users
             var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.ManageRequest);
             ManageRequestOverride(callInfo);
             return System.Threading.Tasks.Task.FromResult<Microsoft.AspNetCore.Mvc.IActionResult>(callInfo);
-        }
-
-        [NonAction]
-        partial void NewOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo);
-        [NonAction]
-        public override Microsoft.AspNetCore.Mvc.IActionResult New()
-        {
-            var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.New);
-            NewOverride(callInfo);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void EditOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo, System.Guid? id);
-        [NonAction]
-        public override System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> Edit(System.Guid? id)
-        {
-            var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Edit);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            EditOverride(callInfo, id);
-            return System.Threading.Tasks.Task.FromResult<Microsoft.AspNetCore.Mvc.IActionResult>(callInfo);
-        }
-
-        [NonAction]
-        partial void EditOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo, Template.Web.Areas.Example.Users.EditViewModel model);
-        [NonAction]
-        public override System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> Edit(Template.Web.Areas.Example.Users.EditViewModel model)
-        {
-            var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Edit);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
-            EditOverride(callInfo, model);
-            return System.Threading.Tasks.Task.FromResult<Microsoft.AspNetCore.Mvc.IActionResult>(callInfo);
-        }
-
-        [NonAction]
-        partial void DeleteOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo, System.Guid id);
-        [NonAction]
-        public override System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> Delete(System.Guid id)
-        {
-            var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Delete);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            DeleteOverride(callInfo, id);
-            return System.Threading.Tasks.Task.FromResult<Microsoft.AspNetCore.Mvc.IActionResult>(callInfo);
-        }
-
-        [NonAction]
-        partial void UpdateOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo, Template.Web.Areas.CapoSettore.Users.IndexViewModel model);
-        [NonAction]
-        public override Microsoft.AspNetCore.Mvc.IActionResult Update(Template.Web.Areas.CapoSettore.Users.IndexViewModel model)
-        {
-            var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Update);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
-            UpdateOverride(callInfo, model);
-            return callInfo;
         }
     }
 }

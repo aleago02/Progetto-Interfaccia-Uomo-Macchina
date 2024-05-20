@@ -36,18 +36,20 @@ namespace Template.Web.Areas.CapoSettore.Users
         public virtual async Task<IActionResult> Index(IndexViewModel model, DateTime? startDate = null, DateTime? endDate = null)
         {
             model.CurrentDate = DateTime.Now;
+            int startDay = DateTime.Now.Day + 1 - DateTime.Now.Day;
             int endYear = DateTime.Now.Year;
             int endMonth = DateTime.Now.Month;
+            int endDay = DateTime.DaysInMonth(endYear, endMonth);
 
             if (startDate.HasValue && endDate.HasValue)
             {
-                model.CalendarData = GenerateCalendarData(startDate.Value.Year, startDate.Value.Month, endDate.Value.Year, endDate.Value.Month)
+                model.CalendarData = GenerateCalendarData(startDate.Value.Day, startDate.Value.Month, startDate.Value.Year, endDate.Value.Day, endDate.Value.Month, endDate.Value.Year)
                     .Select(week => week.Select(day => new CalendarCell { Day = day.Day, Status = day.Status, CssClass = day.CssClass, Date = day.Date }).ToList())
                     .ToList();
             }
             else
             {
-                model.CalendarData = GenerateCalendarData(DateTime.Now.Year, DateTime.Now.Month, endYear, endMonth)
+                model.CalendarData = GenerateCalendarData(startDay, DateTime.Now.Month, DateTime.Now.Year, endDay, endMonth, endYear)
                     .Select(week => week.Select(day => new CalendarCell { Day = day.Day, Status = day.Status, CssClass = day.CssClass, Date = day.Date }).ToList())
                     .ToList();
             }
@@ -69,87 +71,22 @@ namespace Template.Web.Areas.CapoSettore.Users
             return View(model);
         }
 
-        [HttpGet]
-        public virtual IActionResult New()
-        {
-            return RedirectToAction(Actions.Edit());
-        }
-
-        [HttpGet]
-        public virtual async Task<IActionResult> Edit(Guid? id)
-        {
-            var model = new EditViewModel();
-
-            if (id.HasValue)
-            {
-                model.SetUser(await _sharedService.Query(new UserDetailQuery
-                {
-                    Id = id.Value,
-                }));
-            }
-
-            return View(model);
-        }
-
-        [HttpPost]
-        public virtual async Task<IActionResult> Edit(EditViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    model.Id = await _sharedService.Handle(model.ToAddOrUpdateUserCommand());
-
-                    Alerts.AddSuccess(this, "Informazioni aggiornate");
-
-                    // Esempio lancio di un evento SignalR
-                    await _publisher.Publish(new NewMessageEvent
-                    {
-                        IdGroup = model.Id.Value,
-                        IdUser = model.Id.Value,
-                        IdMessage = Guid.NewGuid()
-                    });
-                }
-                catch (Exception e)
-                {
-                    ModelState.AddModelError(string.Empty, e.Message);
-                }
-            }
-
-            if (ModelState.IsValid == false)
-            {
-                Alerts.AddError(this, "Errore in aggiornamento");
-            }
-
-            return RedirectToAction(Actions.Edit(model.Id));
-        }
-
-        [HttpPost]
-        public virtual async Task<IActionResult> Delete(Guid id)
-        {
-            // Query to delete user
-
-            Alerts.AddSuccess(this, "Utente cancellato");
-
-            return RedirectToAction(Actions.Index());
-        }
-
-        [HttpPost]
-        public virtual IActionResult Update(IndexViewModel model)
-        {
-            return RedirectToAction(Actions.Index());
-        }
-
-        private List<List<CalendarDay>> GenerateCalendarData(int startYear, int startMonth, int endYear, int endMonth)
+        private static List<List<CalendarDay>> GenerateCalendarData(int startDay, int startMonth, int startYear, int endDay, int endMonth, int endYear)
         {
             var calendarData = new List<List<CalendarDay>>();
 
             for (var year = startYear; year <= endYear; year++)
             {
-                for (var month = startMonth; month <= (year == endYear ? endMonth : 12); month++)
+                var startMonthLoop = (year == startYear) ? startMonth : 1;
+                var endMonthLoop = (year == endYear) ? endMonth : 12;
+
+                for (var month = startMonthLoop; month <= endMonthLoop; month++)
                 {
                     var daysInMonth = DateTime.DaysInMonth(year, month);
-                    for (var day = 1; day <= daysInMonth; day++)
+                    var startDayLoop = (year == startYear && month == startMonth) ? startDay : 1;
+                    var endDayLoop = (year == endYear && month == endMonth) ? endDay : daysInMonth;
+
+                    for (var day = startDayLoop; day <= endDayLoop; day++)
                     {
                         var date = new DateTime(year, month, day);
 
@@ -216,12 +153,11 @@ namespace Template.Web.Areas.CapoSettore.Users
                     }
                 }
             }
-
             return calendarData;
         }
 
 
-        private bool IsFestivity(DateTime date)
+        private static bool IsFestivity(DateTime date)
         {
             var holidays = new ItalyPublicHoliday().PublicHolidaysInformation(date.Year);
 
@@ -230,26 +166,7 @@ namespace Template.Web.Areas.CapoSettore.Users
             return isFestivity;
         }
 
-        private string GetStatusForDay(DateTime day, PublicHoliday.Holiday ferieTrovata)
-        {
-            if (day.DayOfWeek == DayOfWeek.Sunday)
-            {
-                return "Domenica";
-            }
-            else if (day.DayOfWeek == DayOfWeek.Saturday)
-            {
-                return "Sabato";
-            }
-            else if (ferieTrovata != null)
-            {
-                return ferieTrovata.GetName();
-            }
-            else
-            {
-                return "Lavorativo";
-            }
-        }
-        private string GetCssClassForStatus(string status)
+        private static string GetCssClassForStatus(string status)
         {
             return status?.ToLower() ?? "lavorativo";
         }

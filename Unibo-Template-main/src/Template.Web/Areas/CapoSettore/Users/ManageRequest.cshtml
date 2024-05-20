@@ -6,10 +6,10 @@
             <a class="btn btn-primary" href="@Url.Action(MVC.CapoSettore.Users.Index())">Dashboard</a>
         </div>
     </div>
-
 }
+
 <div>
-    <table class="table">
+    <table class="table table-success table-striped">
         <thead>
             <tr>
                 <th>Dipendenti</th>
@@ -33,15 +33,14 @@
                             @if(req.Request == false)
                             {
                                 <td>
-                                    <input type="checkbox">
+                                    <button type="button" class="btn btn-success">V</button>
                                 </td>
                                 <td>
-                                    <input type="checkbox">
+                                    <button type="button" class="btn btn-danger">X</button>
                                 </td>
                             }
                         </tr>
                     }
-
                 }
             }
         </tbody>
