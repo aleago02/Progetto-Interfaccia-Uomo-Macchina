@@ -24,22 +24,33 @@
             {
                 @foreach(var req in Model.Days)
                 {
-                    if (user.Id == req.Id)
+                    if (user.Id == req.UserId)
                     {
-                        <tr>
-                            <td>@user.FirstName @user.LastName</td>
-                            <td>@req.Day</td>>
-                            <td>@req.DayEnd</td>
-                            @if(req.Request == false)
-                            {
-                                <td>
-                                    <button type="button" class="btn btn-success">V</button>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-danger">X</button>
-                                </td>
-                            }
-                        </tr>
+                        @if (req.HHoliday != 0)
+                        {
+                            <tr>
+                                <td>@user.FirstName @user.LastName</td>
+                                <td>@req.Day</td>>
+                                <td>@req.DayEnd</td>
+                                {
+                                @if (req.Request == false)
+                                {
+                                    <td>
+                                        <form asp-action="Accept" method="post">
+                                            <input type="hidden" name="Id" value="@req.Id" />
+                                            <button type="submit" class="btn btn-success">V</button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form asp-action="Reject" method="post">
+                                            <input type="hidden" name="Id" value="@req.Id" />
+                                            <button type="submit" class="btn btn-danger">X</button>
+                                        </form>
+                                    </td>
+                                }
+
+                            </tr>
+                        }
                     }
                 }
             }

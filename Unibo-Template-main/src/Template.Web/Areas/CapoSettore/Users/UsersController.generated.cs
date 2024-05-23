@@ -83,6 +83,13 @@ namespace Template.Web.Areas.CapoSettore.Users
             return new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Index);
         }
 
+        [NonAction]
+        [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
+        public virtual IActionResult Accept()
+        {
+            return new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Accept);
+        }
+
         [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
         public UsersController Actions => MVC.CapoSettore.Users;
         [GeneratedCode("R4Mvc", "1.0")]
@@ -100,6 +107,7 @@ namespace Template.Web.Areas.CapoSettore.Users
         {
             public readonly string Index = "Index";
             public readonly string ManageRequest = "ManageRequest";
+            public readonly string Accept = "Accept";
         }
 
         [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
@@ -107,6 +115,7 @@ namespace Template.Web.Areas.CapoSettore.Users
         {
             public const string Index = "Index";
             public const string ManageRequest = "ManageRequest";
+            public const string Accept = "Accept";
         }
 
         [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
@@ -152,6 +161,17 @@ namespace Template.Web.Areas.CapoSettore.Users
         {
             var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.ManageRequest);
             ManageRequestOverride(callInfo);
+            return System.Threading.Tasks.Task.FromResult<Microsoft.AspNetCore.Mvc.IActionResult>(callInfo);
+        }
+
+        [NonAction]
+        partial void AcceptOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo, int Id);
+        [NonAction]
+        public override System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> Accept(int Id)
+        {
+            var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Accept);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "Id", Id);
+            AcceptOverride(callInfo, Id);
             return System.Threading.Tasks.Task.FromResult<Microsoft.AspNetCore.Mvc.IActionResult>(callInfo);
         }
     }

@@ -141,5 +141,19 @@ namespace Template.Services.Shared
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task AcceptRequest(int Id)
+        {
+            var userRequest = await _dbContext.Requests
+                .Where(x => x.Id == Id)
+                .FirstOrDefaultAsync();
+
+            if (userRequest != null)
+            {
+                userRequest.request = true;
+
+                await _dbContext.SaveChangesAsync();
+            }
+        }
+
     }
 }

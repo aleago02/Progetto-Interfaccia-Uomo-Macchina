@@ -57,7 +57,8 @@ namespace Template.Services.Shared
 
         public class User
         {
-            public Guid Id { get; set; }
+            public int Id { get; set; }
+            public Guid UserId { get; set; }
             public DateOnly Day { get; set; }
             public DateOnly DayEnd { get; set; }
             public decimal HSmartWork { get; set; }
@@ -167,9 +168,10 @@ namespace Template.Services.Shared
             {
                 Users = await queryable.Select(x=> new DaysIndexDTO.User
                 {
+                    Id = x.Id,
                     Day = x.Day,
                     DayEnd = x.DayEnd,
-                    Id = x.UserId,
+                    UserId = x.UserId,
                     HSmartWork = x.HSmartWorking,
                     HHoliday = x.HHoliday,
                     Request = x.Requests.Select(y=> y.request).FirstOrDefault()

@@ -57,7 +57,7 @@ namespace Template.Web.Areas.Dipendenti.Users
     {
         public UserDaysIndexViewModel(DaysIndexDTO.User userWorkIndexDTO)
         {
-            this.Id = userWorkIndexDTO.Id;  
+            this.Id = userWorkIndexDTO.UserId;  
             this.Day = userWorkIndexDTO.Day;
             this.DayEnd = userWorkIndexDTO.DayEnd;
             this.HSmartWork = userWorkIndexDTO.HSmartWork;

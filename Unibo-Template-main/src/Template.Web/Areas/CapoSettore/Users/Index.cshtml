@@ -19,7 +19,7 @@
                         {
                             if (!req.Request)
                             {
-                                <a href="@Url.Action(MVC.CapoSettore.Users.ManageRequest())">
+                                <a asp-action="ManageRequest" asp-controller="Users" asp-area="CapoSettore">
                                     <img src="~/images/red-request.png" alt="logo request" width="40" height="40" />
                                 </a>
                                 break;
@@ -58,23 +58,26 @@
                         <td class="sticky-column">@user.FirstName @user.LastName</td>
                         @foreach (var day in Model.CalendarData.SelectMany(week => week))
                         {
-                            var req = Model.Days.FirstOrDefault(r => r.Id == user.Id && r.Day == day.Date);
-                            if (req != null && req.Request != false && (day.CssClass == "lavorativo" || day.CssClass == "current-day"))
+                            bool cellFilled = false;
+                            foreach (var req in Model.Days)
                             {
-                                if (req.HHoliday != 0)
+                                if (req.UserId == user.Id && day.CssClass == "lavorativo" && req.Day <= day.Date && req.DayEnd >= day.Date)
                                 {
-                                    <td class="@day.CssClass">Ferie</td>
-                                }
-                                else if (req.HSmartWork != 0)
-                                {
-                                    <td class="@day.CssClass">Smart Working</td>
-                                }
-                                else
-                                {
-                                    <td class="@day.CssClass"></td>
+                                    if (req.HHoliday != 0 && req.Request)
+                                    {
+                                        <td class="@day.CssClass">Ferie</td>
+                                        cellFilled = true;
+                                        break;
+                                    }
+                                    else if (req.HSmartWork != 0)
+                                    {
+                                        <td class="@day.CssClass">Smart Working</td>
+                                        cellFilled = true;
+                                        break;
+                                    }
                                 }
                             }
-                            else
+                            if (!cellFilled)
                             {
                                 <td class="@day.CssClass"></td>
                             }

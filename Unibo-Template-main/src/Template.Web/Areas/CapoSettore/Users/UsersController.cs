@@ -71,6 +71,21 @@ namespace Template.Web.Areas.CapoSettore.Users
             return View(model);
         }
 
+        [HttpPost]
+        public virtual async Task<IActionResult> Accept(int Id)
+        {
+            try
+            {
+                await _sharedService.AcceptRequest(Id);
+                Alerts.AddSuccess(this, "Richiesta Accettata");
+            }
+            catch
+            {
+                Alerts.AddSuccess(this, "Errore");
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
         private static List<List<CalendarDay>> GenerateCalendarData(int startDay, int startMonth, int startYear, int endDay, int endMonth, int endYear)
         {
             var calendarData = new List<List<CalendarDay>>();
