@@ -161,8 +161,8 @@ namespace Template.Services.Shared
         {
             var users = _dbContext.Users.Include(x => x.UsersDayDetails).ThenInclude(x=> x.Requests).ToArray();
 
-            var queryable = _dbContext.UsersDayDetails;
-                //.Where(x => x.UserId == qry.IdCurrentUser);
+            var queryable = _dbContext.UsersDayDetails
+                .Where(x => x.UserId == qry.IdCurrentUser);
 
             return new DaysIndexDTO
             {

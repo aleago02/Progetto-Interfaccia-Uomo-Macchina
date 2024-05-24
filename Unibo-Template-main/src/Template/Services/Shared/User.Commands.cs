@@ -23,6 +23,7 @@ namespace Template.Services.Shared
     public class AddOrUpdateUserDayCommand
     {
         public Guid Id { get; set; }
+        public Guid UserId { get; set; }
         public DateOnly Day { get; set; }
         public decimal HSmartWork { get; set; }
         public decimal HHoliday { get; set; }
@@ -59,7 +60,7 @@ namespace Template.Services.Shared
         {
 
             var day = await _dbContext.UsersDayDetails
-                .Where(x => x.Day.Equals(cmd.Day))
+                .Where(x => x.UserId.Equals(cmd.Id) && x.Day.Equals(cmd.Day))
                 .FirstOrDefaultAsync();
 
             if (cmd.DayEnd.Equals(new DateOnly(0001, 01, 01))) {
@@ -73,6 +74,7 @@ namespace Template.Services.Shared
                 {
                     Day = cmd.Day,
                     DayEnd = cmd.DayEnd,
+                    UserId = cmd.Id
                 };
                 _dbContext.UsersDayDetails.Add(day);
             }
@@ -130,10 +132,10 @@ namespace Template.Services.Shared
             return cmd.Id;
         }
 
-        public async Task DeleteDay(DateOnly day)
+        public async Task DeleteDay(int day)
         {
             var dato = await _dbContext.UsersDayDetails
-                .Where(x => x.Day.Equals(day))
+                .Where(x => x.Id.Equals(day))
                 .FirstOrDefaultAsync();
 
             _dbContext.UsersDayDetails.Remove(dato);

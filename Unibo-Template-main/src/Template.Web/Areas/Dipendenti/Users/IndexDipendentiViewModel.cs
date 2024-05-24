@@ -57,14 +57,16 @@ namespace Template.Web.Areas.Dipendenti.Users
     {
         public UserDaysIndexViewModel(DaysIndexDTO.User userWorkIndexDTO)
         {
-            this.Id = userWorkIndexDTO.UserId;  
+            this.UserId = userWorkIndexDTO.UserId;
+            this.Id = userWorkIndexDTO.Id;
             this.Day = userWorkIndexDTO.Day;
             this.DayEnd = userWorkIndexDTO.DayEnd;
             this.HSmartWork = userWorkIndexDTO.HSmartWork;
             this.HHoliday = userWorkIndexDTO.HHoliday;
             this.Request = userWorkIndexDTO.Request;    
         }
-        public Guid Id { get; set; }  
+        public int Id { get; set; }
+        public Guid UserId { get; }
         public DateOnly Day { get; set; }
         public DateOnly DayEnd { get; set; }
         public decimal HSmartWork { get; set; }

@@ -114,7 +114,7 @@ namespace Template.Web.Areas.Dipendenti.Users
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Delete(DateOnly day)
+        public virtual async Task<IActionResult> Delete(int day)
         {
             try
             {
