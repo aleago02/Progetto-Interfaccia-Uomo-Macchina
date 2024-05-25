@@ -26,15 +26,14 @@
                 {
                     if (user.Id == req.UserId)
                     {
-                        @if (req.HHoliday != 0)
+                        @if (req.Request == false)
                         {
-                            <tr>
-                                <td>@user.FirstName @user.LastName</td>
-                                <td>@req.Day</td>>
-                                <td>@req.DayEnd</td>
-                                {
-                                @if (req.Request == false)
-                                {
+                            @if (req.HHoliday != 0)
+                            {
+                                <tr>
+                                    <td>@user.FirstName @user.LastName</td>
+                                    <td>@req.Day</td>>
+                                    <td>@req.DayEnd</td>
                                     <td>
                                         <form asp-action="Accept" method="post">
                                             <input type="hidden" name="Id" value="@req.Id" />
@@ -47,9 +46,8 @@
                                             <button type="submit" class="btn btn-danger">X</button>
                                         </form>
                                     </td>
-                                }
-
-                            </tr>
+                                </tr>
+                            }
                         }
                     }
                 }

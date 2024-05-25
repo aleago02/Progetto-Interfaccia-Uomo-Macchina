@@ -128,6 +128,8 @@ namespace Template.Services.Shared
             day.UserId = cmd.Id;
 
             await _dbContext.SaveChangesAsync();
+            var q = _dbContext.Requests;
+            System.Diagnostics.Debug.WriteLine(q.ToString());
 
             return cmd.Id;
         }
@@ -145,17 +147,21 @@ namespace Template.Services.Shared
 
         public async Task AcceptRequest(int Id)
         {
-            var userRequest = await _dbContext.Requests
-                .Where(x => x.Id == Id)
-                .FirstOrDefaultAsync();
+            var userRequest = _dbContext.Requests;
 
-            if (userRequest != null)
+            foreach(var request in userRequest)
             {
-                userRequest.request = true;
+                if (request != null) 
+                { 
+                    if (request.Id == Id)
+                    {
+                        request.request = true;
 
-                await _dbContext.SaveChangesAsync();
+                        await _dbContext.SaveChangesAsync();
+                    }
+                }
             }
-        }
 
+        }
     }
 }

@@ -157,7 +157,7 @@ namespace Template.Services.Shared
             };
         }
 
-        public async Task<DaysIndexDTO> QueryDays(DaysSelectQuery qry)
+        public async Task<DaysIndexDTO> QueryDaysDipendenti(DaysSelectQuery qry)
         {
             var users = _dbContext.Users.Include(x => x.UsersDayDetails).ThenInclude(x=> x.Requests).ToArray();
 
@@ -177,18 +177,28 @@ namespace Template.Services.Shared
                     Request = x.Requests.Select(y=> y.request).FirstOrDefault()
                 }).OrderBy(x => x.Day).ToArrayAsync(),
 
-                //from UsersDayDetails in _dbContext.UsersDayDetails
-                //        where UsersDayDetails.UserId == qry.IdCurrentUser
-                //        join Requests in _dbContext.Requests
-                //        on UsersDayDetails.Id equals Requests.Id into requestGroup
-                //        from request in requestGroup.DefaultIfEmpty()
-                //        select new DaysIndexDTO.User
-                //        {
-                //            Day = UsersDayDetails.Day,
-                //            HSmartWork = UsersDayDetails.HSmartWorking,
-                //            HHoliday = UsersDayDetails.HHoliday,
-                //            Request = request.request != null ? request.request : false  // Assuming Request is of type bool
-                //        },
+                Count = await queryable.CountAsync()
+            };
+        }
+
+        public async Task<DaysIndexDTO> QueryDays(DaysSelectQuery qry)
+        {
+            var users = _dbContext.Users.Include(x => x.UsersDayDetails).ThenInclude(x => x.Requests).ToArray();
+
+            var queryable = _dbContext.UsersDayDetails;
+
+            return new DaysIndexDTO
+            {
+                Users = await queryable.Select(x => new DaysIndexDTO.User
+                {
+                    Id = x.Id,
+                    Day = x.Day,
+                    DayEnd = x.DayEnd,
+                    UserId = x.UserId,
+                    HSmartWork = x.HSmartWorking,
+                    HHoliday = x.HHoliday,
+                    Request = x.Requests.Select(y => y.request).FirstOrDefault()
+                }).OrderBy(x => x.Day).ToArrayAsync(),
                 Count = await queryable.CountAsync()
             };
         }

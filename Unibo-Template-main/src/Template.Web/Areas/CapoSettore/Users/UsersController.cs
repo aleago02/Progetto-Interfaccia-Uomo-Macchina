@@ -83,9 +83,22 @@ namespace Template.Web.Areas.CapoSettore.Users
             {
                 Alerts.AddSuccess(this, "Errore");
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(ManageRequest));
         }
 
+        [HttpPost]
+        public virtual async Task<IActionResult> Reject(int Id)
+        {
+            try
+            {
+                Alerts.AddSuccess(this, "Richiesta Rifiutata");
+            }
+            catch
+            {
+                Alerts.AddSuccess(this, "Errore");
+            }
+            return RedirectToAction(nameof(ManageRequest));
+        }
         private static List<List<CalendarDay>> GenerateCalendarData(int startDay, int startMonth, int startYear, int endDay, int endMonth, int endYear)
         {
             var calendarData = new List<List<CalendarDay>>();

@@ -17,9 +17,9 @@
                     <div class="col">
                         @foreach (var req in Model.Days)
                         {
-                            if (!req.Request)
+                            @if (!req.Request)
                             {
-                                <a asp-action="ManageRequest" asp-controller="Users" asp-area="CapoSettore">
+                                <a href="@Url.Action(MVC.CapoSettore.Users.ManageRequest())">
                                     <img src="~/images/red-request.png" alt="logo request" width="40" height="40" />
                                 </a>
                                 break;
