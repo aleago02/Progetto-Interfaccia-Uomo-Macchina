@@ -63,7 +63,7 @@
                             {
                                 if (req.UserId == user.Id && day.CssClass == "lavorativo" && req.Day <= day.Date && req.DayEnd >= day.Date)
                                 {
-                                    if (req.HHoliday != 0 && req.Request)
+                                    if (req.HHoliday != 0 && !req.Request)
                                     {
                                         <td class="@day.CssClass">Ferie</td>
                                         cellFilled = true;

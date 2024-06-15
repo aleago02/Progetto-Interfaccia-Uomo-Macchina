@@ -148,20 +148,18 @@ namespace Template.Services.Shared
         public async Task AcceptRequest(int Id)
         {
             var userRequest = _dbContext.Requests;
-
             foreach(var request in userRequest)
             {
                 if (request != null) 
                 { 
-                    if (request.Id == Id)
+                    if (request.UserDayDetailId == Id)
                     {
-                        request.request = true;
-
+                        request.request = false;
+                        
                         await _dbContext.SaveChangesAsync();
                     }
                 }
             }
-
         }
     }
 }

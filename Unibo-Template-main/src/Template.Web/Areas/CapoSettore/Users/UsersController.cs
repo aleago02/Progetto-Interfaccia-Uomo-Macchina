@@ -77,6 +77,7 @@ namespace Template.Web.Areas.CapoSettore.Users
             try
             {
                 await _sharedService.AcceptRequest(Id);
+                
                 Alerts.AddSuccess(this, "Richiesta Accettata");
             }
             catch
