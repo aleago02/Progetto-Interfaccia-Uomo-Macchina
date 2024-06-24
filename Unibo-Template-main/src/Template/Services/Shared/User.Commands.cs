@@ -78,20 +78,20 @@ namespace Template.Services.Shared
                 };
                 _dbContext.UsersDayDetails.Add(day);
             }
-
+          
             if (cmd.HHoliday != 0)
             {
                 if (cmd.HHoliday + day.HSmartWorking > 8)
                 {
                     day.HHoliday = 8 - day.HSmartWorking;
-                } 
+                }
                 else
                 {
                     day.HHoliday = cmd.HHoliday;
                 }
                 var request = await _dbContext.Requests
-                   .Where(x => x.UserDayDetailId == day.Id)
-                   .FirstOrDefaultAsync();
+                    .Where(x => x.UserDayDetailId == day.Id)
+                    .FirstOrDefaultAsync();
 
                 if (request == null)
                 {
@@ -118,11 +118,25 @@ namespace Template.Services.Shared
                 {
                     day.HSmartWorking = cmd.HSmartWork;
                 }
+
                 
+            } else
+            {
+
             }
             if (day.DayEnd != day.Day)
             {
-                int giorni = (day.DayEnd.DayNumber - day.Day.DayNumber) + 1;
+                int i = 0;
+              
+                for (DateOnly d = day.Day; d <= day.DayEnd; d = d.AddDays(1))
+                {
+                    if (d.DayOfWeek == DayOfWeek.Sunday || d.DayOfWeek == DayOfWeek.Saturday)
+                    {
+                        i++;
+                    }
+                }
+
+                int giorni = (day.DayEnd.DayNumber - day.Day.DayNumber) + 1 - i;
                 day.HHoliday = giorni * 8;
             }
             day.UserId = cmd.Id;
