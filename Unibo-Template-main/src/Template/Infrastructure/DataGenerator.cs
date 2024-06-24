@@ -18,29 +18,29 @@ namespace Template.Infrastructure
                 new User
                 {
                     Id = Guid.Parse("3de6883f-9a0b-4667-aa53-0fbc52c4d300"), // Forced to specific Guid for tests
-                    Email = "email1@test.it",
+                    Email = "alberto.rossi@vanko.it",
                     Password = "M0Cuk9OsrcS/rTLGf5SY6DUPqU2rGc1wwV2IL88GVGo=", // SHA-256 of text "Prova"
-                    FirstName = "Nome1",
-                    LastName = "Cognome1",
-                    NickName = "Nickname1"
+                    FirstName = "Alberto",
+                    LastName = "Rossi",
+                    NickName = "Albero"
                 },
                 new User
                 {
                     Id = Guid.Parse("a030ee81-31c7-47d0-9309-408cb5ac0ac7"), // Forced to specific Guid for tests
-                    Email = "amministratore@test.it",
+                    Email = "amministratore@vanko.it",
                     Password = "Uy6qvZV0iA2/drm4zACDLCCm7BE9aCKZVQ16bg80XiU=", // SHA-256 of text "Test"
-                    FirstName = "Nome2",
-                    LastName = "Cognome2",
-                    NickName = "Nickname2"
+                    FirstName = "Admin",
+                    LastName = "Admin",
+                    NickName = "Admin"
                 },
                 new User
                 {
                     Id = Guid.Parse("bfdef48b-c7ea-4227-8333-c635af267354"), // Forced to specific Guid for tests
-                    Email = "aa",
+                    Email = "admin.admin@vanko.it",
                     Password = "Uy6qvZV0iA2/drm4zACDLCCm7BE9aCKZVQ16bg80XiU=", // SHA-256 of text "Test"
-                    FirstName = "Lorenzo",
-                    LastName = "Needle",
-                    NickName = "Asdrubale"
+                    FirstName = "Admin1",
+                    LastName = "Admin1",
+                    NickName = "Admin1"
                 });
 
             context.UsersDayDetails.AddRange(
