@@ -77,7 +77,6 @@ namespace Template.Web.Areas.CapoSettore.Users
             try
             {
                 await _sharedService.AcceptRequest(Id);
-                
                 Alerts.AddSuccess(this, "Richiesta Accettata");
             }
             catch
@@ -92,6 +91,7 @@ namespace Template.Web.Areas.CapoSettore.Users
         {
             try
             {
+                await _sharedService.DeleteDay(Id);
                 Alerts.AddSuccess(this, "Richiesta Rifiutata");
             }
             catch

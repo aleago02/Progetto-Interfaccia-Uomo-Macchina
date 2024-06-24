@@ -17,7 +17,7 @@
                     <div class="col">
                         @foreach (var req in Model.Days)
                         {
-                            @if (!req.Request)
+                            @if (req.Request)
                             {
                                 <a href="@Url.Action(MVC.CapoSettore.Users.ManageRequest())">
                                     <img src="~/images/red-request.png" alt="logo request" width="40" height="40" />
@@ -27,7 +27,7 @@
                         }
                     </div>
                     <div class="col">
-                        <a class="btn btn-primary" href="@Url.Action(MVC.Dipendenti.Users.Index())">Portale</a>
+                        <a class="btn btn-primary" href="@Url.Action(MVC.Dipendenti.Users.Index())">Richieste</a>
                     </div>
                 </div>
             </form>
