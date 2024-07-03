@@ -38,7 +38,7 @@ namespace Template.Web.Features.Login
 
             };
 
-            if (utente.Email == "amministratore@vanko.it" || utente.Email == "admin.admin@vanko.it")
+            if (utente.Email == "bob@vanko.it")
             {
                 claims.Add(new Claim(ClaimTypes.GroupSid, "CapoSettore"));
                 var clamiIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
