@@ -26,6 +26,8 @@ namespace Template.Web.Areas.CapoSettore.Users
         public override IActionResult GetRoute() => MVC.CapoSettore.Users.Index(this).GetAwaiter().GetResult();
 
         public DateTime CurrentDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         public class CalendarCell
         {

@@ -1,15 +1,30 @@
 ﻿@model Template.Web.Areas.CapoSettore.Users.IndexViewModel
 
 @section pageTitle {
+    <style>
+        ul#navigazione li {
+            display: inline;
+        }
+    </style>
+
+@*     <nav>
+        <ul id="navigazione">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/about">Gli autori</a></li>
+            <li><a href="/refactoring">Il progetto four2five</a></li>
+            <li><a href="/archives">Archivio</a></li>
+        </ul>
+    </nav> *@
+
     <div class="container">
         <div class="row g-4 align-items-end">
             <form method="get" action="@Url.Action(MVC.CapoSettore.Users.Index())">
                 <div class="row">
                     <div class="col">
-                        <input type="date" class="form-control" id="startDate" name="startDate" />
+                        <input type="date" class="form-control" id="startDate" name="startDate" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
                     </div>
                     <div class="col">
-                        <input type="date" class="form-control" id="endDate" name="endDate" />
+                        <input type="date" class="form-control" id="endDate" name="endDate" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
                     </div>
                     <div class="col">
                         <button type="submit" class="btn btn-primary mb-2">Aggiorna</button>
@@ -40,13 +55,13 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th class="sticky-column" style="width: 200px;">Dipendenti</th>
+                    <th class="dipendenti sticky-column" style="width: 200px;">Dipendenti</th>
                     @foreach (var day in Model.CalendarData.SelectMany(week => week))
                     {
                         <th class="@day.CssClass">
-                            <span>@day.Day</span>
-                            <br />
                             <span>@day.Status</span>
+                            <br />
+                            <span>@day.Day</span>
                         </th>
                     }
                 </tr>
@@ -55,17 +70,24 @@
                 @foreach (var user in Model.Users)
                 {
                     <tr>
-                        <td class="sticky-column">@user.FirstName @user.LastName</td>
+                        <td class="dipendenti sticky-column">@user.FirstName @user.LastName</td>
                         @foreach (var day in Model.CalendarData.SelectMany(week => week))
                         {
                             bool cellFilled = false;
                             foreach (var req in Model.Days)
                             {
-                                if (req.UserId == user.Id && day.CssClass == "lavorativo" && req.Day <= day.Date && req.DayEnd >= day.Date)
+                                if (req.UserId == user.Id && req.Day <= day.Date && req.DayEnd >= day.Date)
                                 {
-                                    if (req.HHoliday != 0 && !req.Request)
+                                    if (req.HHoliday != 0 && !day.CssClass.Contains("sabato") && !day.CssClass.Contains("domenica") && !day.CssClass.Contains("festività"))
                                     {
-                                        <td class="@day.CssClass">Ferie</td>
+                                        if (req.Request)
+                                        {
+                                            <td class="@day.CssClass">RF</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="@day.CssClass">Ferie</td>
+                                        }
                                         cellFilled = true;
                                         break;
                                     }
@@ -88,6 +110,8 @@
         </table>
     </div>
 </div>
+
+<p>Form considerazioni: <a href="https://forms.gle/rzpi6xJrke17fCbh6">Link al form</a></p>
 
 @section Scripts {
     <script>

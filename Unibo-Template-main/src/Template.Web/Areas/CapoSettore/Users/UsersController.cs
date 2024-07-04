@@ -36,7 +36,7 @@ namespace Template.Web.Areas.CapoSettore.Users
         public virtual async Task<IActionResult> Index(IndexViewModel model, DateTime? startDate = null, DateTime? endDate = null)
         {
             model.CurrentDate = DateTime.Now;
-            int startDay = DateTime.Now.Day + 1 - DateTime.Now.Day;
+            int startDay = 1;
             int endYear = DateTime.Now.Year;
             int endMonth = DateTime.Now.Month;
             int endDay = DateTime.DaysInMonth(endYear, endMonth);
@@ -46,12 +46,16 @@ namespace Template.Web.Areas.CapoSettore.Users
                 model.CalendarData = GenerateCalendarData(startDate.Value.Day, startDate.Value.Month, startDate.Value.Year, endDate.Value.Day, endDate.Value.Month, endDate.Value.Year)
                     .Select(week => week.Select(day => new CalendarCell { Day = day.Day, Status = day.Status, CssClass = day.CssClass, Date = day.Date }).ToList())
                     .ToList();
+                model.StartDate = startDate.Value;
+                model.EndDate = endDate.Value;
             }
             else
             {
                 model.CalendarData = GenerateCalendarData(startDay, DateTime.Now.Month, DateTime.Now.Year, endDay, endMonth, endYear)
                     .Select(week => week.Select(day => new CalendarCell { Day = day.Day, Status = day.Status, CssClass = day.CssClass, Date = day.Date }).ToList())
                     .ToList();
+                model.StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, startDay);
+                model.EndDate = new DateTime(endYear, endMonth, endDay);
             }
             var users = await _sharedService.Query(model.ToUsersIndexQuery());
             model.SetUsers(users);
@@ -103,6 +107,7 @@ namespace Template.Web.Areas.CapoSettore.Users
         private static List<List<CalendarDay>> GenerateCalendarData(int startDay, int startMonth, int startYear, int endDay, int endMonth, int endYear)
         {
             var calendarData = new List<List<CalendarDay>>();
+            string[] giorniSettimanaAbbreviazioni = { "D", "L", "M", "M", "G", "V", "S" };
 
             for (var year = startYear; year <= endYear; year++)
             {
@@ -118,20 +123,19 @@ namespace Template.Web.Areas.CapoSettore.Users
                     for (var day = startDayLoop; day <= endDayLoop; day++)
                     {
                         var date = new DateTime(year, month, day);
-
-                        string status = "";
-                        string cssClass = "";
+                        string status;
+                        string cssClass;
 
                         if (date.DayOfWeek == DayOfWeek.Sunday)
                         {
                             if (date.Date == DateTime.Now.Date)
                             {
-                                status = "Domenica";
+                                status = "D";
                                 cssClass = "current-day";
                             }
                             else
                             {
-                                status = "Domenica";
+                                status = "D";
                                 cssClass = GetCssClassForStatus(status);
                             }
                         }
@@ -139,27 +143,19 @@ namespace Template.Web.Areas.CapoSettore.Users
                         {
                             if (date.Date == DateTime.Now.Date)
                             {
-                                status = "Sabato";
+                                status = "S";
                                 cssClass = "current-day";
                             }
                             else
                             {
-                                status = "Sabato";
+                                status = "S";
                                 cssClass = GetCssClassForStatus(status);
                             }
                         }
                         else
                         {
-                            if (date.Date.AddDays(1) == DateTime.Now.Date.AddDays(1))
-                            {
-                                status = IsFestivity(date) ? "Festività" : "Lavorativo";
-                                cssClass = "current-day";
-                            }
-                            else
-                            {
-                                status = IsFestivity(date) ? "Festività" : "Lavorativo";
-                                cssClass = GetCssClassForStatus(status);
-                            }
+                            status = giorniSettimanaAbbreviazioni[(int)date.DayOfWeek];
+                            cssClass = IsFestivity(date) ? "festività" : date.Date == DateTime.Now.Date ? "current-day" : "lavorativo";
                         }
 
                         var calendarDay = new CalendarDay
@@ -167,7 +163,7 @@ namespace Template.Web.Areas.CapoSettore.Users
                             Day = day,
                             Status = status,
                             CssClass = cssClass,
-                            DayOfWeek = date.ToString("dddd"),
+                            DayOfWeek = status,
                             Date = DateOnly.FromDateTime(date)
                         };
 
@@ -185,7 +181,6 @@ namespace Template.Web.Areas.CapoSettore.Users
             return calendarData;
         }
 
-
         private static bool IsFestivity(DateTime date)
         {
             var holidays = new ItalyPublicHoliday().PublicHolidaysInformation(date.Year);
@@ -197,7 +192,17 @@ namespace Template.Web.Areas.CapoSettore.Users
 
         private static string GetCssClassForStatus(string status)
         {
-            return status?.ToLower() ?? "lavorativo";
+            switch (status)
+            {
+                case "D":
+                    return "domenica";
+                case "S":
+                    return "sabato";
+                case "Festività":
+                    return "festività";
+                default:
+                    return "lavorativo";
+            }
         }
     }
 }
