@@ -90,6 +90,13 @@ namespace Template.Web.Areas.CapoSettore.Users
             return new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Accept);
         }
 
+        [NonAction]
+        [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
+        public virtual IActionResult Reject()
+        {
+            return new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Reject);
+        }
+
         [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
         public UsersController Actions => MVC.CapoSettore.Users;
         [GeneratedCode("R4Mvc", "1.0")]
@@ -108,6 +115,7 @@ namespace Template.Web.Areas.CapoSettore.Users
             public readonly string Index = "Index";
             public readonly string ManageRequest = "ManageRequest";
             public readonly string Accept = "Accept";
+            public readonly string Reject = "Reject";
         }
 
         [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
@@ -116,6 +124,7 @@ namespace Template.Web.Areas.CapoSettore.Users
             public const string Index = "Index";
             public const string ManageRequest = "ManageRequest";
             public const string Accept = "Accept";
+            public const string Reject = "Reject";
         }
 
         [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
@@ -172,6 +181,17 @@ namespace Template.Web.Areas.CapoSettore.Users
             var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Accept);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "Id", Id);
             AcceptOverride(callInfo, Id);
+            return System.Threading.Tasks.Task.FromResult<Microsoft.AspNetCore.Mvc.IActionResult>(callInfo);
+        }
+
+        [NonAction]
+        partial void RejectOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo, int Id);
+        [NonAction]
+        public override System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> Reject(int Id)
+        {
+            var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Reject);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "Id", Id);
+            RejectOverride(callInfo, Id);
             return System.Threading.Tasks.Task.FromResult<Microsoft.AspNetCore.Mvc.IActionResult>(callInfo);
         }
     }

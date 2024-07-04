@@ -28,9 +28,9 @@ namespace Template.Web.Areas.Dipendenti.Users
             return Infrastructure.JsonSerializer.ToJsonCamelCase(this);
         }
 
-        public DateOnly DateTommorow()
+        public DateOnly DateTommorow(DateTime date)
         {
-            return DateOnly.FromDateTime(DateTime.Today.AddDays(1));
+            return DateOnly.FromDateTime(date.AddDays(1));
         }
 
         public void SetUserDay(UserDayDetailDTO userDayDetailDTO)

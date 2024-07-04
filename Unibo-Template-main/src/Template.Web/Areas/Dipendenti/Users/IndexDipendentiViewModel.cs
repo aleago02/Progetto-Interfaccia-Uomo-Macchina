@@ -29,7 +29,7 @@ namespace Template.Web.Areas.Dipendenti.Users
 
         internal void SetUsers(DaysIndexDTO usersIndexDTO)
         {
-            Users = usersIndexDTO.Users.Select(x => new UserDaysIndexViewModel(x)).ToArray();
+            Users = usersIndexDTO.Users.Select(x => new UserDaysIndexViewModel(x)).OrderByDescending(x => x.Day).ToArray();
             TotalItems = usersIndexDTO.Count;
         }
 

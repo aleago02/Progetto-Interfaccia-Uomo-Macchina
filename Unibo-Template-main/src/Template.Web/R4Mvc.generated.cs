@@ -22,8 +22,6 @@ public static partial class MVC
     public static R4Mvc.CapoSettoreAreaClass CapoSettore => s_CapoSettore;
     static readonly R4Mvc.DipendentiAreaClass s_Dipendenti = new R4Mvc.DipendentiAreaClass();
     public static R4Mvc.DipendentiAreaClass Dipendenti => s_Dipendenti;
-    static readonly R4Mvc.ExampleAreaClass s_Example = new R4Mvc.ExampleAreaClass();
-    public static R4Mvc.ExampleAreaClass Example => s_Example;
     public static readonly Template.Web.Areas.AuthenticatedBaseController AuthenticatedBase = new Template.Web.Areas.R4MVC_AuthenticatedBaseController();
     public static readonly Template.Web.Features.Home.HomeController Home = new Template.Web.Features.Home.R4MVC_HomeController();
     public static readonly Template.Web.Features.Login.LoginController Login = new Template.Web.Features.Login.R4MVC_LoginController();
@@ -84,13 +82,6 @@ namespace R4Mvc
     {
         public readonly string Name = "Dipendenti";
         public readonly Template.Web.Areas.Dipendenti.Users.UsersController Users = new Template.Web.Areas.Dipendenti.Users.R4MVC_UsersController();
-    }
-
-    [GeneratedCode("R4Mvc", "1.0"), DebuggerNonUserCode]
-    public partial class ExampleAreaClass
-    {
-        public readonly string Name = "Example";
-        public readonly Template.Web.Areas.Example.Users.UsersController Users = new Template.Web.Areas.Example.Users.R4MVC_UsersController();
     }
 }
 
