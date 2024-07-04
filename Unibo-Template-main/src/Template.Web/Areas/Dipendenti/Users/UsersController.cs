@@ -5,10 +5,10 @@ using System;
 using System.Threading.Tasks;
 using Template.Infrastructure.AspNetCore;
 using Template.Services.Shared;
-using Template.Web.Areas.Example.Users;
 using Template.Web.Infrastructure;
 using Template.Web.SignalR;
 using Template.Web.SignalR.Hubs.Events;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Template.Web.Areas.Dipendenti.Users
 {
@@ -25,7 +25,7 @@ namespace Template.Web.Areas.Dipendenti.Users
             _publisher = publisher;
             _sharedLocalizer = sharedLocalizer;
 
-            ModelUnbinderHelpers.ModelUnbinders.Add(typeof(IndexViewModel), new SimplePropertyModelUnbinder());
+            ModelUnbinderHelpers.ModelUnbinders.Add(typeof(IndexDipendentiViewModel), new SimplePropertyModelUnbinder());
         }
 
         [HttpGet]
@@ -47,7 +47,7 @@ namespace Template.Web.Areas.Dipendenti.Users
         [HttpPost]
         public virtual async Task<IActionResult> Ferie(FerieViewModel model)
         {
-            if ( model.Day > DateOnly.FromDateTime(DateTime.Now) && model.Day.DayOfWeek != DayOfWeek.Sunday && model.Day.DayOfWeek != DayOfWeek.Saturday && model.Day < model.DayEnd)
+            if ( model.Day > DateOnly.FromDateTime(DateTime.Now) && model.Day.DayOfWeek != DayOfWeek.Sunday && model.Day.DayOfWeek != DayOfWeek.Saturday && model.Day <= model.DayEnd)
             {
                 try
                 {

@@ -1,13 +1,13 @@
 ﻿@model Template.Web.Areas.Dipendenti.Users.IndexDipendentiViewModel
 @{
-    ViewData["Title"] = ((Template.Web.Areas.IdentitaViewModel)ViewData[Template.Web.Areas.IdentitaViewModel.VIEWDATA_IDENTITACORRENTE_KEY]).NomeCognome;
+    //ViewData["Title"] = ((Template.Web.Areas.IdentitaViewModel)ViewData[Template.Web.Areas.IdentitaViewModel.VIEWDATA_IDENTITACORRENTE_KEY]).NomeCognome;
     ViewData["Fullday"] = 8;
 }
 @section pageTitle {
     <div class="container">
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-                <h1>@ViewData["Title"]</h1>
+                <h1>Richieste</h1>
             </div>
         </nav>
         <a class="btn btn-primary" href="@Url.Action(MVC.Dipendenti.Users.Ferie())" role="button">Richiedi Ferie</a>
@@ -21,9 +21,9 @@
                 <tr>
                     <th scope="col">Date Inizo</th>
                     <th scope="col">Date Fine</th>
-                    <th scope="col">WorkHour</th>
-                    <th scope="col">SmartWork</th>
-                    <th scope="col">Holiday</th>
+                    <th scope="col">Ore Lavorative</th>
+                    <th scope="col">Ore SmartWorking</th>
+                    <th scope="col">Ore Ferie</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">

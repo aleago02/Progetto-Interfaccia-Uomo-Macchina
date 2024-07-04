@@ -1,13 +1,13 @@
 ﻿@model Template.Web.Areas.Dipendenti.Users.FerieViewModel
 @{
-    ViewData["Title"] = ((Template.Web.Areas.IdentitaViewModel)ViewData[Template.Web.Areas.IdentitaViewModel.VIEWDATA_IDENTITACORRENTE_KEY]).NomeCognome;
+    //ViewData["Title"] = ((Template.Web.Areas.IdentitaViewModel)ViewData[Template.Web.Areas.IdentitaViewModel.VIEWDATA_IDENTITACORRENTE_KEY]).NomeCognome;
     Model.setUserId(((Template.Web.Areas.IdentitaViewModel)ViewData[Template.Web.Areas.IdentitaViewModel.VIEWDATA_IDENTITACORRENTE_KEY]).IdCorrente);
 }
 @section pageTitle {
     <div class="container">
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-                <h1>@ViewData["Title"]</h1>
+                <h1>Richiesta Ferie</h1>
             </div>
         </nav>
         <a class="btn btn-primary" href="@Url.Action(MVC.Dipendenti.Users.SmartWorking())" role="button">SmartWorking</a>
@@ -16,24 +16,31 @@
 @section pageSubtitle{
     <div class="container-sm" style="margin-top: 35px">
         <div class="row">Giorni di Ferie</div>
-        <div class="row g-3">
+        <div class="row">
             <form autocomplete="off" method="post" class="onit-form-sm" action="@Url.Action(MVC.Dipendenti.Users.Ferie())" id="edit-form">
                 <input id="edit-form-submitter" class="d-none" type="submit" />
-                <fieldset class="pb-3">
-                    <label>Inizio : </label><input class="form-control form-control-lg" type="date" asp-for="Day">
-                    <label>Fine : </label>
-                    <input class="form-control form-control-lg" type="date" asp-for="DayEnd" value="@Model.DateTommorow()"/>
-                    <br />
-                    <label for="customRange2" class="form-label">Ore di Ferie : </label>
-                    <output id="hour">1</output>
-                    <div class="container-sm">
-                        <input type="range" value="1" asp-for="HHoliday" class="form-range" min="1" max="8" id="customRange2" oninput="hour.value = this.value">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-auto">
+                            <p style="font-size: 30px;">dal : </p>
+                        </div>
+                        <div class="col-md-auto">
+                        <input class="form-control form-control-lg" type="date" asp-for="Day" oninput="dayEnd.value=this.value">
+                        </div>
+                        <div class="col-md-auto">
+                            <p style="font-size: 30px;">al : </p>
+                        </div>
+                        <div class="col-md-auto">
+                        <input class="form-control form-control-lg" type="date" asp-for="DayEnd" id="dayEnd"/>
+                        </div>
+                        <input value="8" type="hidden" asp-for="HHoliday">
+                        <input type="hidden" asp-for="UserId">
                     </div>
-                    <input type="hidden" asp-for="UserId">
-                </fieldset>
+                </div>
             </form>
+            <p style=" color:grey;">( I giorni festivi non vengono calcolati e non posso essere selezionati - non si può richiedere una ferie per il giorno corrente )</p>
             <div id="liveAlertPlaceholder"></div>
             <button type="button" class="btn btn-outline-primary" id="liveAlertBtn" onclick="document.getElementById('edit-form-submitter').click()">Invia</button>
         </div>
-    </div>
+    </div>  
 }
