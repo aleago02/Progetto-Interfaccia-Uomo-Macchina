@@ -1,20 +1,44 @@
 ﻿@model Template.Web.Areas.CapoSettore.Users.IndexViewModel
 
 @section pageTitle {
+    <h1>Riepilogo richieste</h1>
     <style>
         ul#navigazione li {
             display: inline;
         }
+        .btn-warning {
+            background-color: #ffc107;
+            border-color: #ffc107;
+        }
+        .legend .legend-item {
+            display: inline-block;
+            padding: 5px 10px;
+            margin-right: 5px;
+            border-radius: 3px;
+            background-color: #e9ecef;
+        }
     </style>
 
-@*     <nav>
+    <nav>
         <ul id="navigazione">
-            <li><a href="/home">Home</a></li>
-            <li><a href="/about">Gli autori</a></li>
-            <li><a href="/refactoring">Il progetto four2five</a></li>
-            <li><a href="/archives">Archivio</a></li>
+            <li><a class="btn btn-primary" href="/Dipendenti">Le mie richieste</a></li>
+            <li>
+                @if (Model.Days.Any(req => req.Request))
+                {
+                    <a class="btn btn-warning" href="@Url.Action(MVC.CapoSettore.Users.ManageRequest())">
+                        Richieste da valutare
+                        <span class="badge badge-light">@Model.Days.Count(req => req.Request)</span>
+                    </a>
+                }
+                else
+                {
+                    <a class="btn btn-primary" href="@Url.Action(MVC.CapoSettore.Users.ManageRequest())">
+                        Richieste da valutare
+                    </a>
+                }
+            </li>
         </ul>
-    </nav> *@
+    </nav>
 
     <div class="container">
         <div class="row g-4 align-items-end">
@@ -29,26 +53,17 @@
                     <div class="col">
                         <button type="submit" class="btn btn-primary mb-2">Aggiorna</button>
                     </div>
-                    <div class="col">
-                        @foreach (var req in Model.Days)
-                        {
-                            @if (req.Request)
-                            {
-                                <a href="@Url.Action(MVC.CapoSettore.Users.ManageRequest())">
-                                    <img src="~/images/red-request.png" alt="logo request" width="40" height="40" />
-                                </a>
-                                break;
-                            }
-                        }
-                    </div>
-                    <div class="col">
-                        <a class="btn btn-primary" href="@Url.Action(MVC.Dipendenti.Users.Index())">Richieste</a>
-                    </div>
                 </div>
             </form>
         </div>
     </div>
 }
+
+<div class="legend">
+    <span class="legend-item">RV: Richiesta da valutare</span>
+    <span class="legend-item">A: Richiesta accettata</span>
+    <span class="legend-item">SW: Smart Working</span>
+</div>
 
 <div class="table-container" id="scrolling-container">
     <div class="table-scroll">
@@ -82,18 +97,18 @@
                                     {
                                         if (req.Request)
                                         {
-                                            <td class="@day.CssClass">RF</td>
+                                            <td class="@day.CssClass">RV</td>
                                         }
                                         else
                                         {
-                                            <td class="@day.CssClass">Ferie</td>
+                                            <td class="@day.CssClass">A</td>
                                         }
                                         cellFilled = true;
                                         break;
                                     }
                                     else if (req.HSmartWork != 0)
                                     {
-                                        <td class="@day.CssClass">Smart Working</td>
+                                        <td class="@day.CssClass">SW</td>
                                         cellFilled = true;
                                         break;
                                     }
