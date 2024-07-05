@@ -2,23 +2,6 @@
 
 @section pageTitle {
     <h1>Riepilogo richieste</h1>
-    <style>
-        ul#navigazione li {
-            display: inline;
-        }
-        .btn-warning {
-            background-color: #ffc107;
-            border-color: #ffc107;
-        }
-        .legend .legend-item {
-            display: inline-block;
-            padding: 5px 10px;
-            margin-right: 5px;
-            border-radius: 3px;
-            background-color: #e9ecef;
-        }
-    </style>
-
     <nav>
         <ul id="navigazione">
             <li><a class="btn btn-primary" href="/Dipendenti">Le mie richieste</a></li>
@@ -44,16 +27,16 @@
         <div class="row g-4 align-items-end">
             <form method="get" action="@Url.Action(MVC.CapoSettore.Users.Index())">
                 <div class="row">
-                    <div class="col">
-                        <p>Calendario di @string.Join(", ", Model.Months)</p>
+                    <div class="col-4">
+                        <p>Calendario di @string.Join("-", Model.Months)</p>
                     </div>
-                    <div class="col">
+                    <div class="col-2">
                         <input type="date" class="form-control" id="startDate" name="startDate" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
                     </div>
-                    <div class="col">
+                    <div class="col-2">
                         <input type="date" class="form-control" id="endDate" name="endDate" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
                     </div>
-                    <div class="col">
+                    <div class="col-2">
                         <button type="submit" class="btn btn-primary mb-2">Aggiorna</button>
                     </div>
                 </div>
