@@ -45,6 +45,9 @@
             <form method="get" action="@Url.Action(MVC.CapoSettore.Users.Index())">
                 <div class="row">
                     <div class="col">
+                        <p>Calendario di @string.Join(", ", Model.Months)</p>
+                    </div>
+                    <div class="col">
                         <input type="date" class="form-control" id="startDate" name="startDate" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
                     </div>
                     <div class="col">

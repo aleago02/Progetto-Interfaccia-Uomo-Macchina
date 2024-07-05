@@ -31,6 +31,26 @@ namespace Template.Web.Areas.CapoSettore.Users
             ModelUnbinderHelpers.ModelUnbinders.Add(typeof(IndexViewModel), new SimplePropertyModelUnbinder());
         }
 
+        private string GetMonthName(int month)
+        {
+            return new CultureInfo("it-IT").DateTimeFormat.GetMonthName(month);
+        }
+
+        private List<string> GetMonthNames(DateTime startDate, DateTime endDate)
+        {
+            var months = new List<string>();
+            var currentDate = new DateTime(startDate.Year, startDate.Month, 1);
+            var cultureInfo = new CultureInfo("it-IT");
+
+            while (currentDate <= endDate)
+            {
+                months.Add(cultureInfo.DateTimeFormat.GetMonthName(currentDate.Month));
+                currentDate = currentDate.AddMonths(1);
+            }
+
+            return months;
+        }
+
         [HttpGet]
         public virtual async Task<IActionResult> Index(IndexViewModel model, DateTime? startDate = null, DateTime? endDate = null)
         {
@@ -47,6 +67,7 @@ namespace Template.Web.Areas.CapoSettore.Users
                     .ToList();
                 model.StartDate = startDate.Value;
                 model.EndDate = endDate.Value;
+                model.Months = GetMonthNames(startDate.Value, endDate.Value);
             }
             else
             {
@@ -55,6 +76,7 @@ namespace Template.Web.Areas.CapoSettore.Users
                     .ToList();
                 model.StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, startDay);
                 model.EndDate = new DateTime(endYear, endMonth, endDay);
+                model.Months = new List<string> { GetMonthName(DateTime.Now.Month) };
             }
             var users = await _sharedService.Query(model.ToUsersIndexQuery());
             model.SetUsers(users);
@@ -162,7 +184,6 @@ namespace Template.Web.Areas.CapoSettore.Users
                             Day = day,
                             Status = status,
                             CssClass = cssClass,
-                            DayOfWeek = status,
                             Date = DateOnly.FromDateTime(date)
                         };
 
