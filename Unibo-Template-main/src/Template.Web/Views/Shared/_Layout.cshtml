@@ -19,18 +19,16 @@
                 <a class="navbar-brand" href="/@group">
                     <img class="onit-suites-logo" src="~/images/vanko-logo.png" />
                 </a>
-
-                <div class="dropdown show">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Menu
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="/@group">Home</a>
-                        <a class="dropdown-item" href="@Url.Action(MVC.Dipendenti.Users.SmartWorking())" >SmartWorking</a>
-                        <a class="dropdown-item" href="@Url.Action(MVC.Dipendenti.Users.Ferie())">Richiedi Ferie</a>
-
-                    </div>
+                <div class="menu-inline">
+                    <a class="menu-item" href="/@group">Home</a>
+                    @if (@group == "CapoSettore")
+                    {
+                        <a class="menu-item" href="@Url.Action(MVC.Dipendenti.Users.Index())">Le mie richieste</a>
+                    }
+                    <a class="menu-item" href="@Url.Action(MVC.Dipendenti.Users.SmartWorking())">SmartWorking</a>
+                    <a class="menu-item" href="@Url.Action(MVC.Dipendenti.Users.Ferie())">Richiedi Ferie</a>
                 </div>
+
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa-solid fa-bars"></i>

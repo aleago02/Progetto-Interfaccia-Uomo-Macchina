@@ -1,34 +1,27 @@
 ﻿@model Template.Web.Areas.CapoSettore.Users.IndexViewModel
 
 @section pageTitle {
-    <h1>Riepilogo richieste</h1>
-    <nav>
-        <ul id="navigazione">
-            <li><a class="btn btn-primary" href="/Dipendenti">Le mie richieste</a></li>
-            <li>
-                @if (Model.Days.Any(req => req.Request))
-                {
-                    <a class="btn btn-warning" href="@Url.Action(MVC.CapoSettore.Users.ManageRequest())">
-                        Richieste da valutare
-                        <span class="badge badge-light">@Model.Days.Count(req => req.Request)</span>
-                    </a>
-                }
-                else
-                {
-                    <a class="btn btn-primary" href="@Url.Action(MVC.CapoSettore.Users.ManageRequest())">
-                        Richieste da valutare
-                    </a>
-                }
-            </li>
-        </ul>
-    </nav>
-
+    <div class="container">
+                <h1>Riepilogo richieste</h1>
+    </div>
     <div class="container">
         <div class="row g-4 align-items-end">
             <form method="get" action="@Url.Action(MVC.CapoSettore.Users.Index())">
                 <div class="row">
-                    <div class="col-4">
-                        <p>Calendario di @string.Join("-", Model.Months)</p>
+                    <div class="col-3">
+                        @if (Model.Days.Any(req => req.Request))
+                        {
+                            <a class="btn btn-warning" href="@Url.Action(MVC.CapoSettore.Users.ManageRequest())">
+                                Richieste da valutare
+                                <span class="badge badge-light">@Model.Days.Count(req => req.Request)</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-primary" href="@Url.Action(MVC.CapoSettore.Users.ManageRequest())">
+                                Richieste da valutare
+                            </a>
+                        }
                     </div>
                     <div class="col-2">
                         <input type="date" class="form-control" id="startDate" name="startDate" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
@@ -46,11 +39,10 @@
 }
 
 <div class="legend">
-    <span class="legend-item">RV: Richiesta da valutare</span>
-    <span class="legend-item">A: Richiesta accettata</span>
-    <span class="legend-item">SW: Smart Working</span>
+    <span class="legend-item RV">RV: Richiesta da valutare</span>
+    <span class="legend-item A">A: Richiesta accettata</span>
+    <span class="legend-item SW">SW: Smart Working</span>
 </div>
-
 <div class="table-container" id="scrolling-container">
     <div class="table-scroll">
         <table class="table">
@@ -59,10 +51,10 @@
                     <th class="dipendenti sticky-column" style="width: 200px;">Dipendenti</th>
                     @foreach (var day in Model.CalendarData.SelectMany(week => week))
                     {
-                        <th class="@day.CssClass">
+                        <th class="@day.CssClass text-center">
                             <span>@day.Status</span>
                             <br />
-                            <span>@day.Day</span>
+                            <span>@day.Day/@day.Date.Month</span>
                         </th>
                     }
                 </tr>
@@ -83,18 +75,18 @@
                                     {
                                         if (req.Request)
                                         {
-                                            <td class="@day.CssClass">RV</td>
+                                            <td class="@day.CssClass RV">RV</td>
                                         }
                                         else
                                         {
-                                            <td class="@day.CssClass">A</td>
+                                            <td class="@day.CssClass A">A</td>
                                         }
                                         cellFilled = true;
                                         break;
                                     }
                                     else if (req.HSmartWork != 0)
                                     {
-                                        <td class="@day.CssClass">SW</td>
+                                        <td class="@day.CssClass SW">SW</td>
                                         cellFilled = true;
                                         break;
                                     }
