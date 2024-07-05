@@ -56,7 +56,7 @@ namespace Template.Services.Shared
             return user.Id;
         }
 
-        public async Task<Guid> HandleDay(AddOrUpdateUserDayCommand cmd)
+        public async Task<string> HandleDay(AddOrUpdateUserDayCommand cmd)
         {
 
             var day = await _dbContext.UsersDayDetails
@@ -77,75 +77,88 @@ namespace Template.Services.Shared
                     UserId = cmd.Id
                 };
                 _dbContext.UsersDayDetails.Add(day);
-            }
-          
-            if (cmd.HHoliday != 0)
-            {
-                if (cmd.HHoliday + day.HSmartWorking > 8)
-                {
-                    day.HHoliday = 8 - day.HSmartWorking;
-                }
-                else
-                {
-                    day.HHoliday = cmd.HHoliday;
-                }
-                var request = await _dbContext.Requests
-                    .Where(x => x.UserDayDetailId == day.Id)
-                    .FirstOrDefaultAsync();
 
-                if (request == null)
+
+                if (cmd.HHoliday != 0)
                 {
-                    request = new Request
+                    if (cmd.HHoliday + day.HSmartWorking > 8)
                     {
-                        request = true,
-                        UserDayDetailId = day.Id
-                    };
-                    _dbContext.Requests.Add(request);
-                }
-                else
-                {
-                    request.request = true;
-                }
-                day.Requests.Add(request);
-            }
-            if (cmd.HSmartWork != 0)
-            {
-                if (cmd.HSmartWork + day.HHoliday > 8)
-                {
-                    day.HSmartWorking = 8 - day.HHoliday;
-                }
-                else
-                {
-                    day.HSmartWorking = cmd.HSmartWork;
-                }
-
-                
-            } else
-            {
-
-            }
-            if (day.DayEnd != day.Day)
-            {
-                int i = 0;
-              
-                for (DateOnly d = day.Day; d <= day.DayEnd; d = d.AddDays(1))
-                {
-                    if (d.DayOfWeek == DayOfWeek.Sunday || d.DayOfWeek == DayOfWeek.Saturday)
-                    {
-                        i++;
+                        day.HHoliday = 8 - day.HSmartWorking;
                     }
+                    else
+                    {
+                        day.HHoliday = cmd.HHoliday;
+                    }
+                    var request = await _dbContext.Requests
+                        .Where(x => x.UserDayDetailId == day.Id)
+                        .FirstOrDefaultAsync();
+
+                    if (request == null)
+                    {
+                        request = new Request
+                        {
+                            request = true,
+                            UserDayDetailId = day.Id
+                        };
+                        _dbContext.Requests.Add(request);
+                    }
+                    else
+                    {
+                        request.request = true;
+                    }
+                    day.Requests.Add(request);
                 }
+                if (cmd.HSmartWork != 0)
+                {
+                    if (cmd.HSmartWork + day.HHoliday > 8)
+                    {
+                        day.HSmartWorking = 8 - day.HHoliday;
+                    }
+                    else
+                    {
+                        day.HSmartWorking = cmd.HSmartWork;
+                    }
 
-                int giorni = (day.DayEnd.DayNumber - day.Day.DayNumber) + 1 - i;
-                day.HHoliday = giorni * 8;
+
+                }
+                else
+                {
+
+                }
+                if (day.DayEnd != day.Day)
+                {
+                    int i = 0;
+
+                    for (DateOnly d = day.Day; d <= day.DayEnd; d = d.AddDays(1))
+                    {
+                        if (d.DayOfWeek == DayOfWeek.Sunday || d.DayOfWeek == DayOfWeek.Saturday)
+                        {
+                            i++;
+                        } else
+                        {
+                            var dayUsed = await _dbContext.UsersDayDetails
+                               .Where(x => x.UserId.Equals(cmd.Id) && x.Day.Equals(d))
+                               .FirstOrDefaultAsync();
+                            if (dayUsed != null)
+                                return "errorPeriod";
+                        }
+                    }
+
+                    int giorni = (day.DayEnd.DayNumber - day.Day.DayNumber) + 1 - i;
+                    day.HHoliday = giorni * 8;
+                }
+                day.UserId = cmd.Id;
+
+                await _dbContext.SaveChangesAsync();
+                var q = _dbContext.Requests;
+                System.Diagnostics.Debug.WriteLine(q.ToString());
+
+                return cmd.Id.ToString();
             }
-            day.UserId = cmd.Id;
-
-            await _dbContext.SaveChangesAsync();
-            var q = _dbContext.Requests;
-            System.Diagnostics.Debug.WriteLine(q.ToString());
-
-            return cmd.Id;
+            else
+            {
+                return "error";
+            }
         }
 
         public async Task DeleteDay(int day)

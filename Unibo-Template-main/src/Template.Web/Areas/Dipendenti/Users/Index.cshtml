@@ -10,20 +10,19 @@
                 <h1>Richieste</h1>
             </div>
         </nav>
-        <a class="btn btn-primary" href="@Url.Action(MVC.Dipendenti.Users.Ferie())" role="button">Richiedi Ferie</a>
-        <a class="btn btn-primary" href="@Url.Action(MVC.Dipendenti.Users.SmartWorking())" role="button">SmartWorking</a>
     </div>   
 }
 @section pageSubtitle{
-    <div class="table-container">
+    <div class="table-container-d">
         <table class="table">
             <thead>
-                <tr>
+                <tr class="sticky-column-d">
                     <th scope="col">Date Inizo</th>
                     <th scope="col">Date Fine</th>
                     <th scope="col">Ore Lavorative</th>
                     <th scope="col">Ore SmartWorking</th>
                     <th scope="col">Ore Ferie</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -46,12 +45,12 @@
                             ViewData["Request"] = "table-success";
                         }
                         <tr class="@ViewData["Request"]">
-                            <th scope="row">
+                            <td scope="row">
                                 @user.Day
-                            </th>
-                            <th scope="row">
+                            </td>
+                            <td scope="row">
                                 @user.DayEnd
-                            </th>
+                            </td>
                             <td>
                                 @if ((user.HSmartWork == 0 && user.HHoliday == 0))
                                 {
@@ -85,8 +84,11 @@
             </tbody>
         </table>
     </div>
+
+
 }
 
 <p>Form considerazioni: <a href="https://forms.gle/rzpi6xJrke17fCbh6">Link al form</a></p>
+
 
 
