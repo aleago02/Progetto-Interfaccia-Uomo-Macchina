@@ -7,20 +7,19 @@
     <div class="container">
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-                <h1>Richieste</h1>
+                <h1>Le mie richieste</h1>
             </div>
         </nav>
     </div>   
 }
 @section pageSubtitle{
     <div class="table-container-d">
-        <table class="table">
+        <h3 class="sticky-column-d">Ferie</h3>
+        <table class="table table-d">
             <thead>
                 <tr class="sticky-column-d">
-                    <th class="th-d" scope="col">Date Inizo</th>
-                    <th class="th-d" scope="col">Date Fine</th>
-                    <th class="th-d" scope="col">Ore Lavorative</th>
-                    <th class="th-d" scope="col">Ore SmartWorking</th>
+                    <th class="th-d" scope="col">Data Inizo</th>
+                    <th class="th-d" scope="col">Data Fine</th>
                     <th class="th-d" scope="col">Ore Ferie</th>
                     <th class="th-d" scope="col"></th>
                 </tr>
@@ -36,49 +35,83 @@
                 {
                     @foreach (var user in Model.Users)
                     {
-                        if (user.Request) 
-                        {
-                            ViewData["Request"] = "table-warning";
+                        if (user.HHoliday != 0)
+                        { 
+                            if (user.Request) 
+                            {
+                                ViewData["Request"] = "table-warning";
+                            }
+                            else if (!user.Request)
+                            {
+                                ViewData["Request"] = "table-success";
+                            }
+                            <tr class="@ViewData["Request"]">
+                                <td scope="row">
+                                    @user.Day
+                                </td>
+                                <td scope="row">
+                                    @user.DayEnd
+                                </td>
+                                <td>
+                                    @user.HHoliday
+                                </td>
+                                <td>
+                                    @if ((user.Request))
+                                    {
+                                        <button class="dropdown-item text-danger" type="button" onclick="document.getElementById('delete-form').submit();">
+                                            <i class="fa-solid fa-trash"></i>&nbsp;Elimina
+                                        </button>
+                                        <form hidden autocomplete="off" id="delete-form" method="post" action="@Url.Action(MVC.Dipendenti.Users.Delete(user.Id))">
+                                            <input type="hidden" asp-for="@user.Day" />
+                                        </form>
+                                    }
+                                </td>
+                            </tr>
                         }
-                        else if (!user.Request)
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="table-container-d">
+        <h3 class="sticky-column-d">SmartWorking</h3>
+        <table class="table table-d">
+            <thead>
+                <tr class="sticky-column-d">
+                    <th class="th-d" scope="col">Data</th>
+                    <th class="th-d" scope="col">Ore Smart Working</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                @if (Model.Users.Any() == false)
+                {
+                    <tr>
+                        <td colspan="4">Nessun elemento trovato con i filtri correnti</td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var user in Model.Users)
+                    {
+                        if (user.HSmartWork != 0)
                         {
-                            ViewData["Request"] = "table-success";
+                            if (user.Request)
+                            {
+                                ViewData["Request"] = "table-warning";
+                            }
+                            else if (!user.Request)
+                            {
+                                ViewData["Request"] = "table-success";
+                            }
+                            <tr class="@ViewData["Request"]">
+                                <td scope="row">
+                                    @user.Day
+                                </td>
+                                <td>
+                                    @user.HSmartWork
+                                </td>
+                            </tr>
                         }
-                        <tr class="@ViewData["Request"]">
-                            <td scope="row">
-                                @user.Day
-                            </td>
-                            <td scope="row">
-                                @user.DayEnd
-                            </td>
-                            <td>
-                                @if ((user.HSmartWork == 0 && user.HHoliday == 0))
-                                {
-                                    @ViewData["Fullday"];
-                                }
-                                else
-                                {
-                                    @Model.LessWork(user.HSmartWork, user.HHoliday)
-                                }
-                            </td>
-                            <td>
-                                @user.HSmartWork
-                            </td>
-                            <td>
-                                @user.HHoliday
-                            </td>
-                            <td>
-                                @if ((user.Request))
-                                {
-                                    <button class="dropdown-item text-danger" type="button" onclick="document.getElementById('delete-form').submit();">
-                                        <i class="fa-solid fa-trash"></i>&nbsp;Elimina
-                                    </button>
-                                    <form hidden autocomplete="off" id="delete-form" method="post" action="@Url.Action(MVC.Dipendenti.Users.Delete(user.Id))">
-                                        <input type="hidden" asp-for="@user.Day" />
-                                    </form>
-                                }
-                            </td>
-                        </tr>
                     }
                 }
             </tbody>
