@@ -51,7 +51,21 @@ namespace Template.Web.Areas.Dipendenti.Users
             {
                 try
                 {
-                    model.UserId = await _sharedService.HandleDay(model.ToAddOrUpdateUserCommand());
+                    string g = await _sharedService.HandleDay(model.ToAddOrUpdateUserCommand());
+
+                    if (g.Equals("error"))
+                    {
+                        Alerts.AddError(this, "Errore : Data già utilizzata");
+                        return RedirectToAction(Actions.Ferie(model));
+                    }
+
+                    if (g.Equals("errorPeriod"))
+                    {
+                        Alerts.AddError(this, "Errore : Tra il periodo utilizzato c'è una data già utilizzata");
+                        return RedirectToAction(Actions.Ferie(model));
+                    }
+
+                    model.UserId = Guid.Parse(g);
 
                     Alerts.AddSuccess(this, "Informazioni aggiornate");
 
@@ -67,6 +81,12 @@ namespace Template.Web.Areas.Dipendenti.Users
                 {
                     ModelState.AddModelError(string.Empty, e.Message);
                 }
+            } else if (model.Day.DayOfWeek == DayOfWeek.Sunday || model.Day.DayOfWeek == DayOfWeek.Saturday)
+            {
+                Alerts.AddError(this, "Errore : Selezionato un girono festivo");
+            }else if (model.Day == DateOnly.FromDateTime(DateTime.Now))
+            {
+                Alerts.AddError(this, "Errore : Non si può selezionato il giorno corrente");
             }
             else
             {
@@ -90,7 +110,15 @@ namespace Template.Web.Areas.Dipendenti.Users
             {
                 try
                 {
-                    model.UserId = await _sharedService.HandleDay(model.ToAddOrUpdateUserCommand());
+                    string g = await _sharedService.HandleDay(model.ToAddOrUpdateUserCommand());
+
+                    if (g.Equals("error"))
+                    {
+                        Alerts.AddError(this, "Errore : Data già utilizzata");
+                        return RedirectToAction(Actions.SmartWorking(model));
+                    }
+
+                    model.UserId = Guid.Parse(g);
 
                     Alerts.AddSuccess(this, "Informazioni aggiornate");
 
@@ -106,7 +134,13 @@ namespace Template.Web.Areas.Dipendenti.Users
                 {
                     ModelState.AddModelError(string.Empty, e.Message);
                 }
-            } else { 
+            }
+            else if (model.Day == DateOnly.FromDateTime(DateTime.Now))
+            {
+                Alerts.AddError(this, "Errore : Non si può selezionato il giorno corrente");
+            }
+            else
+            { 
                 Alerts.AddError(this, "Errore nella data");
             }
 

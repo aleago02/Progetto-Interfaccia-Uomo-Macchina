@@ -19,6 +19,19 @@
                 <a class="navbar-brand" href="/@group">
                     <img class="onit-suites-logo" src="~/images/vanko-logo.png" />
                 </a>
+
+                <div class="dropdown show">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Menu
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="/@group">Home</a>
+                        <a class="dropdown-item" href="@Url.Action(MVC.Dipendenti.Users.SmartWorking())" >SmartWorking</a>
+                        <a class="dropdown-item" href="@Url.Action(MVC.Dipendenti.Users.Ferie())">Richiedi Ferie</a>
+
+                    </div>
+                </div>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa-solid fa-bars"></i>
                 </button>
