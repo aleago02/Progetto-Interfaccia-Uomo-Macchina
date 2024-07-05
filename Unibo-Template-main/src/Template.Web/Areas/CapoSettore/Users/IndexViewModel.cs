@@ -19,20 +19,22 @@ namespace Template.Web.Areas.CapoSettore.Users
         {
             OrderBy = nameof(UserIndexViewModel.Email);
             OrderByDescending = false;
-            Users = Array.Empty<UserIndexViewModel>();  
+            Users = Array.Empty<UserIndexViewModel>();
             Days = Array.Empty<DaysIndexViewModel>();
         }
 
         public override IActionResult GetRoute() => MVC.CapoSettore.Users.Index(this).GetAwaiter().GetResult();
 
         public DateTime CurrentDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public List<string> Months { get; set; }
 
         public class CalendarCell
         {
             public int? Day { get; set; }
             public string Status { get; set; }
             public string CssClass { get; set; }
-            public string DayOfWeek { get; set; }
             public DateOnly Date { get; set; }
         }
 
@@ -47,7 +49,7 @@ namespace Template.Web.Areas.CapoSettore.Users
 
         public IEnumerable<DaysIndexViewModel> Days { get; set; }
 
-        public Guid CurrentId { get ; set; }
+        public Guid CurrentId { get; set; }
 
         internal void SetUsers(UsersIndexDTO usersIndexDTO)
         {
@@ -96,53 +98,53 @@ namespace Template.Web.Areas.CapoSettore.Users
         {
             public DateTime StartDate { get; set; }
             public DateTime EndDate { get; set; }
+            public List<string> Months { get; set; }
         }
-    }
 
-    public class UserIndexViewModel
-    {
-        public UserIndexViewModel(UsersIndexDTO.User userIndexDTO)
+        public class UserIndexViewModel
         {
-            this.Id = userIndexDTO.Id;
-            this.Email = userIndexDTO.Email;
-            this.FirstName = userIndexDTO.FirstName;
-            this.LastName = userIndexDTO.LastName;
+            public UserIndexViewModel(UsersIndexDTO.User userIndexDTO)
+            {
+                this.Id = userIndexDTO.Id;
+                this.Email = userIndexDTO.Email;
+                this.FirstName = userIndexDTO.FirstName;
+                this.LastName = userIndexDTO.LastName;
+            }
+
+            public Guid Id { get; set; }
+            public string Email { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public List<List<CalendarCell>> CalendarData { get; set; }
         }
 
-        public Guid Id { get; set; }
-        public string Email { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public List<List<CalendarCell>> CalendarData { get; set; }
-    }
-
-    public class CalendarDay
-    {
-        public int Day { get; set; }
-        public string Status { get; set; }
-        public string CssClass { get; set; }
-        public string DayOfWeek { get; set; }
-        public DateOnly Date { get; set; }
-    }
-
-    public class DaysIndexViewModel
-    {
-        public DaysIndexViewModel(DaysIndexDTO.User userWorkIndexDTO)
+        public class CalendarDay
         {
-            this.Id = userWorkIndexDTO.Id;
-            this.UserId = userWorkIndexDTO.UserId;
-            this.Day = userWorkIndexDTO.Day;
-            this.DayEnd = userWorkIndexDTO.DayEnd;
-            this.HSmartWork = userWorkIndexDTO.HSmartWork;
-            this.HHoliday = userWorkIndexDTO.HHoliday;
-            this.Request = userWorkIndexDTO.Request;
+            public int Day { get; set; }
+            public string Status { get; set; }
+            public string CssClass { get; set; }
+            public DateOnly Date { get; set; }
         }
-        public int Id { get; set; }
-        public Guid UserId { get; set; }
-        public DateOnly Day { get; set; }
-        public DateOnly DayEnd { get; set; }
-        public decimal HSmartWork { get; set; }
-        public decimal HHoliday { get; set; }
-        public Boolean Request { get; set; }
+
+        public class DaysIndexViewModel
+        {
+            public DaysIndexViewModel(DaysIndexDTO.User userWorkIndexDTO)
+            {
+                this.Id = userWorkIndexDTO.Id;
+                this.UserId = userWorkIndexDTO.UserId;
+                this.Day = userWorkIndexDTO.Day;
+                this.DayEnd = userWorkIndexDTO.DayEnd;
+                this.HSmartWork = userWorkIndexDTO.HSmartWork;
+                this.HHoliday = userWorkIndexDTO.HHoliday;
+                this.Request = userWorkIndexDTO.Request;
+            }
+            public int Id { get; set; }
+            public Guid UserId { get; set; }
+            public DateOnly Day { get; set; }
+            public DateOnly DayEnd { get; set; }
+            public decimal HSmartWork { get; set; }
+            public decimal HHoliday { get; set; }
+            public Boolean Request { get; set; }
+        }
     }
 }
