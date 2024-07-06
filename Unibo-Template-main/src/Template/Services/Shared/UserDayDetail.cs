@@ -24,7 +24,7 @@ namespace Template.Services.Shared
         public DateOnly DayEnd { get; set; }
         public decimal HSmartWorking { get; set; }
         public decimal HHoliday { get; set; }
-
+        public decimal HPermessi{ get; set; }
         [InverseProperty(nameof(Request.UserDayDetail))]
         public virtual ICollection<Request> Requests { get; set; }
     }

@@ -103,6 +103,13 @@ namespace Template.Web.Areas.Dipendenti.Users
             return View(model);
         }
 
+        [HttpGet]
+        public virtual IActionResult Permessi()
+        {
+            var model = new PermessiViewModel();
+            return View(model);
+        }
+
         [HttpPost]
         public virtual async Task<IActionResult> SmartWorking(SmartWorkingViewModel model)
         {
@@ -135,16 +142,68 @@ namespace Template.Web.Areas.Dipendenti.Users
                     ModelState.AddModelError(string.Empty, e.Message);
                 }
             }
+            else if (model.Day.DayOfWeek == DayOfWeek.Sunday || model.Day.DayOfWeek == DayOfWeek.Saturday)
+            {
+                Alerts.AddError(this, "Errore : Selezionato un girono festivo");
+            }
             else if (model.Day == DateOnly.FromDateTime(DateTime.Now))
             {
                 Alerts.AddError(this, "Errore : Non si può selezionato il giorno corrente");
             }
             else
-            { 
+            {
                 Alerts.AddError(this, "Errore nella data");
             }
 
             return RedirectToAction(Actions.SmartWorking(model));
+        }
+
+        [HttpPost]
+        public virtual async Task<IActionResult> Permessi(PermessiViewModel model)
+        {
+            if (ModelState.IsValid && model.Day > DateOnly.FromDateTime(DateTime.Now) && model.Day.DayOfWeek != DayOfWeek.Sunday && model.Day.DayOfWeek != DayOfWeek.Saturday)
+            {
+                try
+                {
+                    string g = await _sharedService.HandleDay(model.ToAddOrUpdateUserCommand());
+
+                    if (g.Equals("error"))
+                    {
+                        Alerts.AddError(this, "Errore : Data già utilizzata");
+                        return RedirectToAction(Actions.Permessi(model));
+                    }
+
+                    model.UserId = Guid.Parse(g);
+
+                    Alerts.AddSuccess(this, "Informazioni aggiornate");
+
+                    // Esempio lancio di un evento SignalR
+                    await _publisher.Publish(new NewMessageEvent
+                    {
+                        IdGroup = model.UserId.Value,
+                        IdUser = model.UserId.Value,
+                        IdMessage = Guid.NewGuid()
+                    });
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError(string.Empty, e.Message);
+                }
+            }
+            else if (model.Day.DayOfWeek == DayOfWeek.Sunday || model.Day.DayOfWeek == DayOfWeek.Saturday)
+            {
+                Alerts.AddError(this, "Errore : Selezionato un girono festivo");
+            }
+            else if (model.Day == DateOnly.FromDateTime(DateTime.Now))
+            {
+                Alerts.AddError(this, "Errore : Non si può selezionato il giorno corrente");
+            }
+            else
+            {
+                Alerts.AddError(this, "Errore nella data");
+            }
+
+            return RedirectToAction(Actions.Permessi(model));
         }
 
         [HttpPost]

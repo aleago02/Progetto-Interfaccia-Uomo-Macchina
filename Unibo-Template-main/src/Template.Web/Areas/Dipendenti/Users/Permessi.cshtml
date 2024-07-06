@@ -1,0 +1,44 @@
+﻿@model Template.Web.Areas.Dipendenti.Users.PermessiViewModel
+@{
+   // ViewData["Title"] = ((Template.Web.Areas.IdentitaViewModel)ViewData[Template.Web.Areas.IdentitaViewModel.VIEWDATA_IDENTITACORRENTE_KEY]).NomeCognome;
+    Model.setUserId(((Template.Web.Areas.IdentitaViewModel)ViewData[Template.Web.Areas.IdentitaViewModel.VIEWDATA_IDENTITACORRENTE_KEY]).IdCorrente);
+}
+@section pageTitle {
+    <div class="container">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <h1>Permessi</h1>
+            </div>
+        </nav>
+    </div>   
+}
+@section pageSubtitle{
+    <div class="container-sm" style="margin-top: 35px">
+        <div class="row">Giorno di Permesso</div>
+        <div class="row g-3">
+            <form autocomplete="off" method="post" class="onit-form-sm" action="@Url.Action(MVC.Dipendenti.Users.Permessi())" id="edit-form">
+                <input id="edit-form-submitter" class="d-none" type="submit" />
+                <fieldset class="pb-3">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-auto">
+                                <input class="form-control form-control-lg" type="date" asp-for="Day">
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <label for="customRange2" class="form-label">Ore Permessi: </label>
+                    <output id="hour">1</output>
+                    <div class="container-sm">
+                        <input type="range" value="1" asp-for="HPermessi" class="form-range" min="1" max="8" id="customRange2" oninput="hour.value = this.value">
+                    </div>
+                    <input type="hidden" asp-for="UserId">
+                </fieldset>
+            </form>
+            <div id="liveAlertPlaceholder"></div>
+            <button type="button" class="btn btn-outline-primary" id="liveAlertBtn" onclick="document.getElementById('edit-form-submitter').click()">Invia</button>
+        </div>
+    </div>
+}
+
+<p>Form considerazioni: <a href="https://forms.gle/rzpi6xJrke17fCbh6">Link al form</a></p>

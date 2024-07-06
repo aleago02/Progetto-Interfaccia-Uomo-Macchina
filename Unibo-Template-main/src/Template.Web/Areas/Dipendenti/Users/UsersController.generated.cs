@@ -108,6 +108,7 @@ namespace Template.Web.Areas.Dipendenti.Users
             public readonly string Index = "Index";
             public readonly string Ferie = "Ferie";
             public readonly string SmartWorking = "SmartWorking";
+            public readonly string Permessi = "Permessi";
             public readonly string Delete = "Delete";
         }
 
@@ -117,6 +118,7 @@ namespace Template.Web.Areas.Dipendenti.Users
             public const string Index = "Index";
             public const string Ferie = "Ferie";
             public const string SmartWorking = "SmartWorking";
+            public const string Permessi = "Permessi";
             public const string Delete = "Delete";
         }
 
@@ -186,6 +188,16 @@ namespace Template.Web.Areas.Dipendenti.Users
         }
 
         [NonAction]
+        partial void PermessiOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo);
+        [NonAction]
+        public override Microsoft.AspNetCore.Mvc.IActionResult Permessi()
+        {
+            var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Permessi);
+            PermessiOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
         partial void SmartWorkingOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo, Template.Web.Areas.Dipendenti.Users.SmartWorkingViewModel model);
         [NonAction]
         public override System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> SmartWorking(Template.Web.Areas.Dipendenti.Users.SmartWorkingViewModel model)
@@ -193,6 +205,17 @@ namespace Template.Web.Areas.Dipendenti.Users
             var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.SmartWorking);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             SmartWorkingOverride(callInfo, model);
+            return System.Threading.Tasks.Task.FromResult<Microsoft.AspNetCore.Mvc.IActionResult>(callInfo);
+        }
+
+        [NonAction]
+        partial void PermessiOverride(R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult callInfo, Template.Web.Areas.Dipendenti.Users.PermessiViewModel model);
+        [NonAction]
+        public override System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> Permessi(Template.Web.Areas.Dipendenti.Users.PermessiViewModel model)
+        {
+            var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.Permessi);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            PermessiOverride(callInfo, model);
             return System.Threading.Tasks.Task.FromResult<Microsoft.AspNetCore.Mvc.IActionResult>(callInfo);
         }
 
