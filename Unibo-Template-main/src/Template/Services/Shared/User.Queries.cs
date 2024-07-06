@@ -63,6 +63,7 @@ namespace Template.Services.Shared
             public DateOnly DayEnd { get; set; }
             public decimal HSmartWork { get; set; }
             public decimal HHoliday { get; set; }
+            public decimal HPermessi { get; set; }
             public Boolean Request {  get; set; }
         }
     }
@@ -88,6 +89,7 @@ namespace Template.Services.Shared
         public DateOnly DayEnd { get; set; }
         public decimal HSmartWork { get; set; }
         public decimal HHoliday { get; set; }
+        public decimal HPermessi { get; set; }
     }
 
     public class CheckLoginCredentialsQuery
@@ -174,6 +176,7 @@ namespace Template.Services.Shared
                     UserId = x.UserId,
                     HSmartWork = x.HSmartWorking,
                     HHoliday = x.HHoliday,
+                    HPermessi = x.HPermessi,
                     Request = x.Requests.Select(y=> y.request).FirstOrDefault()
                 }).OrderBy(x => x.Day).ToArrayAsync(),
 

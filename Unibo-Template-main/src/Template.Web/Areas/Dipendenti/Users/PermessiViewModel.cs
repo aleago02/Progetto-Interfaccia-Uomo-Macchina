@@ -10,9 +10,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Template.Web.Areas.Dipendenti.Users
 {
     [TypeScriptModule("Dipendenti.Users.Server")]
-    public class PermessiViewModel 
+    public class SmartWorkingViewModel 
     {
-        public PermessiViewModel()
+        public SmartWorkingViewModel()
         {
         }
 
@@ -25,7 +25,6 @@ namespace Template.Web.Areas.Dipendenti.Users
         public DateOnly Day { get; set; }
         public decimal HHoliday = 0;
         public decimal HSmartWork { get; set; }
-        public decimal HPermessi { get; set; }
 
         public string ToJson()
         {
@@ -44,8 +43,7 @@ namespace Template.Web.Areas.Dipendenti.Users
                 UserId = userDayDetailDTO.Id;
                 HHoliday = userDayDetailDTO.HHoliday;
                 Day = userDayDetailDTO.Day;
-                HSmartWork = userDayDetailDTO.HSmartWork;
-                HPermessi = userDayDetailDTO.HPermessi;
+                HSmartWork = userDayDetailDTO.HPermessi;
             }
         }
 
@@ -56,8 +54,7 @@ namespace Template.Web.Areas.Dipendenti.Users
                 Id = (Guid)UserId,
                 Day = Day,
                 HSmartWork = HSmartWork,
-                HHoliday = HHoliday,
-                HPermessi = HPermessi
+                HHoliday = HHoliday
             };
         }
     }

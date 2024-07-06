@@ -25,15 +25,15 @@
                 </tr>
             </thead>
             <tbody class="table-group-divider">
-                @if (Model.Users.Any() == false)
+                @if (Model.AnyFerie().Count() == 0)
                 {
                     <tr>
-                        <td colspan="4">Nessun elemento trovato con i filtri correnti</td>
+                        <td colspan="4">Nessun elemento trovato</td>
                     </tr>
                 }
                 else
                 {
-                    @foreach (var user in Model.Users)
+                    @foreach (var user in Model.AnyFerie())
                     {
                         if (user.HHoliday != 0)
                         { 
@@ -83,15 +83,15 @@
                 </tr>
             </thead>
             <tbody class="table-group-divider">
-                @if (Model.Users.Any() == false)
+                @if (Model.AnySmartworking().Count() == 0)
                 {
                     <tr>
-                        <td colspan="4">Nessun elemento trovato con i filtri correnti</td>
+                        <td colspan="4">Nessun elemento trovato</td>
                     </tr>
                 }
                 else
                 {
-                    @foreach (var user in Model.Users)
+                    @foreach (var user in Model.AnySmartworking())
                     {
                         if (user.HSmartWork != 0)
                         {
@@ -116,6 +116,50 @@
                 }
             </tbody>
         </table>
+        </div>
+        <div class="table-container-d">
+            <h3 class="sticky-column-d">Permessi</h3>
+            <table class="table table-d">
+                <thead>
+                    <tr class="sticky-column-d">
+                        <th class="th-d" scope="col">Data</th>
+                        <th class="th-d" scope="col">Ore Permessi</th
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                @if (Model.AnyPermessi().Count() == 0)
+                    {
+                        <tr>
+                            <td colspan="4">Nessun elemento trovato</td>
+                        </tr>
+                    }
+                    else
+                    {
+                    @foreach (var user in Model.AnyPermessi())
+                        {
+                            if (user.HPermessi != 0)
+                            {
+                                if (user.Request)
+                                {
+                                    ViewData["Request"] = "table-warning";
+                                }
+                                else if (!user.Request)
+                                {
+                                    ViewData["Request"] = "table-success";
+                                }
+                                <tr class="@ViewData["Request"]">
+                                    <td scope="row">
+                                        @user.Day
+                                    </td>
+                                    <td>
+                                        @user.HPermessi
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
     </div>
 
 

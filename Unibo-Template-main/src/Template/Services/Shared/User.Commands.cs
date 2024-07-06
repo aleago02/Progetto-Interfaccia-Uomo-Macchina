@@ -27,6 +27,7 @@ namespace Template.Services.Shared
         public DateOnly Day { get; set; }
         public decimal HSmartWork { get; set; }
         public decimal HHoliday { get; set; }
+        public decimal HPermessi { get; set; }
         public DateOnly DayEnd { get; set; }
     }
 
@@ -119,7 +120,17 @@ namespace Template.Services.Shared
                         day.HSmartWorking = cmd.HSmartWork;
                     }
 
-
+                }
+                if (cmd.HPermessi != 0)
+                {
+                    if (cmd.HPermessi + day.HPermessi > 8)
+                    {
+                        day.HPermessi = 8 - day.HPermessi;
+                    }
+                    else
+                    {
+                        day.HPermessi = cmd.HPermessi;
+                    }
                 }
                 else
                 {

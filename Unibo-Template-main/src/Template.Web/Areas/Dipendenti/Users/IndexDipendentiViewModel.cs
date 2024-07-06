@@ -27,6 +27,21 @@ namespace Template.Web.Areas.Dipendenti.Users
         public IEnumerable<UserDaysIndexViewModel> Users { get; set; }
         public Guid CurrentId { get; set; }
 
+        public IEnumerable<UserDaysIndexViewModel> AnySmartworking()
+        {
+            return this.Users.Where(x => x.HSmartWork != 0);
+        }
+
+        public IEnumerable<UserDaysIndexViewModel> AnyPermessi()
+        {
+            return this.Users.Where(x => x.HPermessi != 0);
+        }
+
+        public IEnumerable<UserDaysIndexViewModel> AnyFerie()
+        {
+            return this.Users.Where(x => x.HHoliday != 0);
+        }
+
         internal void SetUsers(DaysIndexDTO usersIndexDTO)
         {
             Users = usersIndexDTO.Users.Select(x => new UserDaysIndexViewModel(x)).OrderByDescending(x => x.Day).ToArray();
@@ -63,6 +78,7 @@ namespace Template.Web.Areas.Dipendenti.Users
             this.DayEnd = userWorkIndexDTO.DayEnd;
             this.HSmartWork = userWorkIndexDTO.HSmartWork;
             this.HHoliday = userWorkIndexDTO.HHoliday;
+            this.HPermessi = userWorkIndexDTO.HPermessi;
             this.Request = userWorkIndexDTO.Request;    
         }
         public int Id { get; set; }
@@ -71,6 +87,7 @@ namespace Template.Web.Areas.Dipendenti.Users
         public DateOnly DayEnd { get; set; }
         public decimal HSmartWork { get; set; }
         public decimal HHoliday { get; set; }
+        public decimal HPermessi { get; set; }
         public Boolean Request {  get; set; }
     }
 
