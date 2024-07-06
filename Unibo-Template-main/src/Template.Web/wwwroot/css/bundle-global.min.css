@@ -11,21 +11,24 @@
  * Copyright 2011-2023 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+.user-name {
+    color: dodgerblue;
+    vertical-align: middle; /* Allinea verticalmente al centro */
+}
 .menu-inline {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    width: 100%;
+    width: 40%;
     overflow: hidden;
-    white-space: nowrap;
 }
 .menu-item {
     text-decoration: none;
     padding: 1% 2%;
-    margin: 0 2%;
+    margin: 0 1%;
     color: #000;
     background-color: #f0f0f0;
-    border-radius: 2%;
+    border-radius: 1%;
 }
 .sticky-column{
     position: sticky;
@@ -69,6 +72,8 @@
 .legend .legend-item {
     display: inline-block;
     padding: 5px 10px;
+    margin-top: 2%;
+    margin-bottom: 1%;
     margin-right: 5px;
     border-radius: 3px;
     background-color: #e9ecef;
