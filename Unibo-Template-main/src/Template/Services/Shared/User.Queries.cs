@@ -199,6 +199,7 @@ namespace Template.Services.Shared
                     DayEnd = x.DayEnd,
                     UserId = x.UserId,
                     HSmartWork = x.HSmartWorking,
+                    HPermessi = x.HPermessi,
                     HHoliday = x.HHoliday,
                     Request = x.Requests.Select(y => y.request).FirstOrDefault()
                 }).OrderBy(x => x.Day).ToArrayAsync(),

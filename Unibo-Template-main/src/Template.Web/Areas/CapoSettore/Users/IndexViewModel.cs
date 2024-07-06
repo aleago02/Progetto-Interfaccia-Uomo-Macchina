@@ -136,6 +136,7 @@ namespace Template.Web.Areas.CapoSettore.Users
                 this.DayEnd = userWorkIndexDTO.DayEnd;
                 this.HSmartWork = userWorkIndexDTO.HSmartWork;
                 this.HHoliday = userWorkIndexDTO.HHoliday;
+                this.HPermessi = userWorkIndexDTO.HPermessi;
                 this.Request = userWorkIndexDTO.Request;
             }
             public int Id { get; set; }
@@ -144,6 +145,7 @@ namespace Template.Web.Areas.CapoSettore.Users
             public DateOnly DayEnd { get; set; }
             public decimal HSmartWork { get; set; }
             public decimal HHoliday { get; set; }
+            public decimal HPermessi { get; set; }
             public Boolean Request { get; set; }
         }
     }

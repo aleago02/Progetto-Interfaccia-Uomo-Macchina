@@ -42,6 +42,7 @@
     <span class="legend-item RV">RV: Richiesta da valutare</span>
     <span class="legend-item A">A: Richiesta accettata</span>
     <span class="legend-item SW">SW: Smart Working</span>
+    <span class="legend-item P">P(ore): Permesso</span>
 </div>
 <div class="table-container" id="scrolling-container">
     <div class="table-scroll">
@@ -87,6 +88,12 @@
                                     else if (req.HSmartWork != 0)
                                     {
                                         <td class="@day.CssClass SW">SW</td>
+                                        cellFilled = true;
+                                        break;
+                                    }
+                                    else if (req.HPermessi != 0)
+                                    {
+                                        <td class="@day.CssClass P">P(@req.HPermessi)</td>
                                         cellFilled = true;
                                         break;
                                     }
