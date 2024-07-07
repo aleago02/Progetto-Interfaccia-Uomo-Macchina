@@ -16,36 +16,28 @@
             </tr>
         </thead>
         <tbody class="table-group-divider">
-            @foreach (var user in Model.Users)
+            @foreach (var req in Model.Days.Where(r => r.Request && r.HHoliday != 0))
             {
-                @foreach(var req in Model.Days)
+                var user = Model.Users.FirstOrDefault(u => u.Id == req.UserId);
+                if (user != null)
                 {
-                    if (user.Id == req.UserId)
-                    {
-                        @if (req.Request == true)
-                        {
-                            @if (req.HHoliday != 0)
-                            {
-                                <tr>
-                                    <td>@user.FirstName @user.LastName</td>
-                                    <td>@req.Day</td>>
-                                    <td>@req.DayEnd</td>
-                                    <td>
-                                        <form asp-action="Accept" method="post">
-                                            <input type="hidden" name="Id" value="@req.Id" />
-                                            <button type="submit" class="btn btn-success">V</button>
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <form asp-action="Reject" method="post">
-                                            <input type="hidden" name="Id" value="@req.Id" />
-                                            <button type="submit" class="btn btn-danger">X</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            }
-                        }
-                    }
+                    <tr>
+                        <td>@user.FirstName @user.LastName</td>
+                        <td>@req.Day.ToString("dd/MM/yyyy")</td>
+                        <td>@req.DayEnd.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            <form asp-action="Accept" method="post">
+                                <input type="hidden" name="Id" value="@req.Id" />
+                                <button type="submit" class="btn btn-success">V</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form asp-action="Reject" method="post">
+                                <input type="hidden" name="Id" value="@req.Id" />
+                                <button type="submit" class="btn btn-danger">X</button>
+                            </form>
+                        </td>
+                    </tr>
                 }
             }
         </tbody>

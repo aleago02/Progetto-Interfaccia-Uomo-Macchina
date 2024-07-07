@@ -1,27 +1,31 @@
 ﻿@model Template.Web.Areas.CapoSettore.Users.IndexViewModel
 
+@{
+    bool hasPendingRequests = Model.Days.Any(req => req.Request);
+    ViewData["PendingRequestClass"] = hasPendingRequests ? "btn-warning" : "btn-primary";
+    ViewData["PendingRequestText"] = "Richieste da valutare";
+    if (hasPendingRequests)
+    {
+        ViewData["PendingRequestCount"] = Model.Days.Count(req => req.Request);
+    }
+}
+
 @section pageTitle {
-    <div class="container">
-                <h1>Riepilogo richieste</h1>
+    <div class="container container-t">
+        <h1>Riepilogo richieste</h1>
     </div>
     <div class="container">
         <div class="row g-4 align-items-end">
             <form method="get" action="@Url.Action(MVC.CapoSettore.Users.Index())">
                 <div class="row">
                     <div class="col-3">
-                        @if (Model.Days.Any(req => req.Request))
-                        {
-                            <a class="btn btn-warning" href="@Url.Action(MVC.CapoSettore.Users.ManageRequest())">
-                                Richieste da valutare
-                                <span class="badge badge-light">@Model.Days.Count(req => req.Request)</span>
-                            </a>
-                        }
-                        else
-                        {
-                            <a class="btn btn-primary" href="@Url.Action(MVC.CapoSettore.Users.ManageRequest())">
-                                Richieste da valutare
-                            </a>
-                        }
+                        <a class="btn @ViewData["PendingRequestClass"]" href="@Url.Action(MVC.CapoSettore.Users.ManageRequest())">
+                            @ViewData["PendingRequestText"]
+                            @if (hasPendingRequests)
+                            {
+                                <span class="badge badge-light">@ViewData["PendingRequestCount"]</span>
+                            }
+                        </a>
                     </div>
                     <div class="col-2">
                         <input type="date" class="form-control" id="startDate" name="startDate" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
@@ -38,50 +42,38 @@
     </div>
 }
 
-<div class="legend">
-    <span class="legend-item RV">RV: Richiesta da valutare</span>
-    <span class="legend-item A">A: Richiesta accettata</span>
-    <span class="legend-item SW">SW: Smart Working</span>
-    <span class="legend-item P">P(ore): Permesso</span>
-</div>
-<div class="table-container" id="scrolling-container">
-    <div class="table-scroll">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th class="dipendenti sticky-column" style="width: 200px;">Dipendenti</th>
-                    @foreach (var day in Model.CalendarData.SelectMany(week => week))
-                    {
-                        <th class="@day.CssClass text-center">
-                            <span>@day.Status</span>
-                            <br />
-                            <span>@day.Day/@day.Date.Month</span>
-                        </th>
-                    }
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var user in Model.Users)
-                {
+<div class="content-wrapper content-table">
+    <div class="table-container" id="scrolling-container">
+        <div class="table-scroll">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td class="dipendenti sticky-column">@user.FirstName @user.LastName</td>
+                        <th class="dipendenti sticky-column" style="width: 200px;">Dipendenti</th>
                         @foreach (var day in Model.CalendarData.SelectMany(week => week))
                         {
-                            bool cellFilled = false;
-                            foreach (var req in Model.Days)
+                            <th class="@day.CssClass text-center">
+                                <span>@day.Status</span>
+                                <br />
+                                <span>@day.Day/@day.Date.Month</span>
+                            </th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model.Users)
+                    {
+                        <tr>
+                            <td class="dipendenti sticky-column">@user.FirstName @user.LastName</td>
+                            @foreach (var day in Model.CalendarData.SelectMany(week => week))
                             {
-                                if (req.UserId == user.Id && req.Day <= day.Date && req.DayEnd >= day.Date)
+                                var reqs = Model.Days.Where(req => req.UserId == user.Id && req.Day <= day.Date && req.DayEnd >= day.Date).ToList();
+                                bool cellFilled = false;
+
+                                foreach (var req in reqs)
                                 {
                                     if (req.HHoliday != 0 && !day.CssClass.Contains("sabato") && !day.CssClass.Contains("domenica") && !day.CssClass.Contains("festività"))
                                     {
-                                        if (req.Request)
-                                        {
-                                            <td class="@day.CssClass RV">RV</td>
-                                        }
-                                        else
-                                        {
-                                            <td class="@day.CssClass A">A</td>
-                                        }
+                                        <td class="@day.CssClass @(req.Request ? "RV" : "A")">@(req.Request ? "RV" : "A")</td>
                                         cellFilled = true;
                                         break;
                                     }
@@ -98,16 +90,27 @@
                                         break;
                                     }
                                 }
+
+                                if (!cellFilled)
+                                {
+                                    <td class="@day.CssClass"></td>
+                                }
                             }
-                            if (!cellFilled)
-                            {
-                                <td class="@day.CssClass"></td>
-                            }
-                        }
-                    </tr>
-                }
-            </tbody>
-        </table>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="legend-container fixed-legend">
+    <div class="legend">
+        <span class="legend-title">Legenda:</span>
+        <span class="legend-item RV">RV: Richiesta da valutare</span>
+        <span class="legend-item A">A: Richiesta accettata</span>
+        <span class="legend-item SW">SW: Smart Working</span>
+        <span class="legend-item P">P(ore): Permesso</span>
     </div>
 </div>
 
