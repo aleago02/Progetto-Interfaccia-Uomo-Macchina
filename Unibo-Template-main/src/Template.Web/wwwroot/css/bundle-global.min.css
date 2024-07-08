@@ -13,7 +13,7 @@
  */
 .user-name {
     color: dodgerblue;
-    vertical-align: middle; /* Allinea verticalmente al centro */
+    vertical-align: middle;
 }
 .menu-inline {
     display: flex;
@@ -45,13 +45,22 @@
 .festività, .current-day, .lavorativo, .domenica, .sabato {
     border: 1px solid #757a79;
 }
-.current-day{background-color:lightblue!important;color:black!important;font-weight:bold!important;white-space:nowrap!important}
+.current-day {
+    background-color: #ADD8E6 !important;
+    color: black !important;
+    font-weight: bold !important;
+    white-space: nowrap !important
+}
 .sabato {
-    background-color: #E3E3E3 !important;
+    background-color: #D3D3D3 !important;
     color: black !important;
     font-weight: bold !important;
 }
-.domenica,.festività{background-color:lightcoral!important;color: black!important;font-weight: bold !important;}
+.domenica, .festività {
+    background-color: #FF6961 !important;
+    color: black !important;
+    font-weight: bold !important;
+}
 .table-container{overflow:auto;width: 100%;}
 .table-container-d {
     margin-top: 50px;
@@ -95,6 +104,7 @@
     background-color: rgba(255, 255, 255, 0.8);
     border: 1px solid #ccc;
     margin-top:1%;
+    margin-right: 10%;
     padding: 10px;
     z-index: 1000;
 }
@@ -114,10 +124,16 @@
     margin-bottom: 3px;
 }
 .RV {
-    background-color: #FFF98A !important;
+    background-color: #FFFF99 !important;
 }
 .A {
-    background-color:#99FF9E !important;
+    background-color: #90EE90 !important;
+}
+.SW {
+    background-color: #40E0D0 !important;
+}
+.P {
+    background-color: #D8BFD8 !important;
 }
 .onit-toastify-success {
     background: limegreen;
