@@ -29,12 +29,6 @@
                     <a class="menu-item" href="@Url.Action(MVC.Dipendenti.Users.SmartWorking())">SmartWorking</a>
                     <a class="menu-item" href="@Url.Action(MVC.Dipendenti.Users.Permessi())">Richiedi Permessi</a>
                 </div>
-
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-                <div class="collapse navbar-collapse flex-wrap icon" id="navbarSupportedContent">
                     <ul class="nav navbar-nav ms-auto onit-page-menu-user">
                         @if (identitaCorrente != null)
                         {
@@ -52,7 +46,6 @@
                             </li>
                         }
                     </ul>
-                </div>
             </div>
         </nav>
         @RenderSection("pageTitle", false)
